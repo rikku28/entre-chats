@@ -1,0 +1,74 @@
+/********************************************************************************************************************/
+/***************************************** Feuille de style du qui Pokémon *****************************************/
+/******************************************************************************************************************/
+body{
+    /* background-color: white; */
+    /* width: 800px; */
+    background-image: url(../img/pattern-pokemon.png);
+    background-repeat: repeat;
+}
+
+main{
+    max-width: 960px;
+	margin : 10px auto;
+}
+
+h1{
+    color: #7c3a01;
+    font-size: 3em;
+    text-align: center;
+    font-family: 'Ranchers', 'Bangers', 'Boogaloo', cursive;
+}
+
+h2{
+    color: #7c3a01;
+    font-size: 2.5em;
+    text-align: center;
+    font-family: 'Ranchers', 'Bangers', 'Boogaloo', cursive;
+}
+
+h3, legend{
+    color: #7c3a01;
+    font-size: 1.8em;
+    text-align: center;
+    font-family: 'Ranchers', 'Bangers', 'Boogaloo', cursive;
+}
+
+p, span, label, #menu{
+    font-family: 'BenchNine', 'Saira Extra Condensed', sans-serif;
+    font-size: 1.4em;
+}
+
+#ancre-classement, #btn-start-game, .gras{
+    /* font-weight: bold; */
+    color: #7c3a01;
+    font-family: 'Bangers', 'Boogaloo', cursive;
+    font-size: 1.3em;
+    font-weight: normal;
+}
+
+#indice-img{
+    max-width: 600px;
+    /* max-width: 960px; */
+}
+
+#question-form{
+    background-image: url(../img/pattern-pokeball.png);
+    background-repeat: repeat;
+    /* padding: 15px; */
+    /* background-image: url(../img/border-orange_2x.png); */
+}
+
+.icones{
+    width: 60px;
+    border-color: yellow;
+    border-width: 2px;
+    border-radius: 15px;
+}
+
+#flaticon-freepik-credits{
+    color: #7c3a01;
+    font-family: 'BenchNine', 'Saira Extra Condensed', sans-serif;
+    font-size: 0.5em;
+    font-style: italic;
+}
