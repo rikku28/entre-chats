@@ -6,6 +6,10 @@ module.exports = {
         consumerKey: process.env.TWITTER_KEY,
         consumerSecret: process.env.TWITTER_SECRET
     },
+    github:{
+        consumerKey: process.env.GITHUB_KEY,
+        consumerSecret: process.env.GITHUB_SECRET
+    },
     mongodb:{
         // dbURI:"mongodb+srv://rikku28:montest@cluster0-iylji.mongodb.net/test?retryWrites=true&w=majority"
         dbURI:process.env.MONGODB_URI
