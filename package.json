@@ -1,7 +1,7 @@
 {
-  "name": "Game_New-test",
+  "name": "entre-chats",
   "version": "1.0.0",
-  "description": "",
+  "description": "Réseau social pour chats. Humains et autres espèces animales, exceptées les souris modératrices, ne sont pas admises.",
   "main": "client.js",
   "dependencies": {
     "express": "^4.16.4",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node entre-chats-server.js"
   },
   "keywords": [],
   "author": "Amé G.M.",
