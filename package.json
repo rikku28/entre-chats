@@ -4,6 +4,7 @@
   "description": "Réseau social pour chats. Humains et autres espèces animales, exceptées les souris modératrices, ne sont pas admises.",
   "main": "client.js",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "express": "^4.17.1",
     "mongodb": "^3.2.7",
     "multer": "^1.4.2",
