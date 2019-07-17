@@ -22,7 +22,7 @@ const socketIo = require('socket.io');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
 const url = process.env.MONGODB_URI;
-const dbName = 'heroku_rm2b81xl';
+const dbName = 'heroku_z2g9tqqw';
 
 // const mongoose = require('mongoose');
 
@@ -121,11 +121,11 @@ socket.on('disconnect', function(reason){
     nbCats--;
     if(logged){
         // nbCats--;
-        socket.broadcast.emit('decoPlayer', {pseudo: socket.pseudo, id: socket.catId});
+        socket.broadcast.emit('decoCat', {pseudo: socket.pseudo, id: socket.catId});
         log(`Nombre de joueurs connectés (après une déconnexion loggée) : ${nbCats}`);
         delete cats[socket.id];
     }
-    // socket.broadcast.emit('decoPlayer', {pseudo: socket.pseudo, id: cats[socket.id].identifiant});
+    // socket.broadcast.emit('decoCat', {pseudo: socket.pseudo, id: cats[socket.id].identifiant});
     log(`Nombre de joueurs connectés (après une déconnexion loggée) : ${nbCats}`);
 
     if(nbCats === undefined || nbCats <= 0){

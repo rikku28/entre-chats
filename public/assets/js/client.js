@@ -1,5 +1,5 @@
 /******************************************************************************************************************/
-/********************************************* Script côté client ************************************************/
+/****************************************** Entre-chats : côté client ********************************************/
 /****************************************************************************************************************/
 'use strict';
 
@@ -118,7 +118,7 @@ socket.on('userUnknown', function(info){
     });
     
 // Déconnexion d'un joueur
-    socket.on('decoPlayer', function(infos){
+    socket.on('decoCat', function(infos){
         // log('Joueur déconnecté : ', infos);
 
         $('#zone-infos').prepend('<p><em>' + infos.pseudo + ' s\'est déconnecté !</em></p>');
@@ -138,88 +138,7 @@ socket.on('userUnknown', function(info){
         $('#zone-infos').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
     });
 
-    socket.on('attenteJoueur', function(){
-        $('#zone-infos').prepend('<p><em>Attente d\'un autre joueur.</em></p>');
-    });
 
-// Lancement du jeu
-    socket.on('startGame', function(q0){
-        log(q0);
-        startGame = true;
-
-        $('#zone-infos').prepend('<p><strong><em>La partie commence : Question n°0!</em></strong></p>');
-        $('.cache-quiz').show();
-        currentQuestion(q0);
-    });
-
-// Déclenchement d'une action lorsqu'un joueur clique sur le bouton permettant de relancer le jeu (utilisation plutôt après une manche, vu que le jeu se lance automatiquement dès qu'il y a 2 joueurs connectés.) 
-    $('#btn-start-game').click(function(e){
-        e.preventDefault();
-        startGame = true;
-
-        socket.emit('restart-game');
-    })
-
-
-/******************************************* Gestion des questions côté client ********************************************/
-// Récupération de la réponse sélectionnée
-    $('#question-form').click(function(e){
-        e.preventDefault();
-        // clearTimeout(premQuestion);
-
-        var reponseSelectionnee = $('input[name=q1]:checked').val();
-        log(reponseSelectionnee);
-        socket.emit('answer', reponseSelectionnee);
-    });
-
-// Passage à la question suivante
-    socket.on('nextQuestion', function(qEnCours){
-        log(qEnCours);
-        $('#zone-infos').prepend('<p><em>Question n°' + qEnCours.tour +'!</em></p>');
-        $('.cache-quiz').show();
-        currentQuestion(qEnCours);
-    });
-
-// Gestion des réponses (si correcte ou fausse, après vérification côté serveur)
-    socket.on('bravo', function(infos){
-        log(infos);
-        $('#zone-infos').prepend('<p class="text-success"><em>' + infos.pseudo + ' remporte le point. </em></p>');
-        let laDivDuJoueur = document.getElementById(infos.id);
-        $(laDivDuJoueur).remove();
-        $('#online-scores').append('<p class="infos-joueurs" id="' + infos.id + '"><img src="' + infos.img + '" width="50px"/> ' + infos.pseudo + ' - Score : <span class="score">' + infos.score + '</span></p>');
-    });
-
-    socket.on('dommage', function(infos){
-        log(infos);
-        $('#zone-infos').prepend('<p class="text-danger"><em> Ce n\'est pas la bonne réponse ' + infos.pseudo + '. Réessayez.</em></p>');
-        $('#indice-txt').text('Indice : ' + infos.indiceTxt);
-    });
-
-
-
-/*********************************** Affichage de la question en cours *******************************************/
-    var currentQuestion = function(questionEnCours){
-// Affichage de la question et ses indices
-        $('#indice-txt').empty();
-        $('div#questions>h2').text('Question n°' + questionEnCours.tour);
-        log('Question n°' + questionEnCours.identifiant);
-        $('#question-en-cours').text('Question : '+ questionEnCours.question);
-        $('#indice-img').removeAttr('src');
-        let indiceEnImage = 'assets/img/indices/' + questionEnCours.indiceImg;
-        log(indiceEnImage);
-        $('#indice-img').attr('src', indiceEnImage);
-        
-//  Affichage des réponses
-        $('input[name=q1]:radio').removeAttr('value');
-        $('input#rep1').attr('value', questionEnCours.reponses[1]);
-        $('input#rep1 + label').text(questionEnCours.reponses[1]);
-        $('input#rep2').attr('value', questionEnCours.reponses[2]);
-        $('input#rep2 + label').text(questionEnCours.reponses[2]);
-        $('input#rep3').attr('value', questionEnCours.reponses[3]);
-        $('input#rep3 + label').text(questionEnCours.reponses[3]);
-        $('input#rep4').attr('value', questionEnCours.reponses[4]);
-        $('input#rep4 + label').text(questionEnCours.reponses[4]);
-    };
 
 /******************************************* Fin de partie ********************************************/
     socket.on('endGame', function(infos){
