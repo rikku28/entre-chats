@@ -134,7 +134,7 @@
         line-height: 50px !important;
     }
 }
-@media (min-width: 767px) {
+@media (min-width: 768px) {
     .nav-side-menu .menu-list .menu-content {
         display: block;
     }
@@ -145,6 +145,6 @@
 body {
     margin: 0px;
     padding: 0px;
-    background-image: url(../img/pattern-pokemon.png);
+    background-image: url(../img/brewster-wallpaper-hn002616-64_600.jpg);
     background-repeat: repeat;
 }
