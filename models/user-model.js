@@ -12,9 +12,9 @@ const userSchema = new Schema({
     password: String,
     thumbnail: String,
     role: String,
-    githubId: String,
-    twitterId: String,
-    strategy: { type: String, required: true },
+    // githubId: String,
+    // twitterId: String,
+    // strategy: { type: String, required: true },
     creationDate: { type: Date, default: Date.now },
     LastVisit: { type: Date, default: Date.now }
 });
