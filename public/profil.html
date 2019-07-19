@@ -15,9 +15,9 @@
     <link href="assets/css/responsive-menu.css" rel="stylesheet" type="text/css">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <!-- Favicon et icones -->
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png" />
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png" /> -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon_meowth_180.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/meowth_32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/meowth_16.png" />
 	<link rel="shortcut icon" href="favicon.ico" />
 <!-- Chargement des scripts et librairies -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -28,58 +28,44 @@
 </head>
 <body>
 <header>
-    <div class="nav-side-menu" id="menu">
+    <nav class="nav-side-menu" id="menu">
         <div class="brand">Entre-chats</div>
-        <i style="color: Dodgerblue;" class="fa fa-paw fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <i style="color: Dodgerblue;" class="fa fa-cat fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
         <div class="menu-list">
             <ul id="menu-content" class="menu-content collapse out">
                 <li data-toggle="collapse" data-target="#profil" class="collapsed">
-                    <a href="#"><i class="fa fa-car fa-lg"></i>Profil<span class="arrow"></span></a>
+                    <a href="#"><i class="fa fa-paw fa-lg"></i>Profil<span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="profil">
+                    <li>Mon profil</li>
                     <li>Gestion du profil</li>
                     <li>Liste d'amis</li>
                     <li>Messages privrés</li>
                 </ul>
                 <li>
-                    <a href="#"><i class="fa fa-dashboard fa-lg"></i>Tchat</a>
+                    <a href="#"><i class="fa fa-cat fa-lg"></i>Tchat</a>
                 </li>
-                <li data-toggle="collapse" data-target="#products" class="collapsed">
-                    <a href="#"><i class="fa fa-gift fa-lg"></i> UI Elements <span class="arrow"></span></a>
-                </li>
-                <ul class="sub-menu collapse" id="products">
-                    <li class="active"><a href="#">CSS3 Animation</a></li>
-                    <li><a href="#">General</a></li>
-                    <li><a href="#">Buttons</a></li>
-                    <li><a href="#">Tabs & Accordions</a></li>
-                    <li><a href="#">Typography</a></li>
-                    <li><a href="#">FontAwesome</a></li>
-                </ul>
                 <li data-toggle="collapse" data-target="#service" class="collapsed">
-                    <a href="#"><i class="fa fa-globe fa-lg"></i> Services <span class="arrow"></span></a>
+                    <a href="#"><i class="fa fa-bug fa-lg"></i> Admin <span class="arrow"></span></a>
                 </li>  
                 <ul class="sub-menu collapse" id="service">
-                    <li>New Service 1</li>
-                    <li>New Service 2</li>
-                    <li>New Service 3</li>
-                </ul>
-                <li data-toggle="collapse" data-target="#new" class="collapsed">
-                    <a href="#"><i class="fa fa-car fa-lg"></i> New <span class="arrow"></span></a>
-                </li>
-                <ul class="sub-menu collapse" id="new">
-                    <li>New New 1</li>
-                    <li>New New 2</li>
-                    <li>New New 3</li>
+                    <li>Gestion des profils</li>
+                    <li>Gestion des messages privés</li>
+                    <li>Statistiques</li>
                 </ul>
                 <li id="deconnexion">
-                    <a href="#"><i class="fa fa-user fa-lg"></i>Déconnexion</a>
+                    <a href="#"><i class="fa fa-sign-out-alt fa-lg"></i>Déconnexion</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-users fa-lg"></i>À propos</a>
+                    <a href="#"><i class="fa fa-dragon fa-lg"></i> À propos</a>
+                    <!-- <a href="#"><i class="fas fa-flag-checkered"></i>À propos</a> -->
                 </li>
             </ul>
-            </div>
-        </div>
+            <form class="form-inline" id="search-bar">
+                <input class="form-control mx-sm-2" type="search" placeholder="Recherche" aria-label="Recherche">
+                <button class="btn btn-outline-primary my-2 my-sm-0 my-md-0" type="submit"><i style="color: #EFDC05;" class="fas fa-search"></i></button>
+            </form>
+        </nav>
     </header>
     <main>
         <h1>Page de profil</h1>
