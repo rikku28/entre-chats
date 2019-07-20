@@ -29,8 +29,8 @@ exports.verifPwd  = function(pwd){
         console.log(`Dans le module : Mot de passe non valide!`);
         return false;
     } else{
-        if(pseudo.length < 6){
-            console.log(`Dans le module : Pseudo trop court!`);
+        if(pwd.length < 6){
+            console.log(`Dans le module : Mot de passe trop court!`);
             return false;
         } else{
             console.log(`Mot de passe valide! -> A chercher en BDD!`);
@@ -41,21 +41,14 @@ exports.verifPwd  = function(pwd){
 
 exports.verifEmail  = function(email){
     const emailRegex = new RegExp('^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$', 'igm')
-    if(email === '' || email === null || email.length === 0 || email === undefined || email === Infinity){
-        console.log(`Dans le module : Mot de passe non valide!`);
+    if(emailRegex.test(email)){
+        console.log(`Email valide!`);
         return false;
     } else{
-        if(pseudo.length < 6){
-            console.log(`Dans le module : Pseudo trop court!`);
-            return false;
-        } else{
-            console.log(`Mot de passe valide! -> A chercher en BDD!`);
-            return true;
-        }
+        console.log(`Dans le module : Adresse email non valide!`);
+        return false;
     }
 };
-
-
 
 // Fonction pour vérifier que l'url de l'avatar est correcte
 exports.verifUrl = function(url, premiereConnexion){
@@ -63,7 +56,7 @@ exports.verifUrl = function(url, premiereConnexion){
 
     const urlRegex = new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)+?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$', 'igm');
     // if(url.match(urlRegex)){
-    if(urlRegex.test(url))
+    if(urlRegex.test(url)){
         console.log(`Url OK!!!`);
         return true;
     } else{

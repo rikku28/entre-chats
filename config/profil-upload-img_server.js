@@ -7,6 +7,9 @@
 // Sauvegarde dans Mongo? https://medium.com/@colinrlly/send-store-and-show-images-with-react-express-and-mongodb-592bc38a9ed
 // 
 
+console.log(`Bienvenue dans le module upload-img.js!`);
+var exports = module.exports = {};
+
 const express = require('express');
 const multer = require('multer');
 // const upload = multer({dest: __dirname + '/uploads/images', preservePath: true});
