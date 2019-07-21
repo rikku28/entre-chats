@@ -17,12 +17,12 @@ const port = 3333;
 /************************************* Ajout de modules complémentaires *************************************/
 const socketIo = require('socket.io');
 const sgMail = require('@sendgrid/mail');
-var multer  = require('multer');
+const bcrypt = require('bcrypt');
+const multer  = require('multer');
 
 /************************************* Données pour server.js : Modularisation de la vérification des identifants du joueur qui se connecte *************************************/
 // console.log('Dirname : ' + __dirname);
 const checkLogin = require('./config/check-login.js');
-const bcrypt = require('bcrypt');
 const sendMail = require('./config/envoi-mail.js');
 const uploadImg = require('./config/upload-img.js');
 
