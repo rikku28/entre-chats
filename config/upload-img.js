@@ -8,6 +8,7 @@
 // 
 
 console.log(`Bienvenue dans le module upload-img.js!`);
+const multer  = require('multer');
 var exports = module.exports = {};
 
 // const multer = require('multer');

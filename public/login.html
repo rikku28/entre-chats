@@ -28,7 +28,7 @@
     <title>Entre-chats : Réseau social félin</title>
 </head>
 <body>
-    <header class="row cache-header">
+    <!-- <header class="row cache-header">
         <section id="menu" class="col-md-4 offset-md-2 mb-3 mt-3">
             <a href="#best-scores" class="badge badge-warning py-2 px-3" id="ancre-classement">Classement général</a>
         </section>
@@ -37,12 +37,12 @@
                 <button type="button" id="btn-start-game" class="btn btn-warning btn-lg col-md-6 offset-md-">Let's Go!</button>
             </div>
         </section>
-    </header>
+    </header> -->
     <main> 
         <section id="welcome">
             <!-- <div class="container"> -->
                 <div class="container">
-                    <h1 class="row mb-4">Bienvenue sur Entre-Chats</h1>
+                    <h1 class="row offset-md2 mb-4">Bienvenue sur Entre-Chats</h1>
                     <div class="row mb-3">
                         <p>Entre-chats est un réseau social exclusivement dédié aux chats.</p>
                         <p>Toutes autres espèces, notamment les chiens et humains, ne sont pas autorisées à se connecter.</p>
@@ -67,15 +67,10 @@
                             <input type="password" name="mdp" id="login-form-mdp" class="form-control" placeholder="Mot de Passe" minlength="6" maxlength="12" required />
                             <div class="valid-tooltip">Excellent choix !</div>
                         </div>
-                        <div class="col-md-3 mb-3 img-avatar">
-                            <label for="validationTooltipUsername">Avatar</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="validationTooltipUsernamePrepend">url</span>
-                                </div>
-                                <input type="url" class="form-control" name="avatar" id="login-form-avatar" placeholder="URL de ton avatar" aria-describedby="validationTooltipUsernamePrepend" required>
-                                <div class="invalid-tooltip">Très jolie photo</div>
-                            </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="inputEmail1">Adresse email</label>
+                            <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="Adresse email">
+                            <small id="emailHelp" class="form-text text-muted">Nous ne partagerons pas votre adresse.</small>
                         </div>
                     </div>
                     <div class="form-row">

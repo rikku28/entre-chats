@@ -23,8 +23,8 @@ const multer  = require('multer');
 /************************************* Données pour server.js : Modularisation de la vérification des identifants du joueur qui se connecte *************************************/
 // console.log('Dirname : ' + __dirname);
 const checkLogin = require('./config/check-login.js');
-const sendMail = require('./config/envoi-mail.js');
-const uploadImg = require('./config/upload-img.js');
+// const sendMail = require('./config/envoi-mail.js');
+// const uploadImg = require('./config/upload-img.js');
 
 /************************************* Configuration du module MongoDB *************************************/
 const MongoClient = require('mongodb').MongoClient;
@@ -49,7 +49,8 @@ app.get('/', function(req, res, next){
     // console.log('Filename : ' + __filename);
     // console.log(`Current directory: ${process.cwd()}`);
     // console.log('process.arg : ' + process.argv);
-    let homePage = path.normalize(__dirname + '/public/index2.html');
+    // let homePage = path.normalize(__dirname + '/public/index2.html');
+    let homePage = path.normalize(__dirname + '/public/login.html');
     log(homePage);
 
     //Doc Express pour le traitement des erreurs : https://expressjs.com/fr/guide/error-handling.html
@@ -191,6 +192,19 @@ var Kitty = function(pseudo, pwd, email, race, genre, urlImg, socketId){
     this.socketId = socketId;
 };
 
+/*********************************** Vérification du nombre de joueur *******************************************/
+var checkNbPlayers = function(){
+    // log(`(checkNbPlayers) Le jeu est-il en cours? ${startGame}`);
+    log(`Nombre de joueurs connectés (checkNbPlayers): ${nbPlayers}`);
+    let playersLength = Object.keys(players).length;
+    log('Avec object.keys - checkNbPlayers contient : ' + Object.keys(players).length + ' entrées');
+
+    if(nbPlayers < playersLength){
+        nbPlayers = playersLength;
+        log(`nbPlayers plus petit que players, on repasse nbPlayers à : ${nbPlayers}`);
+    }
+};
+
 /*********************************** On établie la connexion socket.io *******************************************/
 io.on('connection', function(socket){
     // log(socket);
@@ -198,24 +212,27 @@ io.on('connection', function(socket){
     log(`Nombre de joueurs connectés : ${nbPlayers}`);
     // log('Connexion - players contient :' + players.length + ' objets.');  // Renvoi "undefined"
     log('Avec object.keys : ' + Object.keys(players).length);
-    if(!startGame && (Object.keys(players).length > nbPlayers)){
-        nbPlayers = players.length;
-        log(nbPlayers);
-        checkNbPlayers();
-    }
+    // if(!startGame && (Object.keys(players).length > nbPlayers)){
+    //     nbPlayers = players.length;
+    //     log(nbPlayers);
+    //     checkNbPlayers();
+    // }
+    log(nbPlayers);
+    checkNbPlayers();
     log(`Nombre de joueurs connectés (après nouvelle connexion): ${nbPlayers}`);
 
 /*********************************** Vérification du nombre de joueur *******************************************/
-    var checkNbPlayers = function(){
-        log(`(checkNbPlayers) Le jeu est-il en cours? ${startGame}`);
-        log(`Nombre de joueurs connectés (checkNbPlayers): ${nbPlayers}`);
-        let playersLength = Object.keys(players).length;
-        log('Avec object.keys - checkNbPlayers contient : ' + Object.keys(players).length + ' entrées');
+    // var checkNbPlayers = function(){
+    //     // log(`(checkNbPlayers) Le jeu est-il en cours? ${startGame}`);
+    //     log(`Nombre de joueurs connectés (checkNbPlayers): ${nbPlayers}`);
+    //     let playersLength = Object.keys(players).length;
+    //     log('Avec object.keys - checkNbPlayers contient : ' + Object.keys(players).length + ' entrées');
 
-        if(nbPlayers < playersLength){
-            nbPlayers = playersLength;
-            log(`nbPlayers plus petit que players, on repasse nbPlayers à : ${nbPlayers}`);
-        }
+    //     if(nbPlayers < playersLength){
+    //         nbPlayers = playersLength;
+    //         log(`nbPlayers plus petit que players, on repasse nbPlayers à : ${nbPlayers}`);
+    //     }
+    // };
 
         // if(nbPlayers >= 2 && tour === 0 && !startGame){
         //     for (var player in players){
@@ -233,7 +250,7 @@ io.on('connection', function(socket){
         // } else{
         //     io.emit('attenteJoueur');
         // }
-    };
+    // };
     
 
 /*********************************** Fin de partie : actuellement géré côté front *******************************************/
@@ -612,9 +629,9 @@ io.on('connection', function(socket){
         if(nbPlayers === undefined || nbPlayers <= 0){
             log(`On est dans le "if" de la déconnexion`);
             nbPlayers = 0;
-            startGame = false;
-            attenteJoueur = true;
-            tour = 0;
+            // startGame = false;
+            // attenteJoueur = true;
+            // tour = 0;
             log(`En cas de -1 ou undefined, nbPlayers passe à 0 : ${nbPlayers}`);
         }
     });
