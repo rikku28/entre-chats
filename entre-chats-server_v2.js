@@ -421,12 +421,12 @@ io.on('connection', function(socket){
     log('Un nouvel utilisateur vient de se connecter. ' + socket.id);
     // log(`Le jeu est-il en cours? ${startGame}`);
 
-    socket.on('login', function(infosUser){
+    socket.on('login', async function(infosUser){
         // socket.emit('classement', bestScores);
 
         log('infosUser : ', infosUser);
 
-        let checkPseudo = checkLogin.verifPseudo(infosUser.pseudo);
+        let checkPseudo = await checkLogin.verifPseudo(infosUser.pseudo);
         log('Pseudo : ' + checkPseudo);
         if(!checkPseudo){
             log(`On est dans la condition !checkPseudo`);
@@ -435,7 +435,7 @@ io.on('connection', function(socket){
             log(`Pseudo non valide!`);
         }
 
-        let checkPwd = checkLogin.verifPwd(infosUser.mdp);
+        let checkPwd = await checkLogin.verifPwd(infosUser.mdp);
         log('Pass : ' + checkPwd);
         if(!checkPwd){
             log(`On est dans la condition !checkPwd`);
@@ -444,7 +444,7 @@ io.on('connection', function(socket){
         }
 
         log(`First login vaut : ${infosUser.firstLogin}`);
-        let checkUrl = checkLogin.verifUrl(infosUser.img);
+        let checkUrl = await checkLogin.verifUrl(infosUser.img);
         log('URL : ' + checkUrl);
         // let checkUrl = checkLogin.verifUrl(infosUser.img, infosUser.firstLogin);
         if(infosUser.firstLogin){
