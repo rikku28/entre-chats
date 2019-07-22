@@ -115,7 +115,7 @@ socket.on('userUnknown', function(info){
         $('#online-scores').empty();
         // log('Joueurs en ligne', infos);
         for (var player in infos){
-            $('#online-scores').append('<p class="infos-joueurs" id="' + infos[player].identifiant + '"><img src="' + infos[player].avatar + '" class="rounded" width="50px"/> ' + infos[player].pseudo</p>');
+            $('#online-scores').append('<p class="infos-joueurs" id="' + infos[player].identifiant + '"><img src="' + infos[player].avatar + '" class="rounded" width="50px"/> ' + infos[player].pseudo + '</p>');
         }
     });
     
