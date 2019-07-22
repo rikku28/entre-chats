@@ -290,6 +290,7 @@ io.on('connection', function(socket){
 /*********************************** Fonction globale de vérification des identifiants du joueur qui se connecte *******************************************/
     let checkVerifs = function(aPseudo, bPwd, cAvatar, dInfosJoueur){
         log(`On est dans la fonction "checkVerifs".`);
+        log(`Infos joueur : ${dInfosJoueur.pseudo}`);
 
         if(aPseudo && bPwd && cAvatar && dInfosJoueur.firstLogin){
             // findUserInDB(dInfosJoueur.pseudo, dInfosJoueur.mdp);
@@ -468,14 +469,14 @@ io.on('connection', function(socket){
     let chatMsgIo = io.of('/chat');
     chatMsgIo.on('connection', function(socketChatMsg){
         log(socketChatMsg);
-        log('Un nouvel utilisatuer vient de se conecter au chat!');
-        // socketChatMsg.on('chatMsg', function (message){
-        //     log('Pseudo : ', kittens[socket.id].pseudo);
-        //     log(message);
-        //     message = message;
-        //     // log(kittens);
-        //     io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
-        // });
+    //     log('Un nouvel utilisatuer vient de se conecter au chat!');
+    //     // socketChatMsg.on('chatMsg', function (message){
+    //     //     log('Pseudo : ', kittens[socket.id].pseudo);
+    //     //     log(message);
+    //     //     message = message;
+    //     //     // log(kittens);
+    //     //     io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
+    //     // });
 
         // socketChatMsg.emit('onlinePlayers', kittens);
     });
@@ -485,7 +486,7 @@ io.on('connection', function(socket){
         log(message);
         message = message;
         // log(kittens);
-        io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
+        io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: Date.now()});
     });
 
     chatMsgIo.emit('onlinePlayers', kittens);
