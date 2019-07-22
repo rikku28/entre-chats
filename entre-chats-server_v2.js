@@ -35,7 +35,7 @@ const dbName = 'heroku_z2g9tqqw';
 /************* Constante de raccourci pour "console.log" + déclaration des variables globales **************/
 const log = console.log;
 var logged = false;
-var players = {};
+var kittens = {};
 var nbPlayers = 0;
 var infosJoueursBDD;
 var attenteJoueur = true;
@@ -180,7 +180,7 @@ const io = socketIo(httpServer);
 // recupBestScores();
 
 /************************************** Création de joueurs **********************************************/
-var Kitty = function(pseudo, pwd, email, race, genre, urlImg, socketId){
+var Kitten = function(pseudo, pwd, email, race, genre, urlImg, socketId){
     this.dateCrea = Date.now();
     this.pseudo = pseudo;
     this.identifiant = this.pseudo + '-' + this.dateCrea;
@@ -196,12 +196,12 @@ var Kitty = function(pseudo, pwd, email, race, genre, urlImg, socketId){
 var checkNbPlayers = function(){
     // log(`(checkNbPlayers) Le jeu est-il en cours? ${startGame}`);
     log(`Nombre de joueurs connectés (checkNbPlayers): ${nbPlayers}`);
-    let playersLength = Object.keys(players).length;
-    log('Avec object.keys - checkNbPlayers contient : ' + Object.keys(players).length + ' entrées');
+    let playersLength = Object.keys(kittens).length;
+    log('Avec object.keys - checkNbPlayers contient : ' + Object.keys(kittens).length + ' entrées');
 
     if(nbPlayers < playersLength){
         nbPlayers = playersLength;
-        log(`nbPlayers plus petit que players, on repasse nbPlayers à : ${nbPlayers}`);
+        log(`nbPlayers plus petit que kittens, on repasse nbPlayers à : ${nbPlayers}`);
     }
 };
 
@@ -210,10 +210,10 @@ io.on('connection', function(socket){
     // log(socket);
     log('Coucou depuis le serveur!');
     log(`Nombre de joueurs connectés : ${nbPlayers}`);
-    // log('Connexion - players contient :' + players.length + ' objets.');  // Renvoi "undefined"
-    log('Avec object.keys : ' + Object.keys(players).length);
-    // if(!startGame && (Object.keys(players).length > nbPlayers)){
-    //     nbPlayers = players.length;
+    // log('Connexion - kittens contient :' + kittens.length + ' objets.');  // Renvoi "undefined"
+    log('Avec object.keys : ' + Object.keys(kittens).length);
+    // if(!startGame && (Object.keys(kittens).length > nbPlayers)){
+    //     nbPlayers = kittens.length;
     //     log(nbPlayers);
     //     checkNbPlayers();
     // }
@@ -225,24 +225,24 @@ io.on('connection', function(socket){
     // var checkNbPlayers = function(){
     //     // log(`(checkNbPlayers) Le jeu est-il en cours? ${startGame}`);
     //     log(`Nombre de joueurs connectés (checkNbPlayers): ${nbPlayers}`);
-    //     let playersLength = Object.keys(players).length;
-    //     log('Avec object.keys - checkNbPlayers contient : ' + Object.keys(players).length + ' entrées');
+    //     let playersLength = Object.keys(kittens).length;
+    //     log('Avec object.keys - checkNbPlayers contient : ' + Object.keys(kittens).length + ' entrées');
 
     //     if(nbPlayers < playersLength){
     //         nbPlayers = playersLength;
-    //         log(`nbPlayers plus petit que players, on repasse nbPlayers à : ${nbPlayers}`);
+    //         log(`nbPlayers plus petit que kittens, on repasse nbPlayers à : ${nbPlayers}`);
     //     }
     // };
 
         // if(nbPlayers >= 2 && tour === 0 && !startGame){
-        //     for (var player in players){
-        //         players[player].score = 0;
+        //     for (var player in kittens){
+        //         kittens[player].score = 0;
         //     };
 
         //     attenteJoueur = false;
         //     startGame = true;
 
-        //     // players[socket.id].score = 0;
+        //     // kittens[socket.id].score = 0;
         //     log('Nb de questions : ' + listeQuestions.length);
         //     listeQuestions[tour].tour = tour;
         //     log('Question en cour : ', listeQuestions[tour]);
@@ -255,7 +255,7 @@ io.on('connection', function(socket){
 
 /*********************************** Fin de partie : actuellement géré côté front *******************************************/
 // var classement = function(){
-//     let tabPlayers = Object.entries(players);
+//     let tabPlayers = Object.entries(kittens);
 
 //     tabPlayers.sort(function(a, b){
 //         return b.score - a.score
@@ -331,28 +331,29 @@ io.on('connection', function(socket){
                                     log(`On va intégrer les données en base`);
                                     const db = client.db(dbName);
                                     const collection = db.collection('users');
-                            collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, avatar: dInfosJoueur.img, lastScore: 0, bestScore: 0});
+                                    collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, avatar: dInfosJoueur.img, lastScore: 0, bestScore: 0});
                                 }
                                 client.close();
                             });
 
                             log(3);
                             socket.pseudo = dInfosJoueur.pseudo;
-                            let newPlayer = new Kitty(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.img, socket.id);
+                            let newPlayer = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.img, socket.id);
                             log('Nouveau joueur : ', newPlayer);
                             let pseudo = dInfosJoueur.pseudo;
-                            players[socket.id] = newPlayer;
-                            socket.playerId = players[socket.id].identifiant;
+                            kittens[socket.id] = newPlayer;
+                            socket.playerId = kittens[socket.id].identifiant;
                             nbPlayers++;
 
                             log(`Nb joueurs : ${nbPlayers}`);
                             socket.emit('loginOK', newPlayer);
                             socket.broadcast.emit('newPlayer', newPlayer);
-                            log(players);
-                            io.emit('onlinePlayers', players);
+                            log(kittens);
+                            io.emit('onlinePlayers', kittens);
                             logged = true;
                             checkNbPlayers();
 
+                            res.redirect('/profil');
                             } else{
                                 log(4);
                                 let message = `Le pseudo ${dInfosJoueur.pseudo} est déjà pris!`;
@@ -389,20 +390,22 @@ io.on('connection', function(socket){
                                 } else{
                                     log(7);
                                     socket.pseudo = dInfosJoueur.pseudo;
-                                    let newPlayer = new Kitty(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
+                                    let newPlayer = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
                                     log('Nouveau joueur : ', newPlayer);
                                     let pseudo = dInfosJoueur.pseudo;
-                                    players[socket.id] = newPlayer;
-                                    socket.playerId = players[socket.id].identifiant;
+                                    kittens[socket.id] = newPlayer;
+                                    socket.playerId = kittens[socket.id].identifiant;
                                     nbPlayers++;
                         
                                     log(`Nb joueurs : ${nbPlayers}`);
                                     socket.emit('loginOK', newPlayer);
                                     socket.broadcast.emit('newPlayer', newPlayer);
-                                    log(players);
-                                    io.emit('onlinePlayers', players);
+                                    log(kittens);
+                                    io.emit('onlinePlayers', kittens);
                                     logged = true;
                                     checkNbPlayers();
+
+                                    res.redirect('/profil');
                                 }
                             }
                         });
@@ -461,18 +464,36 @@ io.on('connection', function(socket){
     });
 
 /**************************************** Echange de messages entre joueurs ************************************************/
-    socket.on('chatMsg', function (message){
-        log('Pseudo : ', players[socket.id].pseudo);
+    
+    let chatMsgIo = io.of('/chat');
+    chatMsgIo.on('connection', function(socketChatMsg){
+        log(socketChatMsg);
+        log('Un nouvel utilisatuer vient de se conecter au chat!');
+        // socketChatMsg.on('chatMsg', function (message){
+        //     log('Pseudo : ', kittens[socket.id].pseudo);
+        //     log(message);
+        //     message = message;
+        //     // log(kittens);
+        //     io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
+        // });
+
+        // socketChatMsg.emit('onlinePlayers', kittens);
+    });
+
+    chatMsgIo.on('chatMsg', function (message){
+        log('Pseudo : ', kittens[socket.id].pseudo);
         log(message);
         message = message;
-        // log(players);
-        io.emit('afficheChatMsg',  {pseudo: players[socket.id].pseudo, msg: message});
+        // log(kittens);
+        io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
     });
+
+    chatMsgIo.emit('onlinePlayers', kittens);
 
 /************************************************ Relance du jeu ********************************************************/
     // socket.on('restart-game', function (message){
     //     checkNbPlayers();
-    //     io.emit('onlinePlayers', players);
+    //     io.emit('onlinePlayers', kittens);
     // });
 
 /*********************************** Vérification de la réponse sélectionnée *******************************************/
@@ -487,9 +508,9 @@ io.on('connection', function(socket){
     //     if(answer == repString){
     //     // if(answer == repOk2){
     //         log('Bonne réponse!');
-    //         players[socket.id].score++;
+    //         kittens[socket.id].score++;
             
-    //         log(`Score du joueur ${players[socket.id].pseudo} : ${players[socket.id].score}`);
+    //         log(`Score du joueur ${kittens[socket.id].pseudo} : ${kittens[socket.id].score}`);
     //         MongoClient.connect(url,{ useNewUrlParser: true },function(error,client){
     //             if(error){
     //                 log(`Connexion à Mongo impossible!`);
@@ -497,22 +518,22 @@ io.on('connection', function(socket){
     //                 // throw error;
     //             } else{
     //                 log(`On est dans le "else" de la connextion Mongo de la fonction "checkAnswer".`);
-    //                 let myScore = players[socket.id].score;
+    //                 let myScore = kittens[socket.id].score;
     //                 const db = client.db(dbName);
     //                 const collection = db.collection('users');
-    //                 collection.updateOne({pseudo: players[socket.id].pseudo},
+    //                 collection.updateOne({pseudo: kittens[socket.id].pseudo},
     //                 {$set: {lastScore: myScore}});
     //                 log(`Dernier score + meilleur score du joueur mis à jour. ${myScore}`);
     //                 client.close();
     //             }
     //         });
 
-    //         // log(players[socket.id]);
+    //         // log(kittens[socket.id]);
     //         io.emit('bravo', {
     //             id: socket.playerId,
     //             pseudo: socket.pseudo,
-    //             score: players[socket.id].score,
-    //             img : players[socket.id].avatar,
+    //             score: kittens[socket.id].score,
+    //             img : kittens[socket.id].avatar,
     //             msg: 'Bonne réponse!'
     //         });
     //         return true;
@@ -545,7 +566,7 @@ io.on('connection', function(socket){
 //             startGame = false;
 //             tour = 0;
 
-//             io.emit('endGame', players);
+//             io.emit('endGame', kittens);
 
 //                 MongoClient.connect(url,{ useNewUrlParser: true },function(error,client){
 //                     if(error){
@@ -558,12 +579,12 @@ io.on('connection', function(socket){
 //                         const collection = db.collection('users');
 
 //                         let iPlayer = 0;
-//                         for(var player in players){
-//                             log(players[player].pseudo + ' ' + iPlayer);
+//                         for(var player in kittens){
+//                             log(kittens[player].pseudo + ' ' + iPlayer);
 
-//                             let myScore = players[player].score;
+//                             let myScore = kittens[player].score;
 
-//                         collection.findOne({pseudo: players[player].pseudo}, {projection:{pseudo:1, lastScore:1, bestScore:1, _id:0}}, function(error, datas){
+//                         collection.findOne({pseudo: kittens[player].pseudo}, {projection:{pseudo:1, lastScore:1, bestScore:1, _id:0}}, function(error, datas){
 //                             log('Fin de partie : On cherche les données du joueur en BDD.')
 //                             log(datas);
 //                             if(error){
@@ -573,7 +594,7 @@ io.on('connection', function(socket){
 //                             } else{
 //                                 log('Meilleur score du joueur, avant màj : ' + datas.bestScore);
 //                                 if(myScore > datas.bestScore){
-//                                     collection.updateOne({pseudo: players[player].pseudo},
+//                                     collection.updateOne({pseudo: kittens[player].pseudo},
 //                                     {$set: {lastScore: myScore, bestScore: myScore}}, function(error, datas){
 //                                         if(error){
 //                                             log(`Tiens, y aurait-il un problème? ${error}`);
@@ -614,16 +635,16 @@ io.on('connection', function(socket){
 // Déconnexion d'un utilisateur
     socket.on('disconnect', function(reason){
         log('Déconnexion : ', socket.id, reason);
-        log('Joueur qui vient de se déconnecter : ', players[socket.id]);
+        log('Joueur qui vient de se déconnecter : ', kittens[socket.id]);
         log(`Nombre de joueurs connectés (avant décrémentation si loggée) : ${nbPlayers}`);
         nbPlayers--;
         if(logged){
             // nbPlayers--;
             socket.broadcast.emit('decoPlayer', {pseudo: socket.pseudo, id: socket.playerId});
             log(`Nombre de joueurs connectés (après une déconnexion loggée) : ${nbPlayers}`);
-            delete players[socket.id];
+            delete kittens[socket.id];
         }
-        // socket.broadcast.emit('decoPlayer', {pseudo: socket.pseudo, id: players[socket.id].identifiant});
+        // socket.broadcast.emit('decoPlayer', {pseudo: socket.pseudo, id: kittens[socket.id].identifiant});
         log(`Nombre de joueurs connectés (après une déconnexion loggée) : ${nbPlayers}`);
 
         if(nbPlayers === undefined || nbPlayers <= 0){

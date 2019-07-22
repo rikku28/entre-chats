@@ -32,7 +32,7 @@
             // e.preventDefault();
             premiereConnexion = false;
             $('.cache-login-form').show();
-            $('.img-avatar').hide();
+            $('.champs-masques').hide();
             $('#btn-connexion').hide();
         });
 
@@ -44,7 +44,6 @@
             $('#btn-connexion').hide();
         });
 
-       
 // Formulaire de connnexion : Récupération, puis envoi des infos de connexion au serveur
     let loginForm = document.getElementById('login-form');
     loginForm.addEventListener('submit', function(event){
@@ -54,7 +53,10 @@
             firstLogin: premiereConnexion,
             pseudo : $('#login-form-pseudo').val(),
             mdp: $('#login-form-mdp').val(),
-            img: $('#login-form-avatar').val()
+            email: $('#login-form-email').val,
+            img: $('#login-form-avatar').val(),
+            race: $('#login-form-race').val,
+            genre: $('#login-form-genre').val
         });
     });
 
@@ -113,7 +115,7 @@ socket.on('userUnknown', function(info){
         $('#online-scores').empty();
         // log('Joueurs en ligne', infos);
         for (var player in infos){
-            $('#online-scores').append('<p class="infos-joueurs" id="' + infos[player].identifiant + '"><img src="' + infos[player].avatar + '" class="rounded" width="50px"/> ' + infos[player].pseudo + ' - Score : <span class="score">' + infos[player].score + '</span></p>');
+            $('#online-scores').append('<p class="infos-joueurs" id="' + infos[player].identifiant + '"><img src="' + infos[player].avatar + '" class="rounded" width="50px"/> ' + infos[player].pseudo</p>');
         }
     });
     
