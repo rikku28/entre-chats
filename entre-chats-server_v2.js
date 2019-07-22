@@ -338,16 +338,16 @@ io.on('connection', function(socket){
 
                             log(3);
                             socket.pseudo = dInfosJoueur.pseudo;
-                            let newPlayer = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.img, socket.id);
-                            log('Nouveau joueur : ', newPlayer);
+                            let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.img, socket.id);
+                            log('Nouveau joueur : ', newCat);
                             let pseudo = dInfosJoueur.pseudo;
-                            kittens[socket.id] = newPlayer;
+                            kittens[socket.id] = newCat;
                             socket.playerId = kittens[socket.id].identifiant;
                             nbPlayers++;
 
                             log(`Nb joueurs : ${nbPlayers}`);
-                            socket.emit('loginOK', newPlayer);
-                            socket.broadcast.emit('newPlayer', newPlayer);
+                            socket.emit('loginOK', newCat);
+                            socket.broadcast.emit('newCat', newCat);
                             log(kittens);
                             io.emit('onlinePlayers', kittens);
                             logged = true;
@@ -390,16 +390,16 @@ io.on('connection', function(socket){
                                 } else{
                                     log(7);
                                     socket.pseudo = dInfosJoueur.pseudo;
-                                    let newPlayer = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
-                                    log('Nouveau joueur : ', newPlayer);
+                                    let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
+                                    log('Nouveau joueur : ', newCat);
                                     let pseudo = dInfosJoueur.pseudo;
-                                    kittens[socket.id] = newPlayer;
+                                    kittens[socket.id] = newCat;
                                     socket.playerId = kittens[socket.id].identifiant;
                                     nbPlayers++;
                         
                                     log(`Nb joueurs : ${nbPlayers}`);
-                                    socket.emit('loginOK', newPlayer);
-                                    socket.broadcast.emit('newPlayer', newPlayer);
+                                    socket.emit('loginOK', newCat);
+                                    socket.broadcast.emit('newCat', newCat);
                                     log(kittens);
                                     io.emit('onlinePlayers', kittens);
                                     logged = true;
