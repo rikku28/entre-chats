@@ -207,7 +207,7 @@ var checkNbPlayers = function(){
 
 /*********************************** On établie la connexion socket.io *******************************************/
 io.on('connection', function(socket){
-    // log(socket);
+    log(socket);
     log('Coucou depuis le serveur!');
     log(`Nombre de joueurs connectés : ${nbPlayers}`);
     // log('Connexion - kittens contient :' + kittens.length + ' objets.');  // Renvoi "undefined"

@@ -53,10 +53,10 @@
             firstLogin: premiereConnexion,
             pseudo : $('#login-form-pseudo').val(),
             mdp: $('#login-form-mdp').val(),
-            email: $('#login-form-email').val,
+            email: $('#login-form-email').val(),
             img: $('#login-form-avatar').val(),
-            race: $('#login-form-race').val,
-            genre: $('#login-form-genre').val
+            race: $('#login-form-race').val(),
+            genre: $('#login-form-genre').val()
         });
     });
 
@@ -102,7 +102,7 @@ socket.on('userUnknown', function(info){
         $('.cache-infos-joueurs').show();
         $('#welcome').html('<h1 style="font-size: 3em">Bienvenue ' + infos.pseudo + ' <img src="' + infos.avatar + '" width="75px"/></h1>');
         cats.push(infos.pseudo);
-        // log(cats);
+        log(cats);
     });
 
     socket.on('newCat', function(infos){
