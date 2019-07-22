@@ -485,8 +485,9 @@ io.on('connection', function(socket){
         log('Pseudo : ', kittens[socket.id].pseudo);
         log(message);
         message = message;
+        dateMsg = new Date().toString();
         // log(kittens);
-        io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: Date.now()});
+        io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg});
     });
 
     chatMsgIo.emit('onlinePlayers', kittens);
