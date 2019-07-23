@@ -80,7 +80,7 @@
             race: raceSelected,
             // genre: $('#login-form-genre').val()
             // genre: genreSelec
-            genre: $("input[name='genre']:checked").val();
+            genre: $("input[name='genre']:checked").val()
         });
     });
 
