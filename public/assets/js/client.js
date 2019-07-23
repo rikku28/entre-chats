@@ -68,7 +68,7 @@
         //     log(genreSelec);
         // });
 
-        log($("input[name='genre']:checked").val());
+        log($("input[name=genre]:checked").val());
 
         socket.emit('login', {
             firstLogin: premiereConnexion,
