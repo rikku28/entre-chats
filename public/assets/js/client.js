@@ -62,11 +62,13 @@
             })
             .change();
 
-        let genreSelec;
-        $("input:checkbox[name=genre]:checked").each(function() {
-            genreSelec = $(this).val();
-            log(genreSelec);
-        });
+        // let genreSelec;
+        // $("input:checkbox[name=genre]:checked").each(function() {
+        //     genreSelec = $(this).val();
+        //     log(genreSelec);
+        // });
+
+        log($("input[name='genre']:checked").val());
 
         socket.emit('login', {
             firstLogin: premiereConnexion,
@@ -77,7 +79,8 @@
             // race: $('#login-form-race').val(),
             race: raceSelected,
             // genre: $('#login-form-genre').val()
-            genre: genreSelec
+            // genre: genreSelec
+            genre: $("input[name='genre']:checked").val();
         });
     });
 
