@@ -57,12 +57,12 @@ app.get('/', function(req, res, next){
     res.sendFile(homePage);
 });
 
-app.get('/tchat', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let chatPage = path.normalize(__dirname + '/public/chat.html');
-    log(chatPage);
-    res.sendFile(chatPage);
-});
+// app.get('/tchat', function(req, res, next){
+//     console.log('Dirname : ' + __dirname);
+//     let chatPage = path.normalize(__dirname + '/public/chat.html');
+//     log(chatPage);
+//     res.sendFile(chatPage);
+// });
 
 app.get('/chat', function(req, res, next){
     console.log('Dirname : ' + __dirname);
@@ -78,12 +78,12 @@ app.get('/apropos', function(req, res, next){
     res.sendFile(aProposPage);
 });
 
-app.get('/about', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let aboutPage = path.normalize(__dirname + '/public/about.html');
-    log(aboutPage);
-    res.sendFile(aboutPage);
-});
+// app.get('/about', function(req, res, next){
+//     console.log('Dirname : ' + __dirname);
+//     let aboutPage = path.normalize(__dirname + '/public/about.html');
+//     log(aboutPage);
+//     res.sendFile(aboutPage);
+// });
 
 app.get('/profil', function(req, res, next){
     console.log('Dirname : ' + __dirname);
@@ -189,6 +189,7 @@ var Kitten = function(pseudo, pwd, email, race, genre, urlImg, socketId){
     this.genre = genre;
     this.race = race;
     this.avatar = urlImg;
+    this.admin = false;
     this.socketId = socketId;
 };
 
@@ -332,7 +333,7 @@ io.on('connection', function(socket){
                                     log(`On va intégrer les données en base`);
                                     const db = client.db(dbName);
                                     const collection = db.collection('users');
-                                    collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, avatar: dInfosJoueur.img, lastScore: 0, bestScore: 0});
+                                    collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, avatar: dInfosJoueur.img});
                                 }
                                 client.close();
                             });
@@ -354,7 +355,7 @@ io.on('connection', function(socket){
                             logged = true;
                             checkNbPlayers();
 
-                            res.redirect('/profil');
+                            // res.redirect('/profil');
                             } else{
                                 log(4);
                                 let message = `Le pseudo ${dInfosJoueur.pseudo} est déjà pris!`;
@@ -406,7 +407,7 @@ io.on('connection', function(socket){
                                     logged = true;
                                     checkNbPlayers();
 
-                                    res.redirect('/profil');
+                                    // res.redirect('/profil');
                                 }
                             }
                         });
@@ -425,12 +426,12 @@ io.on('connection', function(socket){
     log('Un nouvel utilisateur vient de se connecter. ' + socket.id);
     // log(`Le jeu est-il en cours? ${startGame}`);
 
-    socket.on('login', async function(infosUser){
+    socket.on('login', function(infosUser){
         // socket.emit('classement', bestScores);
 
         log('infosUser : ', infosUser);
 
-        let checkPseudo = await checkLogin.verifPseudo(infosUser.pseudo);
+        let checkPseudo = checkLogin.verifPseudo(infosUser.pseudo);
         log('Pseudo : ' + checkPseudo);
         if(!checkPseudo){
             log(`On est dans la condition !checkPseudo`);
@@ -439,7 +440,7 @@ io.on('connection', function(socket){
             log(`Pseudo non valide!`);
         }
 
-        let checkPwd = await checkLogin.verifPwd(infosUser.mdp);
+        let checkPwd = checkLogin.verifPwd(infosUser.mdp);
         log('Pass : ' + checkPwd);
         if(!checkPwd){
             log(`On est dans la condition !checkPwd`);
@@ -448,7 +449,7 @@ io.on('connection', function(socket){
         }
 
         log(`First login vaut : ${infosUser.firstLogin}`);
-        let checkUrl = await checkLogin.verifUrl(infosUser.img);
+        let checkUrl = checkLogin.verifUrl(infosUser.img);
         log('URL : ' + checkUrl);
         // let checkUrl = checkLogin.verifUrl(infosUser.img, infosUser.firstLogin);
         if(infosUser.firstLogin){
@@ -464,19 +465,29 @@ io.on('connection', function(socket){
         checkNbPlayers();
     });
 
-/**************************************** Echange de messages entre joueurs ************************************************/
+/**************************************** Echange de messages entre joueurs (/) ************************************************/
+socket.on('chatMsg', function (message){
+    log('Pseudo : ', kittens[socket.id].pseudo);
+    log(message);
+    message = message;
+    // log(kittens);
+    io.emit('afficheChatMsg',  {pseudo: kittens[socket.id].pseudo, msg: message});
+});
+
+/**************************************** Echange de messages entre joueurs (/chat) ************************************************/
     
     let chatMsgIo = io.of('/chat');
     chatMsgIo.on('connection', function(socketChatMsg){
         log(socketChatMsg);
-    //     log('Un nouvel utilisatuer vient de se conecter au chat!');
-    //     // socketChatMsg.on('chatMsg', function (message){
-    //     //     log('Pseudo : ', kittens[socket.id].pseudo);
-    //     //     log(message);
-    //     //     message = message;
-    //     //     // log(kittens);
-    //     //     io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
-    //     // });
+        log('Un nouvel utilisatuer vient de se connecter au chat!');
+        socketChatMsg.pseudo = newCat.pseudo;
+        // socketChatMsg.on('chatMsg', function (message){
+        //     log('Pseudo : ', kittens[socket.id].pseudo);
+        //     log(message);
+        //     message = message;
+        //     // log(kittens);
+        //     io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
+        // });
 
         // socketChatMsg.emit('onlinePlayers', kittens);
     });
@@ -487,7 +498,7 @@ io.on('connection', function(socket){
         message = message;
         dateMsg = new Date().toString();
         // log(kittens);
-        io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg});
+        chatMsgIo.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg});
     });
 
     chatMsgIo.emit('onlinePlayers', kittens);

@@ -25,12 +25,14 @@
         $('.cache-header').hide();
         $('.cache-login-form').hide();
         $('.cache-quiz').hide();
+        $('#menu').hide();
         $('.cache-infos-joueurs').hide(); // à la place de .fadeOut()
 
 // Joueur déjà inscrit :
         $('#welcomeBack').click(function(e){ 
             // e.preventDefault();
             premiereConnexion = false;
+            $('.msg-login-incorrect').remove();
             $('.cache-login-form').show();
             $('.champs-masques').hide();
             $('#btn-connexion').hide();
@@ -40,6 +42,7 @@
         $('#firstConnexion').click(function(e){
             // e.preventDefault();
             premiereConnexion = true;
+            $('.msg-login-incorrect').remove();
             $('.cache-login-form').show();
             $('#btn-connexion').hide();
         });
@@ -71,7 +74,6 @@ socket.on('alreadyUsedPseudo', function(info){
     $('#date-jour').prepend('<p class="text-warning msg-login-incorrect" id="alreadyUsedPseudo"><strong>' + info.msg + '</strong></p>');
 });
 
-
 socket.on('badPwd', function(info){
     // log(`badPwd`);
     $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badPwd"><strong>' + info.msg + '</strong></p>');
@@ -96,7 +98,8 @@ socket.on('userUnknown', function(info){
 
 // Nouveau joueur connecté
     socket.on('loginOK', function(infos){
-        log(`Pseudo transmis au chat connecté : ${infos}`);
+        // log(`Pseudo transmis au chat connecté : ${infos}`);
+        log(infos);
         $('#login-form').remove();
         $('.cache-header').fadeIn();
         $('.cache-infos-joueurs').show();

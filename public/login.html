@@ -28,16 +28,47 @@
     <title>Entre-chats : Réseau social félin</title>
 </head>
 <body>
-    <!-- <header class="row cache-header">
-        <section id="menu" class="col-md-4 offset-md-2 mb-3 mt-3">
-            <a href="#best-scores" class="badge badge-warning py-2 px-3" id="ancre-classement">Classement général</a>
-        </section>
-        <section id="jeu" class="col-md-3 offset-md-3 mb-3 mt-3">
-            <div id="start-game">
-                <button type="button" id="btn-start-game" class="btn btn-warning btn-lg col-md-6 offset-md-">Let's Go!</button>
+    <header>
+        <nav class="nav-side-menu" id="menu">
+            <div class="brand">Entre-chats</div>
+            <i style="color: Dodgerblue;" class="fa fa-cat fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+            <div class="menu-list">
+                <ul id="menu-content" class="menu-content collapse out">
+                    <li data-toggle="collapse" data-target="#profil" class="collapsed">
+                        <a href="/profil"><i class="fa fa-paw fa-lg"></i>Profil<span class="arrow"></span></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="profil">
+                        <li>Mon profil</li>
+                        <li>Gestion du profil</li>
+                        <a href="/amis"><li>Liste d'amis</li></a>
+                        <a href="/messages"><li>Messages privrés</li></a>
+                    </ul>
+                    <li id="tchat">
+                        <a href="tchat"><i class="fa fa-cat fa-lg"></i>Tchat</a>
+                    </li>
+                    <li data-toggle="collapse" data-target="#admin" class="collapsed">
+                        <a href="/admin"><i class="fa fa-bug fa-lg"></i> Admin <span class="arrow"></span></a>
+                    </li>  
+                    <ul class="sub-menu collapse" id="admin">
+                        <li>Gestion des profils</li>
+                        <li>Gestion des messages privés</li>
+                        <li>Statistiques</li>
+                    </ul>
+                    <li id="deconnexion">
+                        <a href="/logout"><i class="fa fa-sign-out-alt fa-lg"></i>Déconnexion</a>
+                    </li>
+                    <li id="apropos">
+                        <a href="/apropos"><i class="fa fa-dragon fa-lg"></i> À propos</a>
+                        <!-- <a href="#"><i class="fas fa-flag-checkered"></i>À propos</a> -->
+                    </li>
+                </ul>
             </div>
-        </section>
-    </header> -->
+                <form class="form-inline" id="search-bar">
+                    <input class="form-control mx-sm-2" type="search" placeholder="Recherche" aria-label="Recherche">
+                    <button class="btn btn-outline-primary my-2 my-sm-0 my-md-0" type="submit"><i style="color: #EFDC05;" class="fas fa-search"></i></button>
+                </form>
+        </nav>
+    </header>
     <main> 
         <section id="welcome">
             <!-- <div class="container"> -->
