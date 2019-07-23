@@ -56,7 +56,7 @@
         $("select")
             .change(function () {
                 $( "select option:selected" ).each(function() {
-                    raceSelected = $(this).text();
+                    raceSelec = $(this).text();
                 });
                 log(raceSelec);
             })
