@@ -51,6 +51,22 @@
     let loginForm = document.getElementById('login-form');
     loginForm.addEventListener('submit', function(event){
         event.preventDefault();
+        
+        let raceSelec;
+        $("select")
+            .change(function () {
+                $( "select option:selected" ).each(function() {
+                    raceSelected = $(this).text();
+                });
+                log(raceSelec);
+            })
+            .change();
+
+        let genreSelec;
+        $("input:checkbox[name=genre]:checked").each(function() {
+            genreSelec = $(this).val();
+            log(genreSelec);
+        });
 
         socket.emit('login', {
             firstLogin: premiereConnexion,
@@ -58,8 +74,10 @@
             mdp: $('#login-form-mdp').val(),
             email: $('#login-form-email').val(),
             img: $('#login-form-avatar').val(),
-            race: $('#login-form-race').val(),
-            genre: $('#login-form-genre').val()
+            // race: $('#login-form-race').val(),
+            race: raceSelected,
+            // genre: $('#login-form-genre').val()
+            genre: genreSelec
         });
     });
 

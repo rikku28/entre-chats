@@ -291,7 +291,8 @@ io.on('connection', function(socket){
 /*********************************** Fonction globale de vérification des identifiants du joueur qui se connecte *******************************************/
     let checkVerifs = function(aPseudo, bPwd, cAvatar, dInfosJoueur){
         log(`On est dans la fonction "checkVerifs".`);
-        log(`Infos joueur : ${dInfosJoueur.pseudo}`);
+        log(`Infos joueur : ${dInfosJoueur}`);
+        // log(`Infos joueur : ${dInfosJoueur.pseudo}`);
 
         if(aPseudo && bPwd && cAvatar && dInfosJoueur.firstLogin){
             // findUserInDB(dInfosJoueur.pseudo, dInfosJoueur.mdp);
@@ -304,10 +305,11 @@ io.on('connection', function(socket){
 
             MongoClient.connect(url,{ useNewUrlParser: true },function(error,client){
                 if(error){
-                    log(`Connexion à Mongo impossible!`);
+                    log(`Connexion à Mongo impossible! - log 1`);
                     log(error);
                     // throw error;
                 } else{
+                    log(`Connexion à MongoDB : OK - log 1`);
                     log(`On est dans le "else" de la fonction "findUserInDB".`);
                     const db = client.db(dbName);
                     const collection = db.collection('users');
@@ -328,19 +330,19 @@ io.on('connection', function(socket){
 
                             MongoClient.connect(url, { useNewUrlParser: true }, function(error,client){
                                 if(error){
-                                    log(`Connexion à Mongo impossible!`);
+                                    log(`Connexion à Mongo impossible! - log 2`);
                                 } else{
-                                    log(`On va intégrer les données en base`);
+                                    log(`On va intégrer les données en base - log 2`);
                                     const db = client.db(dbName);
                                     const collection = db.collection('users');
-                                    collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, avatar: dInfosJoueur.img});
+                                    collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, email: dInfosJoueur.email, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre});
                                 }
                                 client.close();
                             });
 
                             log(3);
                             socket.pseudo = dInfosJoueur.pseudo;
-                            let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.img, socket.id);
+                            let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.email, dInfosJoueur.race, dInfosJoueur.genre, dInfosJoueur.img, socket.id);
                             log('Nouveau joueur : ', newCat);
                             let pseudo = dInfosJoueur.pseudo;
                             kittens[socket.id] = newCat;
@@ -373,15 +375,16 @@ io.on('connection', function(socket){
                 MongoClient.connect(url,{ useNewUrlParser: true },function(error,client){
                     if(error){
                         log(error);
-                        log(`Connexion à Mongo impossible!`);
+                        log(`Connexion à Mongo impossible! - log 5`);
                         // throw error;
                     } else{
+                        log(`On est connecté à la base MongoDB! - log 5`);
                         log(`On est dans le "else" de la fonction "findUserInDB".`);
                         const db = client.db(dbName);
                         const collection = db.collection('users');
                         collection.findOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp}, function(error,datas){
                             infosJoueursBDD = datas;
-                            log(`On rentre dans la fonction de callback.`);
+                            log(`On rentre dans la fonction de callback de "findOne". - log 5`);
                             log(infosJoueursBDD);
                             if(error){
                                 log(`Que se passe-t-il? ${error}`);
