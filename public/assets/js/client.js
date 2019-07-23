@@ -68,7 +68,8 @@
         //     log(genreSelec);
         // });
 
-        log($("input[name=genre]:checked").val());
+        log($( "input[type=radio][name=genre]:checked" ).val());
+        // log($("input[name=genre]:checked").val());
 
         socket.emit('login', {
             firstLogin: premiereConnexion,
@@ -80,7 +81,7 @@
             race: raceSelec,
             // genre: $('#login-form-genre').val()
             // genre: genreSelec
-            genre: $("input[name='genre']:checked").val()
+            genre: $( "input[type=radio][name=genre]:checked" ).val()
         });
     });
 
