@@ -77,7 +77,7 @@
             email: $('#login-form-email').val(),
             img: $('#login-form-avatar').val(),
             // race: $('#login-form-race').val(),
-            race: raceSelected,
+            race: raceSelec,
             // genre: $('#login-form-genre').val()
             // genre: genreSelec
             genre: $("input[name='genre']:checked").val()
