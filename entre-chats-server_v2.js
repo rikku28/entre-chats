@@ -398,7 +398,7 @@ io.on('connection', function(socket){
                                     log(7);
                                     socket.pseudo = dInfosJoueur.pseudo;
                                     // let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
-                                    let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.email, infosJoueursBDD.race, infosJoueursBDD.genre, infosJoueursBDD.img, socket.id);
+                                    let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.email, infosJoueursBDD.race, infosJoueursBDD.genre, infosJoueursBDD.avatar, socket.id);
                                     if (infosJoueursBDD.admin){
                                         newCat.admin = infosJoueursBDD.admin;
                                     }
