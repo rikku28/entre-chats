@@ -483,7 +483,7 @@ socket.on('chatMsg', function (message){
     io.emit('afficheChatMsg',  {pseudo: kittens[socket.id].pseudo, msg: message});
 });
 
-chatMsgIo.emit('onlinePlayers', kittens);
+// io.emit('onlinePlayers', kittens);
 
 /**************************************** Echange de messages entre joueurs (/chat) ************************************************/
     
@@ -513,7 +513,7 @@ chatMsgIo.emit('onlinePlayers', kittens);
         chatMsgIo.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg});
     });
 
-    chatMsgIo.emit('onlinePlayers', kittens);
+    chatMsgIo.emit('onlineCats', kittens);
 
 /************************************************ Relance du jeu ********************************************************/
     // socket.on('restart-game', function (message){
