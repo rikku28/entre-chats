@@ -490,9 +490,8 @@ io.emit('onlinePlayers', kittens);
     let chatMsgIo = io.of('/chat');
     chatMsgIo.on('connection', function(socketChatMsg){
         log('Un nouvel utilisatuer vient de se connecter au chat!');
-        log(socketChatMsg);
-        log (newCat);
-        socketChatMsg.pseudo = newCat.pseudo;
+        log(socketChatMsg.id);
+        socketChatMsg.pseudo = kittens[socket.id].pseudo;
         // socketChatMsg.on('chatMsg', function (message){
         //     log('Pseudo : ', kittens[socket.id].pseudo);
         //     log(message);
