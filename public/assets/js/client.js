@@ -77,10 +77,7 @@
             mdp: $('#login-form-mdp').val(),
             email: $('#login-form-email').val(),
             img: $('#login-form-avatar').val(),
-            // race: $('#login-form-race').val(),
             race: raceSelec,
-            // genre: $('#login-form-genre').val()
-            // genre: genreSelec
             genre: $( "input[type=radio][name=genre]:checked" ).val()
         });
     });
