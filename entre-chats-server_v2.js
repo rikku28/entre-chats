@@ -483,7 +483,7 @@ socket.on('chatMsg', function (message){
     io.emit('afficheChatMsg',  {pseudo: kittens[socket.id].pseudo, msg: message});
 });
 
-// io.emit('onlinePlayers', kittens);
+io.emit('onlinePlayers', kittens);
 
 /**************************************** Echange de messages entre joueurs (/chat) ************************************************/
     
