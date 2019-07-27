@@ -126,6 +126,7 @@ socket.on('userUnknown', function(info){
         $('.cache-header').fadeIn();
         $('.cache-infos-joueurs').show();
         $('#welcome').html('<h1 style="font-size: 3em">Bienvenue ' + infos.pseudo + ' <img src="' + infos.avatar + '" width="75px"/></h1>');
+        $('#menu').hide();
         cats.push(infos.pseudo);
         log(cats);
     });

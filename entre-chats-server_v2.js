@@ -396,7 +396,7 @@ io.on('connection', function(socket){
                                     log(7);
                                     socket.pseudo = dInfosJoueur.pseudo;
                                     // let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
-                                    let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.email, dInfosJoueur.race, dInfosJoueur.genre, dInfosJoueur.img, socket.id);
+                                    let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.email, infosJoueursBDD.race, infosJoueursBDD.genre, infosJoueursBDD.img, socket.id);
                                     log('Nouveau joueur : ', newCat);
                                     let pseudo = dInfosJoueur.pseudo;
                                     kittens[socket.id] = newCat;
