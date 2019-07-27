@@ -483,12 +483,15 @@ socket.on('chatMsg', function (message){
     io.emit('afficheChatMsg',  {pseudo: kittens[socket.id].pseudo, msg: message});
 });
 
+chatMsgIo.emit('onlinePlayers', kittens);
+
 /**************************************** Echange de messages entre joueurs (/chat) ************************************************/
     
     let chatMsgIo = io.of('/chat');
     chatMsgIo.on('connection', function(socketChatMsg){
-        log(socketChatMsg);
         log('Un nouvel utilisatuer vient de se connecter au chat!');
+        log(socketChatMsg);
+        log (newCat);
         socketChatMsg.pseudo = newCat.pseudo;
         // socketChatMsg.on('chatMsg', function (message){
         //     log('Pseudo : ', kittens[socket.id].pseudo);

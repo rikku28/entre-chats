@@ -13,7 +13,7 @@
         var cats = [];
         // var premiereConnexion = false;
 // On déclare l'ip et le port auxquels le socket sera relié.
-        var socket = io('/tchat');
+        var socket = io('/chat');
 
 // Date et timestamp de la date du jour
         var dateJour = new Date();
@@ -35,11 +35,11 @@ socket.on('afficheChatMsg', function(msg){
 });
 
 // Affichage des joueurs en ligne
-socket.on('onlinePlayers', function(infos){
-    $('#online-scores').empty();
+socket.on('onlineCats', function(infos){
+    $('#online-cats').empty();
     // log('Joueurs en ligne', infos);
     for (var player in infos){
-        $('#online-scores').append('<p class="infos-joueurs" id="' + infos[player].identifiant + '"><img src="' + infos[player].avatar + '" class="rounded" width="50px"/> ' + infos[player].pseudo + '</p>');
+        $('#online-cats').append('<p class="infos-joueurs" id="' + infos[player].identifiant + '"><img src="' + infos[player].avatar + '" class="rounded" width="50px"/> ' + infos[player].pseudo + '</p>');
     }
 });
 
