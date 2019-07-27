@@ -25,7 +25,7 @@
         $('.cache-header').hide();
         $('.cache-login-form').hide();
         $('.cache-quiz').hide();
-        $('#menu').show();
+        $('.cache-menu').hide();
         $('.cache-infos-joueurs').hide(); // à la place de .fadeOut()
 
 // Joueur déjà inscrit :
@@ -126,7 +126,7 @@ socket.on('userUnknown', function(info){
         $('.cache-header').fadeIn();
         $('.cache-infos-joueurs').show();
         $('#welcome').html('<h1 style="font-size: 3em">Bienvenue ' + infos.pseudo + ' <img src="' + infos.avatar + '" width="75px"/></h1>');
-        $('#menu').hide();
+        $('.cache-menu').show();
         cats.push(infos.pseudo);
         log(cats);
     });

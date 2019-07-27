@@ -21,6 +21,8 @@
 	<link rel="icon" type="image/png" sizes="16x16" href="assets/img/meowth_16.png" />
 	<link rel="shortcut icon" href="favicon.ico" />
 <!-- Chargement des scripts et librairies -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/84110aeaa6.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- <script src="./public/libs/jquery/jquery-3.3.1.min.js" type="text/javascript"></script> -->
     <script src="../socket.io/socket.io.js"></script>
@@ -34,20 +36,20 @@
             <div class="brand">Entre-chats</div>
             <i style="color: Dodgerblue;" class="fa fa-cat fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
             <div class="menu-list">
-                <ul id="menu-content" class="menu-content collapse out">
+                <ul id="menu-content" class="menu-content collapse out cache-menu">
                     <li data-toggle="collapse" data-target="#profil" class="collapsed">
                         <a href="/profil"><i class="fa fa-paw fa-lg"></i>Profil<span class="arrow"></span></a>
                     </li>
-                    <ul class="sub-menu collapse" id="profil">
+                    <ul class="sub-menu collapse cache-menu" id="profil">
                         <li>Mon profil</li>
                         <li>Gestion du profil</li>
                         <a href="/amis"><li>Liste d'amis</li></a>
                         <a href="/messages"><li>Messages privrés</li></a>
                     </ul>
-                    <li id="tchat">
-                        <a href="tchat"><i class="fa fa-cat fa-lg"></i>Tchat</a>
+                    <li id="tchat" class="cache-menu">
+                        <a href="/chat"><i class="fa fa-cat fa-lg"></i>Tchat</a>
                     </li>
-                    <li data-toggle="collapse" data-target="#admin" class="collapsed">
+                    <li data-toggle="collapse" data-target="#admin" class="collapsed cache-menu">
                         <a href="/admin"><i class="fa fa-bug fa-lg"></i> Admin <span class="arrow"></span></a>
                     </li>  
                     <ul class="sub-menu collapse" id="admin">
@@ -55,7 +57,7 @@
                         <li>Gestion des messages privés</li>
                         <li>Statistiques</li>
                     </ul>
-                    <li id="deconnexion">
+                    <li id="deconnexion" class="cache-menu">
                         <a href="/logout"><i class="fa fa-sign-out-alt fa-lg"></i>Déconnexion</a>
                     </li>
                     <li id="apropos">
@@ -64,10 +66,10 @@
                     </li>
                 </ul>
             </div>
-                <form class="form-inline" id="search-bar">
-                    <input class="form-control mx-sm-2" type="search" placeholder="Recherche" aria-label="Recherche">
-                    <button class="btn btn-outline-primary my-2 my-sm-0 my-md-0" type="submit"><i style="color: #EFDC05;" class="fas fa-search"></i></button>
-                </form>
+            <form class="form-inline cache-menu" id="search-bar">
+                <input class="form-control mx-sm-2" type="search" placeholder="Recherche" aria-label="Recherche">
+                <button class="btn btn-outline-primary my-2 my-sm-0 my-md-0" type="submit"><i style="color: #EFDC05;" class="fas fa-search"></i></button>
+            </form>
         </nav>
     </header>
     <main> 
