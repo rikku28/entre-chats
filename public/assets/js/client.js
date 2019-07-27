@@ -119,6 +119,7 @@ socket.on('userUnknown', function(info){
     socket.on('loginOK', function(infos){
         // log(`Pseudo transmis au chat connecté : ${infos}`);
         log(infos);
+        localStorage.setItem(infos.key, infos.item);
         $('#login-form').remove();
         $('.cache-header').fadeIn();
         $('.cache-infos-joueurs').show();
@@ -145,7 +146,7 @@ socket.on('userUnknown', function(info){
 // Déconnexion d'un joueur
     socket.on('decoCat', function(infos){
         // log('Joueur déconnecté : ', infos);
-
+        localStorage.removeItem(infos.key);
         $('#zone-infos').prepend('<p><em>' + infos.pseudo + ' s\'est déconnecté !</em></p>');
         let balPlayerDis = document.getElementById(infos.id);
         $(balPlayerDis).remove();

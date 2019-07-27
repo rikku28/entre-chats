@@ -66,10 +66,15 @@
                     </li>
                 </ul>
             </div>
-            <form class="form-inline cache-menu" id="search-bar">
-                <input class="form-control mx-sm-2" type="search" placeholder="Recherche" aria-label="Recherche">
-                <button class="btn btn-outline-primary my-2 my-sm-0 my-md-0" type="submit"><i style="color: #EFDC05;" class="fas fa-search"></i></button>
-            </form>
+            <div>
+                <form class="form-inline cache-menu" id="search-bar">
+                    <input class="form-control mx-sm-2" type="search" placeholder="Recherche" aria-label="Recherche">
+                    <button class="btn btn-outline-primary my-2 my-sm-0 my-md-0" type="submit"><i style="color: #EFDC05;" class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div>
+                <p id="date-jour"></p>
+            </div>
         </nav>
     </header>
     <main> 
@@ -193,20 +198,8 @@
                         <div class="col-md-3 mb-3 champs-masques">
                             <label for="login-form-avatar">URL</label>
                             <input type="url" class="form-control" name="avatar" id="login-form-avatar" placeholder="URL de ton avatar" required >
-                            <div class="invalid-tooltip">Très jolie photo</div>
+                            <div class="invalid-tooltip">Es-tu sûr que l'url est valide?</div>
                         </div>
-                        
-                        <!-- <div class="col-md-3 mb-3 champs-masques">
-                            <label for="validationTooltipUsername">Avatar</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="validationTooltipUsernamePrepend">url</span>
-                                </div>
-                                <input type="url" class="form-control" name="avatar" id="login-form-avatar" placeholder="URL de ton avatar" aria-describedby="validationTooltipUsernamePrepend" required >
-                                <div class="invalid-tooltip">Très jolie photo</div>
-                            </div>
-                        </div> -->
-                        <!-- <div class="col-md-3 mb-3"> -->
                         <div class="col-md-3 mt-3">
                             <div class="input-group">
                                 <button class="btn btn-primary" id="valider-login" type="submit">Valider</button>
@@ -216,8 +209,8 @@
                 </form>
             <!-- </div> -->
         </section>
-<!-- Section dédiée à l'affichage des questions, réponses et indices (si besoin) -->
-        <div class="container">
+<!-- Section dédiée à l'affichage du chat -->
+        <div class="container" id="tchat">
 <!-- Section dédiée au chat et affichages des infos émises par le serveur (connexion d'un nouveau joueur, si le joueur remporte le point ou s'il s'est trompé de réponse, ...) -->
             <div class="row mt-3">
                 <section id="chat" class="cache-infos-joueurs col-md-6">
@@ -242,11 +235,89 @@
                 </section>
             </div>
         </div>
+        <section id="about">
+            <div class="container" id="apropos">
+                <h2>À propos d'Entre-chats</h2>
+                <section id="le-projet">
+                    <h3>Le projet initial</h3>
+                    <p>Ce réseau social est réalisé dans le cadre de la formation de développeur(se) fullstack JavaScript proposée par l'IFOCOP. Il s'agît de l'épreuve finale de la formation.</p>
+                    <p>Ce projet consiste donc en la réalisation d'un réseau social de A à Z, même jusqu'à la gestion du projet. Le projet était à réaliser en parallèle du stage.</p>
+                    <p>Les réseaux sociaux, ce n'est plus mon truc depuis quelques années déjà. Le projet n'est donc pas aussi motivant que les jeux qui étaient à réaliser lors des projets précédents.</p>
+                    <p>Les réseaux sociaux ne me servent plus, principalement, qu'à suivre l'actualité en temps quasi réel des transports en commun qui animent mon quotidien, ainsi qu'à partager des photos de mes chats ou des félins du parc zoologique de Lumigny, où je vais me promener régulièrement. C'est pourquoi j'ai choisi une thématique féline.</p>
+                </section>
+                <section id="mes-chats">
+                    <h3>Mes chats</h3>
+                    <div class="card-deck">
+                        <div class="card border-primary" style="width: 18rem;">
+                            <img src="assets/img/about/Nekoni_612px.jpg" class="card-img-top" alt="Nekoni">
+                            <div class="card-body">
+                                <h5 class="card-title">Nekoni</h5>
+                                <p class="card-text">Elle a été adoptée en août 2005. Après avoir vécu 10 ans en appartement, à se balader entre Chalon et Dijon, puis en région parisienne, elle a découvert les joies du jardin. Elle est la doyenne de la team croquettes.</p>
+                                <!-- <a href="#" class="btn btn-primary">Go somewhere</a>  -->
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Femelle - Européen</small><br/>
+                                <small class="text-muted">Née en juin ou juillet 2005</small>
+                            </div>
+                        </div>
+                        <div class="card border-primary" style="width: 18rem;">
+                            <img src="assets/img/about/Fender_612px.jpg" class="card-img-top" alt="Fender">
+                            <div class="card-body">
+                                <h5 class="card-title">Fender</h5>
+                                <p class="card-text">A 2 semaines, il a été retiré à sa mère avec les autres chatons de la portée pour être confié (de force?) à une agence immobilière qui s'occupais d'animaux sur son temps libre. C'est en allant à l'agence que nous avons découvert Fender et son frère Gibson, en juillet 2013. Fender était le baroudeur de la bande. Son territoire s'étendait plus loin qu'on ne l'imaginait. Ca lui a été fatal. Effet chat noir?</p>
+                                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Mâle - Européen</small><br/>
+                                <small class="text-muted">Né en juin 2013</small><br/>
+                                <small class="text-muted">Décédé le 04 ou 05 septembre 2015</small>
+                            </div>
+                        </div>
+                        <div class="card border-primary" style="width: 18rem;">
+                            <img src="assets/img/about/Gibson_612px.jpg" class="card-img-top" alt="Gibson">
+                            <div class="card-body">
+                                <h5 class="card-title">Gibson</h5>
+                                <p class="card-text">Gibson est le frère de Fender et pourtant, ils ne se ressemblaient pas. Physiquement proche de Garfield, il est pantouflard et passe plus de temps à dormir sur le canapé. C'est pourtant un bon chasseur. Il a mis du temps a se remettre de la disparition de son frère. Maintenant, il s'habitue a la vie avec Nibbler et Gilgamesh.</p>
+                                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Mâle - Européen</small><br/>
+                                <small class="text-muted">Né en juin 2013</small>
+                            </div>
+                        </div>
+                        <div class="card border-primary" style="width: 18rem;">
+                            <img src="assets/img/about/Mokona_612px.jpg" class="card-img-top" alt="Mokona">
+                            <div class="card-body">
+                                <h5 class="card-title">Mokona</h5>
+                                <p class="card-text">C'est la petite dernière. Recueillie par l'association <a href="http://www.solana-asso.com/" target="_blank">"Solana"</a>, on l'a adopté en octobre 2018. Dynamique et joueuse, elle a chamboulé le quotidien de Nekoni et Gibson. Elle passe pas mal de temps à l'extérieur et aime grimper aux arbres.</p>
+                                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Femelle - Européen</small><br/>
+                                <small class="text-muted">Née en mai 2018</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="about-me">
+                    <h3>À propos de moi</h3>
+                    <p>Je suis actuellement en reconversion professionnelle.</p>
+                    <p>Bla bla bla</p>
+                    <p><a href="" target="_blank"><i class="fab fa-github fa-2x"></i><span>Mon Github</span></a></p>
+                    <p><a href="" target="_blank"><i class="fas fa-file-pdf fa-2x"></i><span>Mon curriculum vitae</span></a></p>
+                    <!-- <p><a href="" target="_blank"><i class="fas fa-address-card fa-2x"></i><span>Mon jeu c.v.</span></a></p> -->
+                    <p><a href="http://rikku28.yo.fr/" target="_blank"><i class="fas fa-grin-squint fa-2x"></i><span>Mon jeu c.v.</span></a></p>
+                    <!-- <p><a href="" target="_blank"><i class="fab fa-file-code fa-2x"></i><span>Mon quizz Pokémon (2ème projet)</span></a></p> -->
+                    <p><a href="http://rikku28.herokuapp.com/" target="_blank"><i class="fab fa-grin-heart fa-2x"></i><span>Mon quizz Pokémon (2ème projet)</span></a></p>
+                    <p><a href="" target="_blank"><i class="fab fa-twitter fa-2x"></i><span>Mon Twitter</span></a></p>
+                </section>
+            </div>
+        </section>
     </main>
 <!-- Affichage de la date du jour -->
-    <div class="container">
+    <!-- <div class="container">
         <footer class="row">
-            <p id="date-jour" class="gras col-md-6 offset-md-3"></p>
+            <p id="date-jour" class="gras col-md-6 offset-md-3"></p> -->
             <!-- <p id="date-jour" class="gras col-md-4 offset-md-2"></p> -->
             <!-- <p id="github" class="gras col-md-2 mx-auto">
                 <a href="https://github.com/rikku28/Game_New-test" target="_blank">
@@ -263,12 +334,12 @@
                     <img src="assets/img/apple-touch-icon.png" alt="Lien vers mon jeu C.V." title="Lien vers mon jeu C.V." class="icones" />
                 </a>
             </p> -->
-        </footer>
+        <!-- </footer> -->
         <!-- <div class="row" id="flaticon-freepik-credits">
             <p>The Curriculum icon, made by <a href="https://www.freepik.com/" target="_blank" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" target="_blank" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
         </div> -->
-    </div>
+    <!-- </div> -->
     <!-- Chargement du JS minifié de Bootstrap -->
-<script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>

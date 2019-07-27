@@ -41,6 +41,8 @@ var infosJoueursBDD;
 var attenteJoueur = true;
 var finPartie = false;
 var bestScores = [];
+var storageKey = 'LaCleLS';
+var storageItem = 'Coucou Hibou!'
 
 /********************************** Création du serveur HTTP avec Express **********************************/
 app.get('/', function(req, res, next){
@@ -352,7 +354,8 @@ io.on('connection', function(socket){
                             nbPlayers++;
 
                             log(`log 3 - Nb joueurs : ${nbPlayers}`);
-                            socket.emit('loginOK', newCat);
+                            socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre,
+                            key: storageKey, item: storageItem});
                             socket.broadcast.emit('newCat', newCat);
                             log(kittens);
                             io.emit('onlinePlayers', kittens);
@@ -399,9 +402,11 @@ io.on('connection', function(socket){
                                     socket.pseudo = dInfosJoueur.pseudo;
                                     // let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
                                     let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.email, infosJoueursBDD.race, infosJoueursBDD.genre, infosJoueursBDD.avatar, socket.id);
+
                                     if (infosJoueursBDD.admin){
                                         newCat.admin = infosJoueursBDD.admin;
                                     }
+
                                     log('Nouveau joueur : ', newCat);
                                     let pseudo = dInfosJoueur.pseudo;
                                     kittens[socket.id] = newCat;
@@ -409,7 +414,8 @@ io.on('connection', function(socket){
                                     nbPlayers++;
                         
                                     log(`Nb joueurs : ${nbPlayers}`);
-                                    socket.emit('loginOK', newCat);
+
+                                    socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: newCat.img, race: newCat.race, genre: newCat.genre, key: storageKey, item: storageItem});
                                     socket.broadcast.emit('newCat', newCat);
                                     log(kittens);
                                     io.emit('onlinePlayers', kittens);
@@ -479,40 +485,41 @@ socket.on('chatMsg', function (message){
     log('Pseudo : ', kittens[socket.id].pseudo);
     log(message);
     message = message;
-    // log(kittens);
-    io.emit('afficheChatMsg',  {pseudo: kittens[socket.id].pseudo, msg: message});
+    dateMsg = new Date().toString();
+    log(dateMsg);
+    io.emit('afficheChatMsg',  {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg}});
 });
 
 io.emit('onlinePlayers', kittens);
 
 /**************************************** Echange de messages entre joueurs (/chat) ************************************************/
     
-    let chatMsgIo = io.of('/chat');
-    chatMsgIo.on('connection', function(socketChatMsg){
-        log('Un nouvel utilisatuer vient de se connecter au chat!');
-        log(socketChatMsg.id);
-        socketChatMsg.pseudo = kittens[socket.id].pseudo;
-        // socketChatMsg.on('chatMsg', function (message){
-        //     log('Pseudo : ', kittens[socket.id].pseudo);
-        //     log(message);
-        //     message = message;
-        //     // log(kittens);
-        //     io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
-        // });
+    // let chatMsgIo = io.of('/chat');
+    // chatMsgIo.on('connection', function(socketChatMsg){
+    //     log('Un nouvel utilisatuer vient de se connecter au chat!');
+    //     log(socketChatMsg.id);
+    //     socketChatMsg.pseudo = kittens[socket.id].pseudo;
+    //     // socketChatMsg.on('chatMsg', function (message){
+    //     //     log('Pseudo : ', kittens[socket.id].pseudo);
+    //     //     log(message);
+    //     //     message = message;
+    //     //     // log(kittens);
+    //     //     io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message});
+    //     // });
 
-        // socketChatMsg.emit('onlinePlayers', kittens);
-    });
+    //     // socketChatMsg.emit('onlinePlayers', kittens);
+    // });
 
-    chatMsgIo.on('chatMsg', function (message){
-        log('Pseudo : ', kittens[socket.id].pseudo);
-        log(message);
-        message = message;
-        dateMsg = new Date().toString();
-        // log(kittens);
-        chatMsgIo.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg});
-    });
+    // chatMsgIo.on('chatMsg', function (message){
+    //     log('Pseudo : ', kittens[socket.id].pseudo);
+    //     log(message);
+    //     message = message;
+    //     dateMsg = new Date().toString();
+    //     // log(kittens);
+    //     chatMsgIo.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg});
+    // });
 
-    chatMsgIo.emit('onlineCats', kittens);
+    // chatMsgIo.emit('onlineCats', kittens);
 
 /************************************************ Relance du jeu ********************************************************/
     // socket.on('restart-game', function (message){
@@ -664,7 +671,7 @@ io.emit('onlinePlayers', kittens);
         nbPlayers--;
         if(logged){
             // nbPlayers--;
-            socket.broadcast.emit('decoPlayer', {pseudo: socket.pseudo, id: socket.playerId});
+            socket.broadcast.emit('decoCat', {pseudo: socket.pseudo, id: socket.playerId, key: storageKey});
             log(`Nombre de joueurs connectés (après une déconnexion loggée) : ${nbPlayers}`);
             delete kittens[socket.id];
         }
