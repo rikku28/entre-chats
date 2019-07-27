@@ -114,10 +114,12 @@ app.get('/admin', function(req, res, next){
 });
 
 app.get('/logout', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let adminPage = path.normalize(__dirname + '/public/admin.html');
-    log(adminPage);
-    res.sendFile(adminPage);
+    // console.log('Dirname : ' + __dirname);
+    // let adminPage = path.normalize(__dirname + '/public/admin.html');
+    // log(adminPage);
+    // res.sendFile(adminPage);
+    logged = false;
+    res.redirect('/');
 });
 
 /**************************** On rattache le serveur HTTP à socket.io ************************************/
@@ -335,7 +337,7 @@ io.on('connection', function(socket){
                                     log(`On va intégrer les données en base - log 2`);
                                     const db = client.db(dbName);
                                     const collection = db.collection('users');
-                                    collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, email: dInfosJoueur.email, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre});
+                                    collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, email: dInfosJoueur.email, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre, admin: false});
                                 }
                                 client.close();
                             });
@@ -349,7 +351,7 @@ io.on('connection', function(socket){
                             socket.playerId = kittens[socket.id].identifiant;
                             nbPlayers++;
 
-                            log(`Nb joueurs : ${nbPlayers}`);
+                            log(`log 3 - Nb joueurs : ${nbPlayers}`);
                             socket.emit('loginOK', newCat);
                             socket.broadcast.emit('newCat', newCat);
                             log(kittens);
@@ -397,6 +399,9 @@ io.on('connection', function(socket){
                                     socket.pseudo = dInfosJoueur.pseudo;
                                     // let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
                                     let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.email, infosJoueursBDD.race, infosJoueursBDD.genre, infosJoueursBDD.img, socket.id);
+                                    if (infosJoueursBDD.admin){
+                                        newCat.admin = infosJoueursBDD.admin;
+                                    }
                                     log('Nouveau joueur : ', newCat);
                                     let pseudo = dInfosJoueur.pseudo;
                                     kittens[socket.id] = newCat;

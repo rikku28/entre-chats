@@ -25,7 +25,7 @@
         $('.cache-header').hide();
         $('.cache-login-form').hide();
         $('.cache-quiz').hide();
-        $('#menu').hide();
+        $('#menu').show();
         $('.cache-infos-joueurs').hide(); // à la place de .fadeOut()
 
 // Joueur déjà inscrit :
