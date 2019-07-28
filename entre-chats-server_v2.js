@@ -495,7 +495,8 @@ socket.on('chatMsg', function (message){
 io.emit('onlinePlayers', kittens);
 
 /********************************************* Recherche de chats *********************************************/
-let searchCats = function(catName){
+// let searchCats = function(catName){
+let searchCats = function(){
     log(`Nous sommes dans la fonction searchCats`);
     log(catName);
 
@@ -509,7 +510,8 @@ let searchCats = function(catName){
             log(`Connexion à MongoDB : OK - On va chercher un chat.`);
             const db = client.db(dbName);
             const collection = db.collection('users');
-            collection.find({"pseudo": { "$regex": catName, "$options": "i" }}, {projection:{pseudo:1, avatar: 1, _id:0}}).toArray(function(err,data){
+            // {"pseudo": { "$regex": catName, "$options": "i" }}
+            collection.find({}, {projection:{pseudo:1, avatar: 1, _id:0}}).toArray(function(err,data){
                 log(`On rentre dans la fonction de callback.`);
                 if(err){
                     log(`Que se passe-t-il? ${err} - recherche de chat`);
@@ -540,8 +542,8 @@ let searchCats = function(catName){
 
 socket.on('searchingCats', function(keyword){
     log(keyword.recherche);
-    chercheChats = keyword.recherche; 
-    chercheChats = '\"' + chercheChats + '\"';
+    // chercheChats = keyword.recherche;
+    // chercheChats = '\"' + chercheChats + '\"';
     log(chercheChats);
     searchCats(chercheChats);
 });
