@@ -487,7 +487,7 @@ socket.on('chatMsg', function (message){
     log('Pseudo : ', kittens[socket.id].pseudo);
     log(message);
     message = message;
-    dateMsg = new Date().toString();
+    let dateMsg = new Date().toString();
     log(dateMsg);
     io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg});
 });
