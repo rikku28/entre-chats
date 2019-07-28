@@ -509,7 +509,7 @@ let searchCats = function(catName){
             log(`Connexion à MongoDB : OK - On va chercher un chat.`);
             const db = client.db(dbName);
             const collection = db.collection('users');
-            collection.find({pseudo: {$regex: catName, $option:"$i"}}).toArray(function(err,data){
+            collection.find({pseudo: {$regex: catName}}).toArray(function(err,data){
                 log(`On rentre dans la fonction de callback.`);
                 if(error){
                     log(`Que se passe-t-il? ${error} - recherche de chat`);
@@ -541,7 +541,7 @@ let searchCats = function(catName){
 socket.on('searchingCats', function(keyword){
     log(keyword.recherche);
     chercheChats = keyword.recherche; 
-    chercheChats = '\"' + chercheChats + '\"';
+    chercheChats = '/' + chercheChats + '/i';
     log(chercheChats);
     searchCats(chercheChats);
 });
