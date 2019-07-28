@@ -523,19 +523,19 @@ let searchCats = function(catName){
                     client.close();
                     log('Infos récupérées : ', data);
 
-                // log(`Datas récupérées en base : ${resultatChats}`);
+                    // log(`Datas récupérées en base : ${resultatChats}`);
 
-                // if(!datas){
-                //     log(`3 : recherche de chats`);
-                //     log(`Aucun chat ne correspond à votre recherche!`);
-                //     let message = 'Aucun chat ne correspond à votre recherche!';
-                //     socket.emit('catList', {msg: message});
-                //     } else{
-                //         log(`4 : recherche de chats`);
-                //         let message = resultatChats; // Ne transférer que le pseudo + avatar
-                //         socket.emit('catList', {msg: message});
-                //     } // Fin 3ème else
-                // }
+                    if(!datas){
+                        log(`3 : recherche de chats`);
+                        log(`Aucun chat ne correspond à votre recherche!`);
+                        let message = 'Aucun chat ne correspond à votre recherche!';
+                        socket.emit('catList', {msg: message});
+                        } else{
+                            log(`4 : recherche de chats`);
+                            let message = resultatChats; // Ne transférer que le pseudo + avatar
+                            socket.emit('catList', {msg: message});
+                        }
+                    }
                 }
             });
         }
