@@ -417,7 +417,7 @@ io.on('connection', function(socket){
                         
                                     log(`Nb joueurs : ${nbPlayers}`);
 
-                                    socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: newCat.img, race: newCat.race, genre: newCat.genre, key: storageKey, item: storageItem});
+                                    socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: newCat.avatar, race: newCat.race, genre: newCat.genre, key: storageKey, item: storageItem});
                                     socket.broadcast.emit('newCat', newCat);
                                     log(kittens);
                                     io.emit('onlinePlayers', kittens);
@@ -545,7 +545,7 @@ let searchCats = function(catName){
 socket.on('searchingCats', function(keyword){
     log(keyword.recherche);
     chercheChats = keyword.recherche; 
-    chercheChats = '\"' + recherche + '\"';
+    chercheChats = '\"' + chercheChats + '\"';
     log(chercheChats);
     searchCats(chercheChats);
 });
