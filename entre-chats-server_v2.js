@@ -53,7 +53,8 @@ app.get('/', function(req, res, next){
     // console.log(`Current directory: ${process.cwd()}`);
     // console.log('process.arg : ' + process.argv);
     // let homePage = path.normalize(__dirname + '/public/index2.html');
-    let homePage = path.normalize(__dirname + '/public/login.html');
+    // let homePage = path.normalize(__dirname + '/public/login.html');
+    let homePage = path.normalize(__dirname + '/public/index.html');
     log(homePage);
 
     //Doc Express pour le traitement des erreurs : https://expressjs.com/fr/guide/error-handling.html
