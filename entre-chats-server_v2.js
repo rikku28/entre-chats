@@ -495,53 +495,61 @@ socket.on('chatMsg', function (message){
 io.emit('onlinePlayers', kittens);
 
 /********************************************* Recherche de chats *********************************************/
+let searchCats = function(catName){
+    log(`Nous sommes dans la fonction searchCats`);
+    log(catName);
+
+    MongoClient.connect(url,{ useNewUrlParser: true },function(error,client){
+        if(error){
+            log(`Connexion à Mongo impossible! - Recherche de chats`);
+            log(error);
+            // throw error;
+        } else{
+            log(`1 : recherche de chats`)
+            log(`Connexion à MongoDB : OK - On va chercher un chat.`);
+            log(`On est dans le "else" de la fonction "findUserInDB".`);
+            const db = client.db(dbName);
+            const collection = db.collection('users');
+            // collection.findOne({pseudo: {$regex: chercheChats, $option:"$i"}}, function(error,datas){
+    //  collection.find({}, {projection:{pseudo:1, avatar: 1, lastScore:1, bestScore:1, _id:0}}).sort({bestScore: -1, lastScore: -1}).toArray(function(error,datas){
+            collection.find({pseudo: {$regex: chercheChats, $option:"$i"}}, function(error,datas){
+                log(`On rentre dans la fonction de callback.`);
+                if(error){
+                    log(`Que se passe-t-il? ${error} - recherche de chat`);
+                } else{
+                    log(`2 : recherche de chats`);
+                    let resultatChats = datas;
+                    client.close();
+                    log('Infos récupérées : ', datas);
+
+                log(`Datas récupérées en base : ${resultatChats}`);
+
+                if(!datas){
+                    log(`3 : recherche de chats`);
+                    log(`Aucun chat ne correspond à votre recherche!`);
+                    let message = 'Aucun chat ne correspond à votre recherche!';
+                    socket.emit('catList', {msg: message});
+                    } // Fin if(!datas)
+                    else{
+                        log(`4 : recherche de chats`);
+                        let message = resultatChats; // Ne transférer que le pseudo + avatar
+                        socket.emit('catList', {msg: message});
+                    } // Fin 3ème else
+                    // return datas;
+                } // Fin 2ème else
+            }); // Fin recherche findOne dans Mongo DB
+        } // Fin 1er else - log 1
+    }); // Fin MongoDB
+};
+
 socket.on('searchingCats', function(recherche){
     log(recherche);
     chercheChats = recherche; 
     chercheChats = '\"' + recherche + '\"';
     log(chercheChats);
+    searchCats(chercheChats);
 });
 
-MongoClient.connect(url,{ useNewUrlParser: true },function(error,client){
-    if(error){
-        log(`Connexion à Mongo impossible! - Recherche de chats`);
-        log(error);
-        // throw error;
-    } else{
-        log(`1 : recherche de chats`)
-        log(`Connexion à MongoDB : OK - On va chercher un chat.`);
-        log(`On est dans le "else" de la fonction "findUserInDB".`);
-        const db = client.db(dbName);
-        const collection = db.collection('users');
-        // collection.findOne({pseudo: {$regex: chercheChats, $option:"$i"}}, function(error,datas){
-        collection.find({pseudo: {$regex: chercheChats, $option:"$i"}}, function(error,datas){
-            log(`On rentre dans la fonction de callback.`);
-            if(error){
-                log(`Que se passe-t-il? ${error} - recherche de chat`);
-            } else{
-                log(`2 : recherche de chats`);
-                let resultatChats = datas;
-                client.close();
-                log('Infos récupérées : ', datas);
-
-            log(`Datas récupérées en base : ${resultatChats}`);
-
-            if(!datas){
-                log(`3 : recherche de chats`);
-                log(`Aucun chat ne correspond à votre recherche!`);
-                let message = 'Aucun chat ne correspond à votre recherche!';
-                socket.emit('catList', {msg: message});
-                } // Fin if(!datas)
-                else{
-                    log(`4 : recherche de chats`);
-                    let message = datas; // Ne transférer que le pseudo + avatar
-                    socket.emit('catList', {msg: message});
-                } // Fin 3ème else
-                // return datas;
-            } // Fin 2ème else
-        }); // Fin recherche findOne dans Mongo DB
-    } // Fin 1er else - log 1
-}); // Fin MongoDB
 
 /**************************************** Echange de messages entre joueurs (/chat) ************************************************/
     
