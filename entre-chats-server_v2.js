@@ -498,7 +498,7 @@ io.emit('onlinePlayers', kittens);
 // let searchCats = function(catName){
 let searchCats = function(){
     log(`Nous sommes dans la fonction searchCats`);
-    log(catName);
+    // log(catName);
 
     MongoClient.connect(url, {useNewUrlParser: true}, function(error, client){
         if(error){
