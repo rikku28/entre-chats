@@ -43,7 +43,7 @@ exports.verifEmail  = function(email){
     const emailRegex = new RegExp('^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$', 'igm')
     if(emailRegex.test(email)){
         console.log(`Email valide!`);
-        return false;
+        return true;
     } else{
         console.log(`Dans le module : Adresse email non valide!`);
         return false;
