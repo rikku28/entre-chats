@@ -515,9 +515,9 @@ let searchCats = function(catName){
                     log(`Que se passe-t-il? ${error} - recherche de chat`);
                 } else{
                     log(`2 : recherche de chats`);
-                    let resultatChats = datas;
+                    let resultatChats = data;
                     client.close();
-                    log('Infos récupérées : ', datas);
+                    log('Infos récupérées : ', data);
 
                 // log(`Datas récupérées en base : ${resultatChats}`);
 
