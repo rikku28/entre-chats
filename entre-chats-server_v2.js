@@ -509,7 +509,7 @@ let searchCats = function(catName){
             log(`Connexion à MongoDB : OK - On va chercher un chat.`);
             const db = client.db(dbName);
             const collection = db.collection('users');
-            collection.find({"pseudo": { $regex: catName, $options: "i" }}, {projection:{pseudo:1, avatar: 1, _id:0}}).toArray(function(err,data){
+            collection.find({"pseudo": { "$regex": catName, "$options": "i" }}, {projection:{pseudo:1, avatar: 1, _id:0}}).toArray(function(err,data){
                 log(`On rentre dans la fonction de callback.`);
                 if(err){
                     log(`Que se passe-t-il? ${err} - recherche de chat`);
