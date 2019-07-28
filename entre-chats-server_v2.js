@@ -44,6 +44,7 @@ var bestScores = [];
 var storageKey = 'LaCleLS';
 var storageItem = 'Coucou Hibou!'
 var chercheChats = '';
+const saltRounds = 10;
 
 /********************************** Création du serveur HTTP avec Express **********************************/
 app.get('/', function(req, res, next){
@@ -68,19 +69,19 @@ app.get('/', function(req, res, next){
 //     res.sendFile(chatPage);
 // });
 
-app.get('/chat', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let chatPage = path.normalize(__dirname + '/public/chat.html');
-    log(chatPage);
-    res.sendFile(chatPage);
-});
+// app.get('/chat', function(req, res, next){
+//     console.log('Dirname : ' + __dirname);
+//     let chatPage = path.normalize(__dirname + '/public/chat.html');
+//     log(chatPage);
+//     res.sendFile(chatPage);
+// });
 
-app.get('/apropos', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let aProposPage = path.normalize(__dirname + '/public/about.html');
-    log(aProposPage);
-    res.sendFile(aProposPage);
-});
+// app.get('/apropos', function(req, res, next){
+//     console.log('Dirname : ' + __dirname);
+//     let aProposPage = path.normalize(__dirname + '/public/about.html');
+//     log(aProposPage);
+//     res.sendFile(aProposPage);
+// });
 
 // app.get('/about', function(req, res, next){
 //     console.log('Dirname : ' + __dirname);
@@ -89,33 +90,33 @@ app.get('/apropos', function(req, res, next){
 //     res.sendFile(aboutPage);
 // });
 
-app.get('/profil', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let profilPage = path.normalize(__dirname + '/public/profil.html');
-    log(profilPage);
-    res.sendFile(profilPage);
-});
+// app.get('/profil', function(req, res, next){
+//     console.log('Dirname : ' + __dirname);
+//     let profilPage = path.normalize(__dirname + '/public/profil.html');
+//     log(profilPage);
+//     res.sendFile(profilPage);
+// });
 
-app.get('/messages', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let msgPage = path.normalize(__dirname + '/public/messages.html');
-    log(msgPage);
-    res.sendFile(msgPage);
-});
+// app.get('/messages', function(req, res, next){
+//     console.log('Dirname : ' + __dirname);
+//     let msgPage = path.normalize(__dirname + '/public/messages.html');
+//     log(msgPage);
+//     res.sendFile(msgPage);
+// });
 
-app.get('/amis', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let friendsListPage = path.normalize(__dirname + '/public/amis.html');
-    log(friendsListPage);
-    res.sendFile(friendsListPage);
-});
+// app.get('/amis', function(req, res, next){
+//     console.log('Dirname : ' + __dirname);
+//     let friendsListPage = path.normalize(__dirname + '/public/amis.html');
+//     log(friendsListPage);
+//     res.sendFile(friendsListPage);
+// });
 
-app.get('/admin', function(req, res, next){
-    console.log('Dirname : ' + __dirname);
-    let adminPage = path.normalize(__dirname + '/public/admin.html');
-    log(adminPage);
-    res.sendFile(adminPage);
-});
+// app.get('/admin', function(req, res, next){
+//     console.log('Dirname : ' + __dirname);
+//     let adminPage = path.normalize(__dirname + '/public/admin.html');
+//     log(adminPage);
+//     res.sendFile(adminPage);
+// });
 
 app.get('/logout', function(req, res, next){
     // console.log('Dirname : ' + __dirname);
@@ -294,7 +295,36 @@ io.on('connection', function(socket){
 //         }
 //     };
 
-/*********************************** Fonction globale de vérification des identifiants du joueur qui se connecte *******************************************/
+/*********************************** Fonction de génération du cryptage des mots de passe *******************************************/
+
+let cryptPwd = function(pwdEnClair){
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+        bcrypt.hash(pwdEnClair, salt, function(err, hash) {
+            // Store hash in your password DB.
+        });
+    });
+};
+
+// OU : bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+  // Store hash in your password DB.
+// });
+
+let comparePwd = function(pwdEnClair, pwdHash){
+    // Load hash from your password DB.
+    bcrypt.compare(pwdEnClair, pwdHash, function(err, res) {
+        // res == true
+    });
+    // bcrypt.compare(someOtherPlaintextPassword, hash, function(err, res) {
+    //     // res == false
+    // });
+};
+
+// Doc : https://www.npmjs.com/package/bcrypt
+
+// Why is async mode recommended over sync mode?
+// If you are using bcrypt on a simple script, using the sync mode is perfectly fine. However, if you are using bcrypt on a server, the async mode is recommended. This is because the hashing done by bcrypt is CPU intensive, so the sync version will block the event loop and prevent your application from servicing any other inbound requests or events. The async version uses a thread pool which does not block the main event loop.
+
+/*********************************** Fonction globale de vérification des identifiants du chat qui se connecte *******************************************/
     let checkVerifs = function(aPseudo, bPwd, cAvatar, dInfosJoueur){
         log(`On est dans la fonction "checkVerifs".`);
         log(`Infos joueur : ${dInfosJoueur}`);
