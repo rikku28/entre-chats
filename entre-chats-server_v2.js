@@ -541,7 +541,7 @@ let searchCats = function(catName){
 socket.on('searchingCats', function(keyword){
     log(keyword.recherche);
     chercheChats = keyword.recherche; 
-    chercheChats = '/' + chercheChats + '/i';
+    chercheChats = '/*' + chercheChats + '*/i';
     log(chercheChats);
     searchCats(chercheChats);
 });
