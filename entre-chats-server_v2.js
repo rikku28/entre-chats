@@ -499,7 +499,7 @@ let searchCats = function(catName){
     log(`Nous sommes dans la fonction searchCats`);
     log(catName);
 
-    MongoClient.condition(url, {useNewUrlParser: true}, function(error, client){
+    MongoClient.connect(url, {useNewUrlParser: true}, function(error, client){
         if(error){
             log(`Connexion à Mongo impossible! - Recherche de chats`);
             log(error);
