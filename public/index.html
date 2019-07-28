@@ -226,7 +226,7 @@
                         </form>
                         <div id="zone-infos"></div>
                     </section>
-        <!-- Affichage des joueurs en ligne -->
+        <!-- Affichage des chats en ligne -->
                     <section id="online-players" class="cache-infos-joueurs col-md-6">
                         <h2>Chats en ligne</h2>
                         <div id="online-scores"></div>
@@ -234,9 +234,28 @@
                 </div>
             </div>
         </section>
+<!-- Résultats d'une recherche -->
         <section id="search" class="cache-menu">
             <div id="res-search-cats"></div>
         </section>
+<!-- Gestion du profil -->
+        <section id="gestion-profil">
+            <h3>Upload d'image</h3>
+            <div class="container">
+                <div class="card border-success mt-5">
+                    <h1 class="card-header">Upload Image</h1>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <form action="/profil/upload" method="post" enctype="multipart/form-data">
+                                <input class="form-control-file" type="file" accept="image/*" name="photo" >
+                                <input class="btn mt-3" type="submit" value="upload">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+<!-- Section "À Propos" -->
         <section id="about">
             <div class="container" id="apropos">
                 <h2>À propos d'Entre-chats</h2>
