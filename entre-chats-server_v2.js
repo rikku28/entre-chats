@@ -530,11 +530,10 @@ let searchCats = function(catName){
                         log(`Aucun chat ne correspond à votre recherche!`);
                         let message = 'Aucun chat ne correspond à votre recherche!';
                         socket.emit('catList', {msg: message});
-                        } else{
-                            log(`4 : recherche de chats`);
-                            let message = resultatChats; // Ne transférer que le pseudo + avatar
-                            socket.emit('catList', {msg: message});
-                        }
+                    } else{
+                        log(`4 : recherche de chats`);
+                        let message = resultatChats; // Ne transférer que le pseudo + avatar
+                        socket.emit('catList', {msg: message});
                     }
                 }
             });
