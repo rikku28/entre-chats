@@ -489,7 +489,7 @@ socket.on('chatMsg', function (message){
     message = message;
     dateMsg = new Date().toString();
     log(dateMsg);
-    io.emit('afficheChatMsg',  {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg}});
+    io.emit('afficheChatMsg', {pseudo: kittens[socket.id].pseudo, msg: message, date: dateMsg});
 });
 
 io.emit('onlinePlayers', kittens);
