@@ -546,7 +546,7 @@ socket.on('searchingCats', function(keyword){
     log(keyword.recherche);
     chercheChats = keyword.recherche;
     // chercheChats = '\"' + chercheChats + '\"';
-    chercheChats = new Regexp(chercheChats, 'i');
+    chercheChats = new RegExp(chercheChats, 'i');
     log(chercheChats);
     searchCats(chercheChats);
 });
