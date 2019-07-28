@@ -525,7 +525,7 @@ let searchCats = function(catName){
 
                     // log(`Datas récupérées en base : ${resultatChats}`);
 
-                    if(!datas){
+                    if(!data){
                         log(`3 : recherche de chats`);
                         log(`Aucun chat ne correspond à votre recherche!`);
                         let message = 'Aucun chat ne correspond à votre recherche!';
