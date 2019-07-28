@@ -511,8 +511,8 @@ let searchCats = function(catName){
             const collection = db.collection('users');
             collection.find({pseudo: catName}, {projection:{pseudo:1, avatar: 1, _id:0}}).sort({pseudo: -1}).toArray(function(err,data){
                 log(`On rentre dans la fonction de callback.`);
-                if(error){
-                    log(`Que se passe-t-il? ${error} - recherche de chat`);
+                if(err){
+                    log(`Que se passe-t-il? ${err} - recherche de chat`);
                 } else{
                     log(`2 : recherche de chats`);
                     let resultatChats = data;
