@@ -36,39 +36,37 @@
             <div class="brand">Entre-chats</div>
             <i style="color: Dodgerblue;" class="fa fa-cat fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
             <div class="menu-list">
-                <li id="apropos">
-                    <a href="/apropos"><i class="fa fa-dragon fa-lg"></i> À propos</a>
-                    <!-- <a href="#"><i class="fas fa-flag-checkered"></i>À propos</a> -->
-                </li>
-                <ul id="menu-content" class="menu-content collapse out cache-menu">
-                    <li data-toggle="collapse" data-target="#profil" class="collapsed">
-                        <a href="/profil"><i class="fa fa-paw fa-lg"></i>Profil<span class="arrow"></span></a>
+                <ul id="menu-content" class="menu-content collapse out">
+                    <li data-toggle="collapse" data-target="#profil" class="collapsed cache-menu">
+                        <a href="#profil"><i class="fa fa-paw fa-lg"></i>Profil<span class="arrow"></span></a>
                     </li>
                     <ul class="sub-menu collapse cache-menu" id="profil">
-                        <li>Mon profil</li>
-                        <li>Gestion du profil</li>
-                        <a href="/amis"><li>Liste d'amis</li></a>
-                        <a href="/messages"><li>Messages privrés</li></a>
+                        <a href="#mon-profil"><li>Éditer le profil</li></a>
+                        <a href="#mes-amis"><li>Liste d'amis</li></a>
+                        <a href="#messages"><li>Messages privrés</li></a>
                     </ul>
-                    <li id="tchat" class="cache-menu">
-                        <a href="/chat"><i class="fa fa-cat fa-lg"></i>Tchat</a>
+                    <li id="menu-tchat" class="cache-menu">
+                        <a href="#tchat"><i class="fa fa-cat fa-lg"></i>Tchat</a>
                     </li>
                     <li data-toggle="collapse" data-target="#admin" class="collapsed cache-menu">
-                        <a href="/admin"><i class="fa fa-bug fa-lg"></i> Admin <span class="arrow"></span></a>
+                        <a href="#admin"><i class="fa fa-bug fa-lg"></i> Admin <span class="arrow"></span></a>
                     </li>  
                     <ul class="sub-menu collapse" id="admin">
-                        <li>Gestion des profils</li>
-                        <li>Gestion des messages privés</li>
-                        <li>Statistiques</li>
+                        <a href="#gestion-profils"><li>Gestion des profils</li></a>
+                        <a href="#gestion-messages"><li>Gestion des messages privés</li></a>
+                        <a href="#stats"><li>Statistiques</li></a>
                     </ul>
-                    <li id="deconnexion" class="cache-menu">
+                    <li id="menu-deconnexion" class="cache-menu">
                         <a href="/logout"><i class="fa fa-sign-out-alt fa-lg"></i>Déconnexion</a>
+                    </li>
+                    <li id="apropos">
+                        <a href="#about"><i class="fa fa-dragon fa-lg"></i> À propos</a>
                     </li>
                 </ul>
             </div>
             <div>
                 <form class="form-inline cache-menu" id="search-bar">
-                    <input class="form-control mx-sm-2" type="search" placeholder="Recherche" aria-label="Recherche">
+                    <input class="form-control mx-sm-2" type="search" id="searching-cats" placeholder="Cherche un chat" aria-label="Recherche">
                     <button class="btn btn-outline-primary my-2 my-sm-0 my-md-0" type="submit"><i style="color: #EFDC05;" class="fas fa-search"></i></button>
                 </form>
             </div>
@@ -200,41 +198,45 @@
                             <input type="url" class="form-control" name="avatar" id="login-form-avatar" placeholder="URL de ton avatar" required >
                             <div class="invalid-tooltip">Es-tu sûr que l'url est valide?</div>
                         </div>
-                        <div class="col-md-3 mt-3">
-                            <div class="input-group">
-                                <button class="btn btn-primary" id="valider-login" type="submit">Valider</button>
-                            </div>
+                    </div>
+                    <div class="row col-md-6 offset-2 mb-3" id="btn-valider">
+                        <div class="input-group">
+                            <button class="btn btn-primary" id="valider-login" type="submit">Valider</button>
                         </div>
                     </div>	 
                 </form>
             <!-- </div> -->
         </section>
 <!-- Section dédiée à l'affichage du chat -->
-        <div class="container" id="tchat">
-<!-- Section dédiée au chat et affichages des infos émises par le serveur (connexion d'un nouveau joueur, si le joueur remporte le point ou s'il s'est trompé de réponse, ...) -->
-            <div class="row mt-3">
-                <section id="chat" class="cache-infos-joueurs col-md-6">
-                    <h2>Infos et chat</h2>
-                    <!-- <div id="zone-infos"></div> -->
-                    <form id="chat-form">
-                        <div class="form-row">
-                            <div class="col-md-8 mb-3">
-                                <input type="text" class="form-control" name="msg" id="chat-message" placeholder="Hello" />
+        <section id="tchat">
+            <div class="container" id="div-chat">
+                <div class="row mt-3">
+                    <section id="chat" class="cache-infos-joueurs col-md-6">
+                        <h2>Infos et chat</h2>
+                        <!-- <div id="zone-infos"></div> -->
+                        <form id="chat-form">
+                            <div class="form-row">
+                                <div class="col-md-8 mb-3">
+                                    <input type="text" class="form-control" name="msg" id="chat-message" placeholder="Hello" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <button class="btn btn-primary" type="submit" id="send-msg">Envoyer</button>
+                                </div>
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <button class="btn btn-primary" type="submit" id="send-msg">Envoyer</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div id="zone-infos"></div>
-                </section>
-    <!-- Affichage des joueurs en ligne -->
-                <section id="online-players" class="cache-infos-joueurs col-md-6">
-                    <h2>Chats en ligne</h2>
-                    <div id="online-scores"></div>
-                </section>
+                        </form>
+                        <div id="zone-infos"></div>
+                    </section>
+        <!-- Affichage des joueurs en ligne -->
+                    <section id="online-players" class="cache-infos-joueurs col-md-6">
+                        <h2>Chats en ligne</h2>
+                        <div id="online-scores"></div>
+                    </section>
+                </div>
             </div>
-        </div>
+        </section>
+        <section>
+            <div id="res-search-cats"></div>
+        </section>
         <section id="about">
             <div class="container" id="apropos">
                 <h2>À propos d'Entre-chats</h2>
@@ -248,51 +250,51 @@
                 <section id="mes-chats">
                     <h3>Mes chats</h3>
                     <div class="card-deck">
-                        <div class="card border-primary" style="width: 18rem;">
-                            <img src="assets/img/about/Nekoni_612px.jpg" class="card-img-top" alt="Nekoni">
+                        <div class="card border-primary mb-3" style="width: 18rem;">
+                            <img src="assets/img/about/Nekoni_612px.jpg" class="card-img-top border-primary" alt="Nekoni">
                             <div class="card-body">
-                                <h5 class="card-title">Nekoni</h5>
+                                <h5 class="card-title font-weight-bold text-primary">Nekoni</h5>
                                 <p class="card-text">Elle a été adoptée en août 2005. Après avoir vécu 10 ans en appartement, à se balader entre Chalon et Dijon, puis en région parisienne, elle a découvert les joies du jardin. Elle est la doyenne de la team croquettes.</p>
                                 <!-- <a href="#" class="btn btn-primary">Go somewhere</a>  -->
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer text-primary">
                                 <small class="text-muted">Femelle - Européen</small><br/>
                                 <small class="text-muted">Née en juin ou juillet 2005</small>
                             </div>
                         </div>
-                        <div class="card border-primary" style="width: 18rem;">
-                            <img src="assets/img/about/Fender_612px.jpg" class="card-img-top" alt="Fender">
+                        <div class="card border-danger mb-3" style="width: 18rem;">
+                            <img src="assets/img/about/Fender_612px.jpg" class="card-img-top border-danger" alt="Fender">
                             <div class="card-body">
-                                <h5 class="card-title">Fender</h5>
+                                <h5 class="card-title font-weight-bold text-danger">Fender</h5>
                                 <p class="card-text">A 2 semaines, il a été retiré à sa mère avec les autres chatons de la portée pour être confié (de force?) à une agence immobilière qui s'occupais d'animaux sur son temps libre. C'est en allant à l'agence que nous avons découvert Fender et son frère Gibson, en juillet 2013. Fender était le baroudeur de la bande. Son territoire s'étendait plus loin qu'on ne l'imaginait. Ca lui a été fatal. Effet chat noir?</p>
                                 <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer text-danger">
                                 <small class="text-muted">Mâle - Européen</small><br/>
                                 <small class="text-muted">Né en juin 2013</small><br/>
                                 <small class="text-muted">Décédé le 04 ou 05 septembre 2015</small>
                             </div>
                         </div>
-                        <div class="card border-primary" style="width: 18rem;">
+                        <div class="card border-warning mb-3" style="width: 18rem;">
                             <img src="assets/img/about/Gibson_612px.jpg" class="card-img-top" alt="Gibson">
                             <div class="card-body">
-                                <h5 class="card-title">Gibson</h5>
+                                <h5 class="card-title font-weight-bold text-warning">Gibson</h5>
                                 <p class="card-text">Gibson est le frère de Fender et pourtant, ils ne se ressemblaient pas. Physiquement proche de Garfield, il est pantouflard et passe plus de temps à dormir sur le canapé. C'est pourtant un bon chasseur. Il a mis du temps a se remettre de la disparition de son frère. Maintenant, il s'habitue a la vie avec Nibbler et Gilgamesh.</p>
                                 <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer text-warning">
                                 <small class="text-muted">Mâle - Européen</small><br/>
                                 <small class="text-muted">Né en juin 2013</small>
                             </div>
                         </div>
-                        <div class="card border-primary" style="width: 18rem;">
+                        <div class="card border-info mb-3" style="width: 18rem;">
                             <img src="assets/img/about/Mokona_612px.jpg" class="card-img-top" alt="Mokona">
                             <div class="card-body">
-                                <h5 class="card-title">Mokona</h5>
+                                <h5 class="card-title font-weight-bold text-info">Mokona</h5>
                                 <p class="card-text">C'est la petite dernière. Recueillie par l'association <a href="http://www.solana-asso.com/" target="_blank">"Solana"</a>, on l'a adopté en octobre 2018. Dynamique et joueuse, elle a chamboulé le quotidien de Nekoni et Gibson. Elle passe pas mal de temps à l'extérieur et aime grimper aux arbres.</p>
                                 <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer text-info">
                                 <small class="text-muted">Femelle - Européen</small><br/>
                                 <small class="text-muted">Née en mai 2018</small>
                             </div>

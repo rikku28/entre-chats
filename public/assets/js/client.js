@@ -36,6 +36,7 @@
             $('.cache-login-form').show();
             $('.champs-masques').hide();
             $('#btn-connexion').hide();
+            // $('#btn-valider').show();
         });
 
 // Inscription d'un nouveau joueur :
@@ -82,38 +83,38 @@
         });
     });
 
-// Evènements liés à la vérification en BDD des infos de connextion
-socket.on('badPseudo', function(info){
-    log(`badPseudo`);
-    $('#login-form').prepend('<p class="text-danger msg-login-incorrect" id="badPseudo"><strong>Votre mot de passe est vide ou invalide.</strong></p>');
-});
+    // Evènements liés à la vérification en BDD des infos de connextion
+    socket.on('badPseudo', function(info){
+        log(`badPseudo`);
+        $('#login-form').prepend('<p class="text-danger msg-login-incorrect" id="badPseudo"><strong>Votre mot de passe est vide ou invalide.</strong></p>');
+    });
 
-socket.on('alreadyUsedPseudo', function(info){
-    log(`alreadyUsedPseudo`);
-    $('#date-jour').prepend('<p class="text-warning msg-login-incorrect" id="alreadyUsedPseudo"><strong>' + info.msg + '</strong></p>');
-});
+    socket.on('alreadyUsedPseudo', function(info){
+        log(`alreadyUsedPseudo`);
+        $('#date-jour').prepend('<p class="text-warning msg-login-incorrect" id="alreadyUsedPseudo"><strong>' + info.msg + '</strong></p>');
+    });
 
-socket.on('badPwd', function(info){
-    // log(`badPwd`);
-    $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badPwd"><strong>' + info.msg + '</strong></p>');
-});
+    socket.on('badPwd', function(info){
+        // log(`badPwd`);
+        $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badPwd"><strong>' + info.msg + '</strong></p>');
+    });
 
-socket.on('badAvatar', function(info){
-    // log(`badAvatar`);
-    $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badAvatar"><strong>' + info.msg + '</strong></p>');
-});
+    socket.on('badAvatar', function(info){
+        // log(`badAvatar`);
+        $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badAvatar"><strong>' + info.msg + '</strong></p>');
+    });
 
-socket.on('badInfos', function(info){
-    // log(`badInfos`);
-    $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badInfos"><strong>' + info.msg + '</strong></p>');
-});
+    socket.on('badInfos', function(info){
+        // log(`badInfos`);
+        $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badInfos"><strong>' + info.msg + '</strong></p>');
+    });
 
-socket.on('userUnknown', function(info){
-    // log(`userUnknown`);
-    $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="userUnknown"><strong> Chat introuvable. Veuillez vous connecter avec les bons identifiants, ou vous inscrire si c\'est la 1ère fois que vous venez sur entre-chats.</strong></p>');
-    $('.cache-login-form').hide();
-    $('#btn-connexion').fadeIn();
-});
+    socket.on('userUnknown', function(info){
+        // log(`userUnknown`);
+        $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="userUnknown"><strong> Chat introuvable. Veuillez vous connecter avec les bons identifiants, ou vous inscrire si c\'est la 1ère fois que vous venez sur entre-chats.</strong></p>');
+        $('.cache-login-form').hide();
+        $('#btn-connexion').fadeIn();
+    });
 
 // Nouveau joueur connecté
     socket.on('loginOK', function(infos){
@@ -164,6 +165,21 @@ socket.on('userUnknown', function(info){
         $('#zone-infos').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
     });
 
+/********************************************* Recherche de chats *********************************************/
+    let searchCats = document.getElementById('search-bar');
+    searchCats.addEventListener('submit', function(event){
+        event.preventDefault();
+
+        socket.emit('searchingCats', {
+            recherche : $('#searching-cats').val()
+        });
+    });
+
+    socket.on('catList', function(msg){
+        log(msg);
+        // $('#res-search-cats').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
+        // Afficher la liste sous forme de "card" Bootstrap avec bouton pour ajout en ami.
+    });
 
 
 /******************************************* Fin de partie ********************************************/
@@ -171,7 +187,7 @@ socket.on('userUnknown', function(info){
         $('#zone-infos').prepend('<p><strong><em>Fin de partie</em></strong></p>');
         log(infos);
         $('.cache-quiz').hide();
-        startGame = false;
+        // startGame = false;
 
         let tabPlayers = [];
         for(var key in infos){
