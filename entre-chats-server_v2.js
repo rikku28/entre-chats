@@ -510,7 +510,7 @@ let searchCats = function(catName){
             log(`Connexion à MongoDB : OK - On va chercher un chat.`);
             const db = client.db(dbName);
             const collection = db.collection('users');
-            collection.creatIndex({pseudo:"text"}, {name: "indexTexte"});
+            collection.createIndex({pseudo:"text"}, {name: "indexTexte"});
             collection.find({$text:{$search: catName}}).toArray(function(err,data){
             // {"pseudo": { "$regex": catName, "$options": "i" }}
             // collection.find({}, {projection:{pseudo:1, avatar: 1, _id:0}}).toArray(function(err,data){
