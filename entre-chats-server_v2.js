@@ -512,7 +512,7 @@ let searchCats = function(catName){
             const collection = db.collection('users');
             // collection.findOne({pseudo: {$regex: chercheChats, $option:"$i"}}, function(error,datas){
     //  collection.find({}, {projection:{pseudo:1, avatar: 1, lastScore:1, bestScore:1, _id:0}}).sort({bestScore: -1, lastScore: -1}).toArray(function(error,datas){
-            collection.find({pseudo: {$regex: chercheChats, $option:"$i"}}, function(error,datas){
+            collection.find({pseudo: {$regex: catName, $option:"$i"}}, function(error,datas){
                 log(`On rentre dans la fonction de callback.`);
                 if(error){
                     log(`Que se passe-t-il? ${error} - recherche de chat`);
@@ -522,7 +522,7 @@ let searchCats = function(catName){
                     client.close();
                     log('Infos récupérées : ', datas);
 
-                log(`Datas récupérées en base : ${resultatChats}`);
+                // log(`Datas récupérées en base : ${resultatChats}`);
 
                 if(!datas){
                     log(`3 : recherche de chats`);
