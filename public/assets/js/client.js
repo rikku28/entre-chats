@@ -169,7 +169,8 @@
     let searchCats = document.getElementById('search-bar');
     searchCats.addEventListener('submit', function(event){
         event.preventDefault();
-
+        log($('#searching-cats').val());
+        
         socket.emit('searchingCats', {
             recherche : $('#searching-cats').val()
         });

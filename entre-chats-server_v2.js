@@ -542,9 +542,9 @@ let searchCats = function(catName){
     }); // Fin MongoDB
 };
 
-socket.on('searchingCats', function(recherche){
-    log(recherche);
-    chercheChats = recherche; 
+socket.on('searchingCats', function(keyword){
+    log(keyword.recherche);
+    chercheChats = keyword.recherche; 
     chercheChats = '\"' + recherche + '\"';
     log(chercheChats);
     searchCats(chercheChats);
