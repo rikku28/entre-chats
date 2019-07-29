@@ -385,6 +385,9 @@ let comparePwd = function(pwdEnClair, pwdHash){
                                                     if(err){
                                                         log(err);
                                                     } else{
+                                                        log(`3.5 : Chat inséré.`)
+                                                        log(cb);
+
                                                         socket.pseudo = dInfosJoueur.pseudo;
                                                         let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.email, dInfosJoueur.race, dInfosJoueur.genre, dInfosJoueur.img, socket.id);
                                                         log('Nouveau joueur : ', newCat);
