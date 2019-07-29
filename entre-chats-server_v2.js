@@ -380,26 +380,31 @@ let comparePwd = function(pwdEnClair, pwdHash){
 
                                                 const db = client.db(dbName);
                                                 const collection = db.collection('users');
-                                                collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: hash, email: dInfosJoueur.email, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre, admin: false});
-                                                // Ajouter fonction de callback à InsertOne?
+                                                collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: hash, email: dInfosJoueur.email, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre, admin: false}, function(err, cb){
+                                                    log(`Log 3 : enregistrement du pass hashé!`);
+                                                    if(err){
+                                                        log(err);
+                                                    } else{
+                                                        socket.pseudo = dInfosJoueur.pseudo;
+                                                        let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.email, dInfosJoueur.race, dInfosJoueur.genre, dInfosJoueur.img, socket.id);
+                                                        log('Nouveau joueur : ', newCat);
+                                                        let pseudo = dInfosJoueur.pseudo;
+                                                        kittens[socket.id] = newCat;
+                                                        socket.playerId = kittens[socket.id].identifiant;
+                                                        nbPlayers++;
+                            
+                                                        log(`log 3 - Nb joueurs : ${nbPlayers}`);
+                                                        socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre,
+                                                        key: storageKey, item: storageItem});
+                                                        socket.broadcast.emit('newCat', newCat);
+                                                        log(kittens);
+                                                        io.emit('onlinePlayers', kittens);
 
-                                                log(3);
-                                                socket.pseudo = dInfosJoueur.pseudo;
-                                                let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.email, dInfosJoueur.race, dInfosJoueur.genre, dInfosJoueur.img, socket.id);
-                                                log('Nouveau joueur : ', newCat);
-                                                let pseudo = dInfosJoueur.pseudo;
-                                                kittens[socket.id] = newCat;
-                                                socket.playerId = kittens[socket.id].identifiant;
-                                                nbPlayers++;
-                    
-                                                log(`log 3 - Nb joueurs : ${nbPlayers}`);
-                                                socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre,
-                                                key: storageKey, item: storageItem});
-                                                socket.broadcast.emit('newCat', newCat);
-                                                log(kittens);
-                                                io.emit('onlinePlayers', kittens);
-                                                logged = true;
-                                                checkNbPlayers();
+                                                        logged = true;
+                                                        checkNbPlayers();
+                                                    }
+                                                });
+                                                // Ajouter fonction de callback à InsertOne?
                                             }
                                         });
                                     // });
