@@ -44,7 +44,6 @@ var bestScores = [];
 var storageKey = 'LaCleLS';
 var storageItem = 'Coucou Hibou!'
 var chercheChats = '';
-const saltRounds = 10;
 
 /********************************** Création du serveur HTTP avec Express **********************************/
 app.get('/', function(req, res, next){
@@ -369,30 +368,67 @@ let comparePwd = function(pwdEnClair, pwdHash){
                                     log(`Connexion à Mongo impossible! - log 2`);
                                 } else{
                                     log(`On va intégrer les données en base - log 2`);
-                                    const db = client.db(dbName);
-                                    const collection = db.collection('users');
-                                    collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, email: dInfosJoueur.email, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre, admin: false});
+                                    log(`Mot de passe en clair : ${dInfosJoueur.mdp}`);
+
+                                    const saltRounds = 10;
+                                    // bcrypt.genSalt(saltRounds, function(err, salt) {
+                                        bcrypt.hash(dInfosJoueur.mdp, saltRounds, function(err, hash) {
+                                            if(err){
+                                                log(`Log 2.5 : Il y a un problème lors du hash du mot de passe!`);
+                                            } else{
+                                                log(`Mot de passe crypté : ${hash}`);
+
+                                                const db = client.db(dbName);
+                                                const collection = db.collection('users');
+                                                collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: hash, email: dInfosJoueur.email, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre, admin: false});
+                                                // Ajouter fonction de callback à InsertOne?
+
+                                                log(3);
+                                                socket.pseudo = dInfosJoueur.pseudo;
+                                                let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.email, dInfosJoueur.race, dInfosJoueur.genre, dInfosJoueur.img, socket.id);
+                                                log('Nouveau joueur : ', newCat);
+                                                let pseudo = dInfosJoueur.pseudo;
+                                                kittens[socket.id] = newCat;
+                                                socket.playerId = kittens[socket.id].identifiant;
+                                                nbPlayers++;
+                    
+                                                log(`log 3 - Nb joueurs : ${nbPlayers}`);
+                                                socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre,
+                                                key: storageKey, item: storageItem});
+                                                socket.broadcast.emit('newCat', newCat);
+                                                log(kittens);
+                                                io.emit('onlinePlayers', kittens);
+                                                logged = true;
+                                                checkNbPlayers();
+                                            }
+                                        });
+                                    // });
+
+                                    // const db = client.db(dbName);
+                                    // const collection = db.collection('users');
+                                    // collection.insertOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp, email: dInfosJoueur.email, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre, admin: false});
+
                                 }
                                 client.close();
                             });
 
-                            log(3);
-                            socket.pseudo = dInfosJoueur.pseudo;
-                            let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.email, dInfosJoueur.race, dInfosJoueur.genre, dInfosJoueur.img, socket.id);
-                            log('Nouveau joueur : ', newCat);
-                            let pseudo = dInfosJoueur.pseudo;
-                            kittens[socket.id] = newCat;
-                            socket.playerId = kittens[socket.id].identifiant;
-                            nbPlayers++;
+                            // log(3);
+                            // socket.pseudo = dInfosJoueur.pseudo;
+                            // let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, dInfosJoueur.email, dInfosJoueur.race, dInfosJoueur.genre, dInfosJoueur.img, socket.id);
+                            // log('Nouveau joueur : ', newCat);
+                            // let pseudo = dInfosJoueur.pseudo;
+                            // kittens[socket.id] = newCat;
+                            // socket.playerId = kittens[socket.id].identifiant;
+                            // nbPlayers++;
 
-                            log(`log 3 - Nb joueurs : ${nbPlayers}`);
-                            socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre,
-                            key: storageKey, item: storageItem});
-                            socket.broadcast.emit('newCat', newCat);
-                            log(kittens);
-                            io.emit('onlinePlayers', kittens);
-                            logged = true;
-                            checkNbPlayers();
+                            // log(`log 3 - Nb joueurs : ${nbPlayers}`);
+                            // socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: dInfosJoueur.img, race: dInfosJoueur.race, genre: dInfosJoueur.genre,
+                            // key: storageKey, item: storageItem});
+                            // socket.broadcast.emit('newCat', newCat);
+                            // log(kittens);
+                            // io.emit('onlinePlayers', kittens);
+                            // logged = true;
+                            // checkNbPlayers();
 
                             // res.redirect('/profil');
                             } else{
@@ -405,6 +441,7 @@ let comparePwd = function(pwdEnClair, pwdHash){
                         }
                     });
                 }
+                client.close();
             });
         } else{
             if (aPseudo && bPwd && !dInfosJoueur.firstLogin){
@@ -419,40 +456,78 @@ let comparePwd = function(pwdEnClair, pwdHash){
                         log(`On est dans le "else" de la fonction "findUserInDB".`);
                         const db = client.db(dbName);
                         const collection = db.collection('users');
-                        collection.findOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp}, function(error,datas){
+                        // collection.findOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp}, function(error,datas){
+                        collection.findOne({pseudo: dInfosJoueur.pseudo}, function(error,datas){
                             infosJoueursBDD = datas;
                             log(`On rentre dans la fonction de callback de "findOne". - log 5`);
                             log(infosJoueursBDD);
+
                             if(error){
                                 log(`Que se passe-t-il? ${error}`);
                             } else{
+
                                 if(!datas){
                                     log(6);
-                                    socket.emit('badInfos', {msg: 'Le pseudo et/ou le mot de passe est incorrect. Veuillez réessayer.'});
+                                    // socket.emit('badInfos', {msg: 'Le pseudo et/ou le mot de passe est incorrect. Veuillez réessayer.'});
+                                    socket.emit('badInfos', {msg: 'Le pseudo est incorrect. Veuillez réessayer.'});
                                 } else{
                                     log(7);
-                                    socket.pseudo = dInfosJoueur.pseudo;
-                                    // let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
-                                    let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.email, infosJoueursBDD.race, infosJoueursBDD.genre, infosJoueursBDD.avatar, socket.id);
 
-                                    if (infosJoueursBDD.admin){
-                                        newCat.admin = infosJoueursBDD.admin;
-                                    }
+                                    log(`7.5 : On a récupéré les infos en base et on va vérifier le mdp.`);
+                                    bcrypt.compare(dInfosJoueur.mdp, datas.pwd, function(err, res) {
+                                        if(res){
+                                            socket.pseudo = dInfosJoueur.pseudo;
+                                            let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.email, infosJoueursBDD.race, infosJoueursBDD.genre, infosJoueursBDD.avatar, socket.id);
 
-                                    log('Nouveau joueur : ', newCat);
-                                    let pseudo = dInfosJoueur.pseudo;
-                                    kittens[socket.id] = newCat;
-                                    socket.playerId = kittens[socket.id].identifiant;
-                                    nbPlayers++;
+                                            if (infosJoueursBDD.admin){
+                                                newCat.admin = infosJoueursBDD.admin;
+                                            }
+
+                                            log('Nouveau joueur : ', newCat);
+                                            // let pseudo = dInfosJoueur.pseudo;
+                                            kittens[socket.id] = newCat;
+                                            socket.playerId = kittens[socket.id].identifiant;
+                                            nbPlayers++;
+                                
+                                            log(`Nb joueurs : ${nbPlayers}`);
+
+                                            socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: newCat.avatar, race: newCat.race, genre: newCat.genre, key: storageKey, item: storageItem});
+                                            socket.broadcast.emit('newCat', newCat);
+                                            log(kittens);
+
+                                            io.emit('onlinePlayers', kittens);
+
+                                            logged = true;
+
+                                            checkNbPlayers();
+
+                                        } else{
+                                            socket.emit('badInfos', {msg: 'Le mot de passe est invalide. Veuillez réessayer.'});
+                                        }
+                                    });
+
+                                    // socket.pseudo = dInfosJoueur.pseudo;
+                                    // // let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.avatar, socket.id);
+                                    // let newCat = new Kitten(dInfosJoueur.pseudo, dInfosJoueur.mdp, infosJoueursBDD.email, infosJoueursBDD.race, infosJoueursBDD.genre, infosJoueursBDD.avatar, socket.id);
+
+                                    // if (infosJoueursBDD.admin){
+                                    //     newCat.admin = infosJoueursBDD.admin;
+                                    // }
+
+                                    // log('Nouveau joueur : ', newCat);
+                                    // let pseudo = dInfosJoueur.pseudo;
+                                    // kittens[socket.id] = newCat;
+                                    // socket.playerId = kittens[socket.id].identifiant;
+                                    // nbPlayers++;
                         
-                                    log(`Nb joueurs : ${nbPlayers}`);
+                                    // log(`Nb joueurs : ${nbPlayers}`);
 
-                                    socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: newCat.avatar, race: newCat.race, genre: newCat.genre, key: storageKey, item: storageItem});
-                                    socket.broadcast.emit('newCat', newCat);
-                                    log(kittens);
-                                    io.emit('onlinePlayers', kittens);
-                                    logged = true;
-                                    checkNbPlayers();
+                                    // socket.emit('loginOK', {pseudo: dInfosJoueur.pseudo, avatar: newCat.avatar, race: newCat.race, genre: newCat.genre, key: storageKey, item: storageItem});
+                                    // socket.broadcast.emit('newCat', newCat);
+                                    // log(kittens);
+                                    // io.emit('onlinePlayers', kittens);
+                                    // logged = true;
+                                    // checkNbPlayers();
 
                                     // res.redirect('/profil');
                                 }
