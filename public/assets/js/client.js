@@ -178,7 +178,7 @@
 /********************************************* Ajout de ch'amis *********************************************/
 
     // function addFriend(pseudoAmi){
-        function addFriend(){
+    function addFriend(){
     // var addFriend = function(pseudoAmi){
 // Envoi du pseudo pour la demande d'ajout en ami.
 
