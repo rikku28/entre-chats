@@ -233,36 +233,37 @@
     });
 
     socket.on('catList', function(liste){
-        // log(liste);
+        log(liste);
         log(`On est dans le résultat de la recherche de chats.`);
         $('#res-search-cats').empty();
-        
-        let listeChats = [];
 
-        for(var key in liste){
-            listeChats.push(liste[key]);
-        };
+        let listeChats = liste;
+        // let listeChats = [];
+
+        // for(var key in liste){
+        //     listeChats.push(liste[key]);
+        // };
 
         log(listeChats);
-        
-        // $.each(listeChats, function(index, value) {
-        //     log(index + ' ' + value);
-        //     $('#res-search-cats').append('<p class="fin-partie col-md-5 offset-md-1" id="chat-' + listeChats[index].pseudo + '"><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/> ' + listeChats[index].pseudo + ' <input type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '">Ajout ami</input></p>');
-        // });
-        // $('#res-search-cats').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
-        // Afficher la liste sous forme de "card" Bootstrap avec bouton pour ajout en ami.
 
 // Affichage de la liste de résultats + ajout des boutons permettant d'ajouter un chat en ami ou de lui envoyer un message
 
 // Avec onclick
         $.each(listeChats, function(index, value) {
             log(index + ' ' + value);
-            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/><button type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="addFriend(listeChats[index].pseudo);">Ajouter ' + listeChats[index].pseudo + ' en ami</button><button type="button" class="btn btn-warning envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="sendMail(listeChats[index].pseudo);">Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
+            // $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/><button type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="addFriend(listeChats[index].pseudo);">Ajouter ' + listeChats[index].pseudo + ' en ami</button><button type="button" class="btn btn-warning envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="sendMail(listeChats[index].pseudo);">Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
+            $('#res-search-cats').append('<p class="test col-md-5 offset-md-1" id="end-' + tabRanking[index].pseudo + '"><img src="' + tabRanking[index].avatar + '" class="rounded" width="40px"/> ' + tabRanking[index].pseudo + '</p>');
         });
     });
 
+// 
 
-
+        // $.each(listeChats, function(index, value) {
+        //     log(index + ' ' + value);
+        //     $('#res-search-cats').append('<p class="fin-partie col-md-5 offset-md-1" id="chat-' + listeChats[index].pseudo + '"><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/> ' + listeChats[index].pseudo + ' <input type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '">Ajout ami</input></p>');
+        // });
+        // $('#res-search-cats').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
+        // Afficher la liste sous forme de "card" Bootstrap avec bouton pour ajout en ami.
 
 /******************************************* Fin de partie ********************************************/
     socket.on('endGame', function(infos){
