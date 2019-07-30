@@ -595,13 +595,39 @@ socket.on('searchingCats', function(keyword){
 
 /********************************************* Ajout de ch'amis *********************************************/
 
+//  Enregistrement de la demande d'ajout en ami :
+
+socket.on('ajoutAmi', function(pseudoAmi){
+    log(socket.pseudo);
+    let statutAjout = 'pending';
+    let dateAjout = new Date().toString();
+    // Ajouter un ami en BDD
+
+    MongoClient.connect(url, { useNewUrlParser: true }, function(error,client){
+        if(error){
+            log(`Connexion à Mongo impossible! - log 5`);
+        } else{
+            log(`5 : on stocke le MP en bdd`);
+            const db = client.db(dbName);
+            const collection = db.collection('friends');
+            collection.insertOne({demandeur: socket.pseudo, ami: pseudoAmi, statut: statutAjout, dateAjout: dateAjout});
+        }
+        client.close();
+    });
+
+    let objetMsgAjout = 'Entre-chats : ' + socket.pseudo + ' souhaite vous ajouter en ami';
+    let msgAjout = 'Bonjour ' + pseudoAmi + ', <br/> ' + socket.pseudo '';
+    
+    sendMail.sendPrivateMsg(chatDest.email, objet, msg);
+
+    
+});
 
 
+// Mise à jour du statut de la demande d'ajout en ami : "validée" ou "rejetée"
 
 
 /********************************************* Messages privés *********************************************/
-
-
 
 socket.on('envoiMP', function(infos){
     log(infos);
@@ -642,6 +668,7 @@ socket.on('envoiMP', function(infos){
                         log(`Aucun chat ne correspond à votre recherche!`);
                         let message = 'Aucun chat ne correspond à votre recherche!';
                         socket.emit('noCat', {msg: message});
+
                     } else{
                         log(`4 : On envoie le MP par mail`);
                         sendMail.sendPrivateMsg(chatDest.email, objet, msg);
@@ -664,7 +691,6 @@ socket.on('envoiMP', function(infos){
             });
         }
     });
-
 });
 
 

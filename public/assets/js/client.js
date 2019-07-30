@@ -18,6 +18,9 @@
 // Date et timestamp de la date du jour
         var dateJour = new Date();
         var timestamp=dateJour.getTime(dateJour);
+        var zoneTxt = "";
+        var pseudoMsg = "";
+        // var pseudoAmi = "";
 
 /******************************************* Actions côté client ********************************************/
         log('Coucou côté client');
@@ -171,30 +174,26 @@
         $('#zone-infos').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
     });
 
-/********************************************* Recherche de chats *********************************************/
-    let searchCats = document.getElementById('search-bar');
-    searchCats.addEventListener('submit', function(event){
-        event.preventDefault();
-        log('Le mot-clé envoyé est : ' + $('#searching-cats').val());
-
-        socket.emit('searchingCats', {
-            recherche : $('#searching-cats').val()
-        });
-    });
+/********************************************* Ajout de ch'amis *********************************************/
 
     let addFriend = function(pseudoAmi){
-
+    // Envoi du pseudo pour la demande d'ajout en ami.
+        // pseudoAmi = pseudoDeLAmi;
+        log(pseudoAmi);
+        socket.emit('ajoutAmi', pseudoAmi);
     };
 
-    var zoneTxt;
-    var pseudoMsg;
+    socket.on('demandeAmi', infos); 
+
+/********************************************* Messages privés *********************************************/
 
     let sendMail = function(pseudoDest){
-        // Afficher fenêtre "modal" avec text area pour saisie message.
+    // Afficher fenêtre avec text area pour saisie message.
         pseudoMsg = pseudoDest;
 
         let idBtn="btn-msg-" + pseudoDest;
         let balTextArea = document.getElementById(id);
+        log(balTextArea);
 
         zoneTxt = balTextArea;
 
@@ -218,7 +217,16 @@
         // $('#chat-message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
     });
 
-    
+/********************************************* Recherche de chats *********************************************/
+    let searchCats = document.getElementById('search-bar');
+    searchCats.addEventListener('submit', function(event){
+        event.preventDefault();
+        log('Le mot-clé envoyé est : ' + $('#searching-cats').val());
+
+        socket.emit('searchingCats', {
+            recherche : $('#searching-cats').val()
+        });
+    });
 
     socket.on('catList', function(liste){
         // log(liste);
@@ -233,10 +241,13 @@
         // });
         // $('#res-search-cats').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
         // Afficher la liste sous forme de "card" Bootstrap avec bouton pour ajout en ami.
+
+// Affichage de la liste de résultats + ajout des boutons permettant d'ajouter un chat en ami ou de lui envoyer un message
+
 // Avec onclick
         $.each(listeChats, function(index, value) {
             log(index + ' ' + value);
-            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/><button type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="addFriend(listeChats[index].pseudo);">Ajouter ' + listeChats[index].pseudo + ' en ami</button><button type="button" class="btn btn-warning envoi-msg" value="' + listeChats[index].pseudo + '" id="' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="sendMail(listeChats[index].pseudo);">Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
+            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/><button type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="addFriend(listeChats[index].pseudo);">Ajouter ' + listeChats[index].pseudo + ' en ami</button><button type="button" class="btn btn-warning envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="sendMail(listeChats[index].pseudo);">Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
         });
     });
 
