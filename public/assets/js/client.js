@@ -180,7 +180,7 @@
 
     // function addFriend(pseudoAmi){
     // function addFriend(){
-    let addFriend = function(pseudoAmi){
+    let addFriend = function(pseudoDeLAmi){
 // Envoi du pseudo pour la demande d'ajout en ami.
 
         log(`On est dans la fonction sendMail`);
