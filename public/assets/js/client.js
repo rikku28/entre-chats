@@ -175,17 +175,18 @@
     });
 
 
+
 /********************************************* Ajout de ch'amis *********************************************/
 
     // function addFriend(pseudoAmi){
-    function addFriend(){
-    // var addFriend = function(pseudoAmi){
+    // function addFriend(){
+    let addFriend = function(pseudoAmi){
 // Envoi du pseudo pour la demande d'ajout en ami.
 
         log(`On est dans la fonction sendMail`);
-        // pseudoAmi = pseudoDeLAmi;
-        // log(pseudoAmi);
-        // socket.emit('ajoutAmi', pseudoAmi);
+        pseudoAmi = pseudoDeLAmi;
+        log(pseudoAmi);
+        socket.emit('ajoutAmi', pseudoAmi);
     };
 
 // Voir les demandes d'amis reçues
@@ -196,19 +197,19 @@
 
 /********************************************* Messages privés *********************************************/
     // function sendMail(pseudoDest){
-    function sendMail(){
-    // var sendMail = function(pseudoDest){
+    // function sendMail(){
+    let sendMail = function(pseudoDest){
     // Afficher fenêtre avec text area pour saisie message.
         log(`On est dans la fonction sendMail`);
-        // pseudoMsg = pseudoDest;
+        pseudoMsg = pseudoDest;
 
-        // let idBtn="btn-msg-" + pseudoDest;
-        // let balTextArea = document.getElementById(id);
-        // log(balTextArea);
+        let idBtn="btn-msg-" + pseudoDest;
+        let balTextArea = document.getElementById(id);
+        log(balTextArea);
 
-        // zoneTxt = balTextArea;
+        zoneTxt = balTextArea;
 
-        // $('#' + balTextArea).after('<div class="container"><form id="txt-mp"><div class="form-group"><label for="saisieMsgPrive">Saisissez votre message</label><textarea class="form-control" id="saisieMsgPrive" placeholder="Saisissez votre message pour ' + pseudoDest + '" rows="3"></textarea></div><button type="submit" class="btn btn-primary mb-2">Confirm identity</button></form></div>');
+        $('#' + balTextArea).after('<div class="container"><form id="txt-mp"><div class="form-group"><label for="saisieMsgPrive">Saisissez votre message</label><textarea class="form-control" id="saisieMsgPrive" placeholder="Saisissez votre message pour ' + pseudoDest + '" rows="3"></textarea></div><button type="submit" class="btn btn-primary mb-2">Confirm identity</button></form></div>');
 
         // Sinon tester : balTextArea.after(); ou comme dans le jeu-cv
     };
@@ -255,19 +256,6 @@
 
 // Affichage de la liste de résultats + ajout des boutons permettant d'ajouter un chat en ami ou de lui envoyer un message
 
-/********************************************* Ajout de ch'amis *********************************************/
-
-    // function addFriend(pseudoAmi){
-    function addFriend(){
-    // var addFriend = function(pseudoAmi){
-// Envoi du pseudo pour la demande d'ajout en ami.
-
-        log(`On est dans la fonction sendMail`);
-        // pseudoAmi = pseudoDeLAmi;
-        // log(pseudoAmi);
-        // socket.emit('ajoutAmi', pseudoAmi);
-    };
-
 // Voir les demandes d'amis reçues
 
     // socket.on('demandeAmi', function(infos){
@@ -279,7 +267,14 @@
             // log(index + ' ' + value);
             log(index + ' ' + listeChats[index].pseudo);
 
-            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><p class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '"onclick="addFriend()" >Ajouter ' + listeChats[index].pseudo + ' en ami</p><p class="btn btn-warning m-3 envoi-msg"  id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail()" >Envoyer un mail à ' + listeChats[index].pseudo + '</p></div>');
+            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><input type="button" class="btn btn-warning m-3 envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" placeholder="Ajouter ' + listeChats[index].pseudo + ' en ami "></div>');
+
+            $("#btn-add-" + listeChats[index].pseudo).click(function(e, pseudo){
+                e.preventDefault();
+                addFriend(listeChats[index].pseudo);
+            });
+
+            // $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><p class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '"onclick="addFriend()" >Ajouter ' + listeChats[index].pseudo + ' en ami</p><p class="btn btn-warning m-3 envoi-msg"  id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail()" >Envoyer un mail à ' + listeChats[index].pseudo + '</p></div>');
 
 // type="button" value="' + listeChats[index].pseudo + '" onclick="sendMail(\'' + listeChats[index].pseudo + '\')"
 
