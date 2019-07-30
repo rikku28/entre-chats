@@ -297,23 +297,23 @@ io.on('connection', function(socket){
 
 /*********************************** Fonction de génération du cryptage des mots de passe *******************************************/
 
-let cryptPwd = function(pwdEnClair){
-    bcrypt.genSalt(saltRounds, function(err, salt) {
-        bcrypt.hash(pwdEnClair, salt, function(err, hash) {
-            // Store hash in your password DB.
-        });
-    });
-};
+// let cryptPwd = function(pwdEnClair){
+//     bcrypt.genSalt(saltRounds, function(err, salt) {
+//         bcrypt.hash(pwdEnClair, salt, function(err, hash) {
+//             // Store hash in your password DB.
+//         });
+//     });
+// };
 
 // OU : bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
   // Store hash in your password DB.
 // });
 
-let comparePwd = function(pwdEnClair, pwdHash){
-    // Load hash from your password DB.
-    bcrypt.compare(pwdEnClair, pwdHash, function(err, res) {
-        // res == true
-    });
+// let comparePwd = function(pwdEnClair, pwdHash){
+//     // Load hash from your password DB.
+//     bcrypt.compare(pwdEnClair, pwdHash, function(err, res) {
+//         // res == true
+//     });
     // bcrypt.compare(someOtherPlaintextPassword, hash, function(err, res) {
     //     // res == false
     // });
@@ -606,6 +606,8 @@ socket.on('ajoutAmi', function(pseudoAmi){
     let objetMsgAjout = 'Entre-chats : ' + socket.pseudo + ' souhaite vous ajouter en ami';
     let msgAjout = 'Bonjour ' + pseudoAmi + ', <br/> ' + socket.pseudo + ' t\'a demandé en ami. Connecte-toi pour valider sa demande.<br/> A bientôt sur <a href="http://entre-chats.herokuapp.com" target="">Entre-chats</a>.';
 
+    log(msgAjout);
+
     // Ajouter un ami en BDD
 
     // MongoClient.connect(url, { useNewUrlParser: true }, function(error,client){
@@ -630,7 +632,7 @@ socket.on('ajoutAmi', function(pseudoAmi){
             log(`Connexion à MongoDB : OK - On va chercher le chat.`);
             const db = client.db(dbName);
             const collection = db.collection('users');
-            collection.findOne({"pseudo": infos.pour}, {projection:{pseudo:1, email: 1, _id:0}}).toArray(function(err,data){
+            collection.findOne({"pseudo": pseudoAmi}, {projection:{pseudo:1, email: 1, _id:0}}).toArray(function(err,data){
                 log(`On rentre dans la fonction de callback.`);
                 if(err){
                     log(`2 - Erreur : Que se passe-t-il? ${err}`);
