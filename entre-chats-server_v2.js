@@ -632,7 +632,9 @@ socket.on('ajoutAmi', function(pseudoAmi){
             log(`Connexion à MongoDB : OK - On va chercher le chat.`);
             const db = client.db(dbName);
             const collection = db.collection('users');
-            collection.findOne({"pseudo": pseudoAmi}, {projection:{pseudo:1, email: 1, _id:0}}).toArray(function(err,data){
+// collection.findOne({pseudo: dInfosJoueur.pseudo, pwd: dInfosJoueur.mdp}, function(error,datas){
+// collection.findOne({pseudo: kittens[player].pseudo}, {projection:{pseudo:1, lastScore:1, bestScore:1, _id:0}}, function(error, datas){
+            collection.findOne({"pseudo": pseudoAmi}, {projection:{pseudo:1, email: 1, _id:0}}, function(err,data){
                 log(`On rentre dans la fonction de callback.`);
                 if(err){
                     log(`2 - Erreur : Que se passe-t-il? ${err}`);
@@ -712,7 +714,7 @@ socket.on('envoiMP', function(infos){
             log(`Connexion à MongoDB : OK - On va chercher le chat.`);
             const db = client.db(dbName);
             const collection = db.collection('users');
-            collection.findOne({"pseudo": infos.pour}, {projection:{pseudo:1, email: 1, _id:0}}).toArray(function(err,data){
+            collection.findOne({"pseudo": infos.pour}, {projection:{pseudo:1, email: 1, _id:0}}, function(err,data){
                 log(`On rentre dans la fonction de callback.`);
                 if(err){
                     log(`2 - Erreur : Que se passe-t-il? ${err}`);
