@@ -195,6 +195,7 @@
     function sendMail(pseudoDest){
     // var sendMail = function(pseudoDest){
     // Afficher fenêtre avec text area pour saisie message.
+        log(`On est dans la fonction sendMail`);
         pseudoMsg = pseudoDest;
 
         let idBtn="btn-msg-" + pseudoDest;
@@ -255,7 +256,9 @@
             // log(index + ' ' + value);
             log(index + ' ' + listeChats[index].pseudo);
 
-            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><button type="button" class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="addFriend(\'' + listeChats[index].pseudo + '\')">Ajouter ' + listeChats[index].pseudo + ' en ami</button><button type="button" class="btn btn-warning m-3 envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail(\'' + listeChats[index].pseudo + '\')">Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
+            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><button class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" onclick="addFriend(\'' + listeChats[index].pseudo + '\')" >Ajouter ' + listeChats[index].pseudo + ' en ami</button><button class="btn btn-warning m-3 envoi-msg"  id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail()" >Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
+
+// type="button" value="' + listeChats[index].pseudo + '" onclick="sendMail(\'' + listeChats[index].pseudo + '\')"
 
             // $('#res-search-cats').append('<p class="col-md-5 offset-md-1" id="end-' + listeChats[index].pseudo + '"><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/> ' + listeChats[index].pseudo + '</p>');
         });
