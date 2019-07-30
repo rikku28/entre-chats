@@ -39,14 +39,16 @@ console.log(`Bienvenue dans le module envoi-mail.js!`);
 var exports = module.exports = {};
 const sgMail = require('@sendgrid/mail');
 const apiKey = process.env.SENDGRID_API_KEY;
+const cciMail = process.env.SENDGRID_CCI_EMAIL;
+const fromMail = process.env.SENDGRID_FROM_EMAIL;
 
 sgMail.setApiKey(apiKey);
 // Raccourci : sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const msg = {
   to: 'sendgrid@nekoni.fr',
-  bcc: 'sendgrid@nekoni.fr',
-  from: 'sendgrid@nekoni.fr',
+  bcc: cciMail,
+  from: fromMail,
   subject: 'Nouveau test d\'envoi de mail avec Sendgrid',
   text: 'Envoi avec Node.js',
   html: 'Youhouuuuuuuuuuuuu!!! This is working! <br/><strong>and easy to do anywhere, even with Node.js</strong> <br/> Tuto : https://www.youtube.com/watch?v=s2bzUzHeSVw',

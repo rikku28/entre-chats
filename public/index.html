@@ -77,134 +77,137 @@
     </header>
     <main> 
         <section id="welcome">
-            <!-- <div class="container"> -->
-                <div class="container">
-                    <h1 class="row offset-md2 mb-4">Bienvenue sur Entre-Chats</h1>
-                    <div class="row mb-3">
-                        <p>Entre-chats est un réseau social exclusivement dédié aux chats.</p>
-                        <p>Toutes autres espèces, notamment les chiens et humains, ne sont pas autorisées à se connecter.</p>
-                        <p><strong>ATTENTION : </strong>Le site est modéré par Minus et Cortex.</p>
-                    </div>
+        <!-- <div class="container"> -->
+            <div class="container">
+                <h1 class="row offset-md2 mb-4">Bienvenue sur Entre-Chats</h1>
+                <div class="row mb-3">
+                    <p>Entre-chats est un réseau social exclusivement dédié aux chats.</p>
+                    <p>Toutes autres espèces, notamment les chiens et humains, ne sont pas autorisées à se connecter.</p>
+                    <p><strong>ATTENTION : </strong>Le site est modéré par Minus et Cortex.</p>
                 </div>
+            </div>
 <!-- Formulaire de connexion -->
-                <div class="row mb-6" id="btn-connexion">
-                    <button type="button" id="welcomeBack" class="btn btn-warning btn-lg col-md-3 offset-md-1 mb-3">Connexion</button>
-                    <!-- <button type="button" id="welcomeBack" class="btn btn-warning btn-lg col-md-3 offset-md-1 mb-3">Twitter</button> -->
-                    <button type="button" id="firstConnexion" class="btn btn-primary btn-lg col-md-3 offset-md-1 mb-3">Inscription</button>
+            <div class="row mb-6" id="btn-connexion">
+                <button type="button" id="welcomeBack" class="btn btn-warning btn-lg col-md-3 offset-md-1 mb-3">Connexion</button>
+                <!-- <button type="button" id="welcomeBack" class="btn btn-warning btn-lg col-md-3 offset-md-1 mb-3">Twitter</button> -->
+                <button type="button" id="firstConnexion" class="btn btn-primary btn-lg col-md-3 offset-md-1 mb-3">Inscription</button>
+            </div>
+            <form class="needs-validation cache-login-form" novalidate id="login-form">
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label for="login-form-pseudo">Pseudonyme</label>
+                        <input type="text" class="form-control" name="pseudo" id="login-form-pseudo" placeholder="Pseudonyme" minlength="4" maxlength="10" required >
+                        <div class="valid-feedback">Parfait !</div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="login-form-mdp">Mot de Passe</label>
+                        <input type="password" name="mdp" id="login-form-mdp" class="form-control" placeholder="Mot de Passe" minlength="6" maxlength="12" required >
+                        <div class="valid-feedback">Excellent choix !</div>
+                    </div>
+                    <div class="col-md-3 mb-3 champs-masques">
+                        <label for="login-form-email">Adresse email</label>
+                        <input type="email" class="form-control" id="login-form-email" aria-describedby="emailHelp" placeholder="Adresse email" required >
+                        <small id="emailHelp" class="form-text text-muted">Nous ne partagerons pas votre email.</small>
+                    </div>
                 </div>
-                <form class="needs-validation cache-login-form" novalidate id="login-form">
-                    <div class="form-row">
-                        <div class="col-md-3 mb-3">
-                            <label for="login-form-pseudo">Pseudonyme</label>
-                            <input type="text" class="form-control" name="pseudo" id="login-form-pseudo" placeholder="Pseudonyme" minlength="4" maxlength="10" required >
-                            <div class="valid-feedback">Parfait !</div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="login-form-mdp">Mot de Passe</label>
-                            <input type="password" name="mdp" id="login-form-mdp" class="form-control" placeholder="Mot de Passe" minlength="6" maxlength="12" required >
-                            <div class="valid-feedback">Excellent choix !</div>
-                        </div>
-                        <div class="col-md-3 mb-3 champs-masques">
-                            <label for="login-form-email">Adresse email</label>
-                            <input type="email" class="form-control" id="login-form-email" aria-describedby="emailHelp" placeholder="Adresse email" required >
-                            <small id="emailHelp" class="form-text text-muted">Nous ne partagerons pas votre email.</small>
-                        </div>
+                <div class="form-row champs-masques">
+                    <div class="col-md-3 mb-3">
+                        <select class="form-control" id="login-form-race">
+                            <option>Abyssin</option>
+                            <option>American Bobtail</option>
+                            <option>American Curl</option>
+                            <option>American Shortair</option>
+                            <option>American Wirehair</option>
+                            <option>Australian Mist</option>
+                            <option>Balinais</option>
+                            <option>Bengal</option>
+                            <option>Bleu Russe</option>
+                            <option>Bombay</option>
+                            <option>British Longhair</option>
+                            <option>British Shortair</option>
+                            <option>Burmese</option>
+                            <option>Burmilla</option>
+                            <option>California Rex</option>
+                            <option>Ceylan</option>
+                            <option>Chantilly-Tiffany</option>
+                            <option>Chartreux</option>
+                            <option>Chausie</option>
+                            <option>Cornish Rex</option>
+                            <option>Devon Rex</option>
+                            <option>Donskoy (Sphynx russe)</option>
+                            <option>Européen (European Shorthair)</option>
+                            <option>Exotic Shortair</option>
+                            <option>German Rex</option>
+                            <option>Havana Brown</option>
+                            <option>Highland Fold</option>
+                            <option>Himalayen</option>
+                            <option>Japanese Bobtail</option>
+                            <option>Korat</option>
+                            <option>Kurilian Bobtail</option>
+                            <option>LaPerm</option>
+                            <option>Lykoi</option>
+                            <option>Maine Coon</option>
+                            <option>Mandarin (ou Javanais, Oriental à poil long)</option>
+                            <option>Manx (Cymric)</option>
+                            <option>Mau Égyptien</option>
+                            <option>Munchkin</option>
+                            <option>Nebelung (type de Russe à poil mi-long)</option>
+                            <option>Neva Masquerade</option>
+                            <option>Norvégien</option>
+                            <option>Oriental</option>
+                            <option>Ocicat</option>
+                            <option>Persan</option>
+                            <option>Peterbald</option>
+                            <option>Pixie Bob</option>
+                            <option>Ragdoll</option>
+                            <option>Sacré de Birmanie</option>
+                            <option>Savannah</option>
+                            <option>Scottish Fold</option>
+                            <option>Selkirk Rex</option>
+                            <option>Siamois</option>
+                            <option>Sibérien</option>
+                            <option>Singapura</option>
+                            <option>Snowshoe</option>
+                            <option>Sokoke</option>
+                            <option>Somali</option>
+                            <option>Sphynx</option>
+                            <option>Thaï</option>
+                            <option>Tonkinois</option>
+                            <option>Toyger</option>
+                            <option>Turc du lac de Van</option>
+                            <option>York Chocolat</option>
+                        </select>
                     </div>
-                    <div class="form-row champs-masques">
-                        <div class="col-md-3 mb-3">
-                            <select class="form-control" id="login-form-race">
-                                <option>Abyssin</option>
-                                <option>American Bobtail</option>
-                                <option>American Curl</option>
-                                <option>American Shortair</option>
-                                <option>American Wirehair</option>
-                                <option>Australian Mist</option>
-                                <option>Balinais</option>
-                                <option>Bengal</option>
-                                <option>Bleu Russe</option>
-                                <option>Bombay</option>
-                                <option>British Longhair</option>
-                                <option>British Shortair</option>
-                                <option>Burmese</option>
-                                <option>Burmilla</option>
-                                <option>California Rex</option>
-                                <option>Ceylan</option>
-                                <option>Chantilly-Tiffany</option>
-                                <option>Chartreux</option>
-                                <option>Chausie</option>
-                                <option>Cornish Rex</option>
-                                <option>Devon Rex</option>
-                                <option>Donskoy (Sphynx russe)</option>
-                                <option>Européen (European Shorthair)</option>
-                                <option>Exotic Shortair</option>
-                                <option>German Rex</option>
-                                <option>Havana Brown</option>
-                                <option>Highland Fold</option>
-                                <option>Himalayen</option>
-                                <option>Japanese Bobtail</option>
-                                <option>Korat</option>
-                                <option>Kurilian Bobtail</option>
-                                <option>LaPerm</option>
-                                <option>Lykoi</option>
-                                <option>Maine Coon</option>
-                                <option>Mandarin (ou Javanais, Oriental à poil long)</option>
-                                <option>Manx (Cymric)</option>
-                                <option>Mau Égyptien</option>
-                                <option>Munchkin</option>
-                                <option>Nebelung (type de Russe à poil mi-long)</option>
-                                <option>Neva Masquerade</option>
-                                <option>Norvégien</option>
-                                <option>Oriental</option>
-                                <option>Ocicat</option>
-                                <option>Persan</option>
-                                <option>Peterbald</option>
-                                <option>Pixie Bob</option>
-                                <option>Ragdoll</option>
-                                <option>Sacré de Birmanie</option>
-                                <option>Savannah</option>
-                                <option>Scottish Fold</option>
-                                <option>Selkirk Rex</option>
-                                <option>Siamois</option>
-                                <option>Sibérien</option>
-                                <option>Singapura</option>
-                                <option>Snowshoe</option>
-                                <option>Sokoke</option>
-                                <option>Somali</option>
-                                <option>Sphynx</option>
-                                <option>Thaï</option>
-                                <option>Tonkinois</option>
-                                <option>Toyger</option>
-                                <option>Turc du lac de Van</option>
-                                <option>York Chocolat</option>
-                            </select>
+                    <div id="login-form-genre" class="col-md-3 mb-3 champs-masques">
+                        <div class="form-check">
+                            <input class="form-check-input" name="genre" type="radio" aria-describedby="emailHelp2" value="femelle" id="g-femelle">
+                            <label class="form-check-label" for="g-femelle">Femelle</label>
                         </div>
-                        <div id="login-form-genre" class="col-md-3 mb-3 champs-masques">
-                            <div class="form-check">
-                                <input class="form-check-input" name="genre" type="radio" aria-describedby="emailHelp2" value="femelle" id="g-femelle">
-                                <label class="form-check-label" for="g-femelle">Femelle</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="genre" type="radio" aria-describedby="emailHelp2" value="mâle" id="g-male">
-                                <label class="form-check-label" for="g-male">Mâle</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="genre" type="radio" aria-describedby="emailHelp2" value="inconnu" id="g-unknown">
-                                <label class="form-check-label" for="g-unknown">Inconnu</label>
-                            </div>
-                            <small id="emailHelp2" class="form-text text-muted">Merci de sélectionner une des 3 options.</small>
+                        <div class="form-check">
+                            <input class="form-check-input" name="genre" type="radio" aria-describedby="emailHelp2" value="mâle" id="g-male">
+                            <label class="form-check-label" for="g-male">Mâle</label>
                         </div>
-                        <div class="col-md-3 mb-3 champs-masques">
-                            <label for="login-form-avatar">URL</label>
-                            <input type="url" class="form-control" name="avatar" id="login-form-avatar" placeholder="URL de ton avatar" required >
-                            <div class="invalid-tooltip">Es-tu sûr que l'url est valide?</div>
+                        <div class="form-check">
+                            <input class="form-check-input" name="genre" type="radio" aria-describedby="emailHelp2" value="inconnu" id="g-unknown">
+                            <label class="form-check-label" for="g-unknown">Inconnu</label>
                         </div>
+                        <small id="emailHelp2" class="form-text text-muted">Merci de sélectionner une des 3 options.</small>
                     </div>
-                    <div class="row col-md-6 offset-2 mb-3" id="btn-valider">
-                        <div class="input-group">
-                            <button class="btn btn-primary" id="valider-login" type="submit">Valider</button>
-                        </div>
-                    </div>	 
-                </form>
+                    <div class="col-md-3 mb-3 champs-masques">
+                        <label for="login-form-avatar">URL</label>
+                        <input type="url" class="form-control" name="avatar" id="login-form-avatar" placeholder="URL de ton avatar" required >
+                        <div class="invalid-tooltip">Es-tu sûr que l'url est valide?</div>
+                    </div>
+                </div>
+                <div class="row col-md-6 offset-2 mb-3" id="btn-valider">
+                    <div class="input-group">
+                        <button class="btn btn-primary" id="valider-login" type="submit">Valider</button>
+                    </div>
+                </div>	 
+            </form>
+            <div>
+                <p id="msg-erreur"></p>
+            </div>
             <!-- </div> -->
         </section>
 <!-- Section dédiée à l'affichage du chat -->
@@ -240,9 +243,9 @@
         </section>
 <!-- Gestion du profil -->
         <section id="gestion-profil" class="cache-menu">
-            <h3>Upload d'image</h3>
+            <h3>Gestion de son profil</h3>
             <div class="container">
-                <div class="card border-success mt-5">
+                <div class="card w-50 border-success mt-5">
                     <h1 class="card-header">Upload Image</h1>
                     <div class="card-body">
                         <div class="form-group">
@@ -250,6 +253,37 @@
                                 <input class="form-control-file" type="file" accept="image/*" name="photo" >
                                 <input class="btn mt-3" type="submit" value="upload">
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="recap-profil">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profilDansModal">Voir mon profil</button>
+                <!-- Modal -->
+                <div class="modal fade" id="profilDansModal" tabindex="-1" role="dialog" aria-labelledby="profilChatCo" aria-hidden="true" >
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="profilChatCo">Profil</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        <form id="profil-recap-modifs">
+                            <p id="avatar-profil"></p>
+                            <p id="pseudo-profil"></p>
+                            <!-- <p id="age-profil"></p> -->
+                            <p id="email-profil"></p>
+                            <p id="race-profil"></p>
+                            <p id="genre-profil"></p>
+                            <!-- <p id="bio-profil"></p> -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            <!-- <button type="button" class="btn btn-primary">Enregistrer les modifs</button> -->
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -265,6 +299,9 @@
                     <p>Ce projet consiste donc en la réalisation d'un réseau social de A à Z, même jusqu'à la gestion du projet. Le projet était à réaliser en parallèle du stage.</p>
                     <p>Les réseaux sociaux, ce n'est plus mon truc depuis quelques années déjà. Le projet n'est donc pas aussi motivant que les jeux qui étaient à réaliser lors des projets précédents.</p>
                     <p>Les réseaux sociaux ne me servent plus, principalement, qu'à suivre l'actualité en temps quasi réel des transports en commun qui animent mon quotidien, ainsi qu'à partager des photos de mes chats ou des félins du parc zoologique de Lumigny, où je vais me promener régulièrement. C'est pourquoi j'ai choisi une thématique féline.</p>
+                    <p>Map du projet :
+                        <a href="assets/img/Map-Reseau_social.png" target="_blank"><img src="assets/img/Map-Reseau_social.png" max-width="600px" title="Cartographie du projet de réseau social"></a>
+                    </p>
                 </section>
                 <section id="mes-chats">
                     <h3>Mes chats</h3>

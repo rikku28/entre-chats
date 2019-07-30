@@ -324,13 +324,15 @@ let comparePwd = function(pwdEnClair, pwdHash){
 // Why is async mode recommended over sync mode?
 // If you are using bcrypt on a simple script, using the sync mode is perfectly fine. However, if you are using bcrypt on a server, the async mode is recommended. This is because the hashing done by bcrypt is CPU intensive, so the sync version will block the event loop and prevent your application from servicing any other inbound requests or events. The async version uses a thread pool which does not block the main event loop.
 
+// Test avec la branch bcrypt : problème de symbol illegal pour Mongo. A tester en faisant le hash séparément de l'enregistrement des infos en base.
+
 /*********************************** Fonction globale de vérification des identifiants du chat qui se connecte *******************************************/
-    let checkVerifs = function(aPseudo, bPwd, cAvatar, dInfosJoueur){
+    let checkVerifs = function(aPseudo, bPwd, cAvatar, eMail, dInfosJoueur){
         log(`On est dans la fonction "checkVerifs".`);
         log(`Infos joueur : ${dInfosJoueur}`);
         // log(`Infos joueur : ${dInfosJoueur.pseudo}`);
 
-        if(aPseudo && bPwd && cAvatar && dInfosJoueur.firstLogin){
+        if(aPseudo && bPwd && cAvatar && eMail && dInfosJoueur.firstLogin){
             // findUserInDB(dInfosJoueur.pseudo, dInfosJoueur.mdp);
             log(1);
             log(typeof dInfosJoueur.pseudo);
@@ -497,6 +499,9 @@ let comparePwd = function(pwdEnClair, pwdHash){
 
         log(`First login vaut : ${infosUser.firstLogin}`);
         let checkUrl = checkLogin.verifUrl(infosUser.img);
+
+        let checkEmail = checkLogin.verifEmail(infosUser.email);
+
         log('URL : ' + checkUrl);
         // let checkUrl = checkLogin.verifUrl(infosUser.img, infosUser.firstLogin);
         if(infosUser.firstLogin){
@@ -505,9 +510,16 @@ let comparePwd = function(pwdEnClair, pwdHash){
                 socket.emit('badAvatar', {msg: 'L\'url du lien vers votre avatar est vide ou non valide. Cela doit commencer par \'http://\' ou \'https://\''});
                 log(`Url non valide!`);
             }
+
+            if(!checkEmail){
+                socket.emit('badMail', {msg: 'L\'adresse email est vide ou non valide. Elle doit contenir un @ .'});
+                log(`Mail non valide!`);
+            }
         }
+
         log('1st Login : ' + infosUser.firstLogin);
-        checkVerifs(checkPseudo, checkPwd, checkUrl, infosUser);
+        log(`Pseudo : ${checkPseudo} , Pwd : ${checkPwd} , Email : ${checkUrl} , URL : ${checkPseudo} `);
+        checkVerifs(checkPseudo, checkPwd, checkUrl, checkEmail, infosUser);
 
         checkNbPlayers();
     });
@@ -559,11 +571,11 @@ let searchCats = function(catName){
                         log(`3 : recherche de chats`);
                         log(`Aucun chat ne correspond à votre recherche!`);
                         let message = 'Aucun chat ne correspond à votre recherche!';
-                        socket.emit('catList', {msg: message});
+                        socket.emit('noCat', {msg: message});
                     } else{
                         log(`4 : recherche de chats`);
-                        let message = resultatChats; // Ne transférer que le pseudo + avatar
-                        socket.emit('catList', {msg: message});
+                        let liste = resultatChats; // Ne transférer que le pseudo + avatar
+                        socket.emit('catList', {liste: liste});
                     }
                 }
             });

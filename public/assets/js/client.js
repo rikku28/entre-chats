@@ -91,27 +91,32 @@
 
     socket.on('alreadyUsedPseudo', function(info){
         log(`alreadyUsedPseudo`);
-        $('#date-jour').prepend('<p class="text-warning msg-login-incorrect" id="alreadyUsedPseudo"><strong>' + info.msg + '</strong></p>');
+        $('#msg-erreur').prepend('<p class="text-warning msg-login-incorrect" id="alreadyUsedPseudo"><strong>' + info.msg + '</strong></p>');
     });
 
     socket.on('badPwd', function(info){
         // log(`badPwd`);
-        $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badPwd"><strong>' + info.msg + '</strong></p>');
+        $('#msg-erreur').prepend('<p class="text-danger msg-login-incorrect" id="badPwd"><strong>' + info.msg + '</strong></p>');
     });
 
     socket.on('badAvatar', function(info){
         // log(`badAvatar`);
-        $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badAvatar"><strong>' + info.msg + '</strong></p>');
+        $('#msg-erreur').prepend('<p class="text-danger msg-login-incorrect" id="badAvatar"><strong>' + info.msg + '</strong></p>');
+    });
+
+    socket.on('badMail', function(info){
+        // log(`badAvatar`);
+        $('#msg-erreur').prepend('<p class="text-danger msg-login-incorrect" id="badAvatar"><strong>' + info.msg + '</strong></p>');
     });
 
     socket.on('badInfos', function(info){
         // log(`badInfos`);
-        $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="badInfos"><strong>' + info.msg + '</strong></p>');
+        $('#msg-erreur').prepend('<p class="text-danger msg-login-incorrect" id="badInfos"><strong>' + info.msg + '</strong></p>');
     });
 
     socket.on('userUnknown', function(info){
         // log(`userUnknown`);
-        $('#date-jour').prepend('<p class="text-danger msg-login-incorrect" id="userUnknown"><strong> Chat introuvable. Veuillez vous connecter avec les bons identifiants, ou vous inscrire si c\'est la 1ère fois que vous venez sur entre-chats.</strong></p>');
+        $('#msg-erreur').prepend('<p class="text-danger msg-login-incorrect" id="userUnknown"><strong> Chat introuvable. Veuillez vous connecter avec les bons identifiants, ou vous inscrire si c\'est la 1ère fois que vous venez sur entre-chats.</strong></p>');
         $('.cache-login-form').hide();
         $('#btn-connexion').fadeIn();
     });
@@ -122,6 +127,7 @@
         log(infos);
         localStorage.setItem(infos.key, infos.item);
         $('#login-form').remove();
+        $('.msg-login-incorrect').remove();
         $('.cache-header').fadeIn();
         $('.cache-infos-joueurs').show();
         $('#welcome').html('<h1 style="font-size: 3em">Bienvenue ' + infos.pseudo + ' <img src="' + infos.avatar + '" width="75px"/></h1>');
@@ -176,11 +182,22 @@
         });
     });
 
-    socket.on('catList', function(msg){
-        log(msg);
+    socket.on('catList', function(liste){
+        // log(liste);
+        log(`On est dans le résultat de la recherche de chats.`);
+        let listeChats = liste;
+        log(listeChats);
+        $('#res-search-cats').empty();
+        
+        $.each(listeChats, function(index, value) {
+            log(index + ' ' + value);
+            $('#res-search-cats').append('<p class="fin-partie col-md-5 offset-md-1" id="chat-' + listeChats[index].pseudo + '"><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/> ' + listeChats[index].pseudo + ' <input type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' listeChats[index].pseudo + '">Ajout ami</button></p>');
+        });
         // $('#res-search-cats').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
         // Afficher la liste sous forme de "card" Bootstrap avec bouton pour ajout en ami.
     });
+
+
 
 
 /******************************************* Fin de partie ********************************************/
@@ -225,7 +242,6 @@
             log(index + ' ' + value);
             $('#all-best-scores').append('<p class="fin-partie col-md-5 offset-md-1" id="end-' + tabRanking[index].identifiant + '"><img src="' + tabRanking[index].avatar + '" class="rounded" width="40px"/> ' + tabRanking[index].pseudo + ' - Score : <span class="score">' + tabRanking[index].bestScore + '</span></p>');
         });
-
     });
     
 /***********************************************************************/
