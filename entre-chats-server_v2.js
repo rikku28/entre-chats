@@ -678,6 +678,11 @@ socket.on('ajoutAmi', function(pseudoAmi){
 
 // A vérifier quand l'utilisateur se connecte (vérif en bdd si demandes en "pending");
 
+
+// socket.emit('demandeAmi', function(infos){
+
+// }); 
+
 // Mise à jour du statut de la demande d'ajout en ami : "validée" ou "rejetée"
 
 

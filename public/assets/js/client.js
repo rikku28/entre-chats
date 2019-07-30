@@ -183,7 +183,9 @@
         socket.emit('ajoutAmi', pseudoAmi);
     };
 
-    socket.on('demandeAmi', infos); 
+    // socket.on('demandeAmi', function(infos){
+
+    // }); 
 
 /********************************************* Messages privés *********************************************/
 
