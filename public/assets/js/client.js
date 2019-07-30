@@ -255,6 +255,25 @@
 
 // Affichage de la liste de résultats + ajout des boutons permettant d'ajouter un chat en ami ou de lui envoyer un message
 
+/********************************************* Ajout de ch'amis *********************************************/
+
+    // function addFriend(pseudoAmi){
+    function addFriend(){
+    // var addFriend = function(pseudoAmi){
+// Envoi du pseudo pour la demande d'ajout en ami.
+
+        log(`On est dans la fonction sendMail`);
+        // pseudoAmi = pseudoDeLAmi;
+        // log(pseudoAmi);
+        // socket.emit('ajoutAmi', pseudoAmi);
+    };
+
+// Voir les demandes d'amis reçues
+
+    // socket.on('demandeAmi', function(infos){
+
+    // }); 
+
 // Avec onclick
         $.each(listeChats, function(index, value) {
             // log(index + ' ' + value);
