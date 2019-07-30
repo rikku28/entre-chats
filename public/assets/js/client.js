@@ -174,52 +174,6 @@
         $('#zone-infos').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
     });
 
-/********************************************* Ajout de ch'amis *********************************************/
-
-    let addFriend = function(pseudoAmi){
-// Envoi du pseudo pour la demande d'ajout en ami.
-        // pseudoAmi = pseudoDeLAmi;
-        log(pseudoAmi);
-        socket.emit('ajoutAmi', pseudoAmi);
-    };
-
-// Voir les demandes d'amis reçues
-
-    // socket.on('demandeAmi', function(infos){
-
-    // }); 
-
-/********************************************* Messages privés *********************************************/
-
-    let sendMail = function(pseudoDest){
-    // Afficher fenêtre avec text area pour saisie message.
-        pseudoMsg = pseudoDest;
-
-        let idBtn="btn-msg-" + pseudoDest;
-        let balTextArea = document.getElementById(id);
-        log(balTextArea);
-
-        zoneTxt = balTextArea;
-
-        $('#' + balTextArea).after('<div class="container"><form id="txt-mp"><div class="form-group"><label for="saisieMsgPrive">Saisissez votre message</label><textarea class="form-control" id="saisieMsgPrive" placeholder="Saisissez votre message pour ' + pseudoDest + '" rows="3"></textarea></div><button type="submit" class="btn btn-primary mb-2">Confirm identity</button></form></div>');
-
-        // Sinon tester : balTextArea.after(); ou comme dans le jeu-cv
-    };
-
-    $('#txt-mp').submit(function(e){
-        e.preventDefault();
-        var msg = $('#saisieMsgPrive').val();
-        log(msg);
-
-        let infos = {
-            pour: pseudoMsg,
-            message: msg
-        };
-
-        socket.emit('envoiMP', infos); // Transmet le message au serveur
-        $('zoneTxt').remove;
-        // $('#chat-message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
-    });
 
 /********************************************* Recherche de chats *********************************************/
     let searchCats = document.getElementById('search-bar');
@@ -259,14 +213,52 @@
         });
     });
 
-// 
+/********************************************* Ajout de ch'amis *********************************************/
 
-        // $.each(listeChats, function(index, value) {
-        //     log(index + ' ' + value);
-        //     $('#res-search-cats').append('<p class="fin-partie col-md-5 offset-md-1" id="chat-' + listeChats[index].pseudo + '"><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/> ' + listeChats[index].pseudo + ' <input type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '">Ajout ami</input></p>');
-        // });
-        // $('#res-search-cats').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
-        // Afficher la liste sous forme de "card" Bootstrap avec bouton pour ajout en ami.
+    var addFriend = function(pseudoAmi){
+// Envoi du pseudo pour la demande d'ajout en ami.
+        // pseudoAmi = pseudoDeLAmi;
+        log(pseudoAmi);
+        socket.emit('ajoutAmi', pseudoAmi);
+    };
+
+// Voir les demandes d'amis reçues
+
+    // socket.on('demandeAmi', function(infos){
+
+    // }); 
+
+/********************************************* Messages privés *********************************************/
+
+    var sendMail = function(pseudoDest){
+    // Afficher fenêtre avec text area pour saisie message.
+        pseudoMsg = pseudoDest;
+
+        let idBtn="btn-msg-" + pseudoDest;
+        let balTextArea = document.getElementById(id);
+        log(balTextArea);
+
+        zoneTxt = balTextArea;
+
+        $('#' + balTextArea).after('<div class="container"><form id="txt-mp"><div class="form-group"><label for="saisieMsgPrive">Saisissez votre message</label><textarea class="form-control" id="saisieMsgPrive" placeholder="Saisissez votre message pour ' + pseudoDest + '" rows="3"></textarea></div><button type="submit" class="btn btn-primary mb-2">Confirm identity</button></form></div>');
+
+        // Sinon tester : balTextArea.after(); ou comme dans le jeu-cv
+    };
+
+    $('#txt-mp').submit(function(e){
+        e.preventDefault();
+        var msg = $('#saisieMsgPrive').val();
+        log(msg);
+
+        let infos = {
+            pour: pseudoMsg,
+            message: msg
+        };
+
+        socket.emit('envoiMP', infos); // Transmet le message au serveur
+        $('zoneTxt').remove;
+        // $('#chat-message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
+    });
 
 /******************************************* Fin de partie ********************************************/
     socket.on('endGame', function(infos){
