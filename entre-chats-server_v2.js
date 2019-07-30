@@ -598,31 +598,85 @@ socket.on('searchingCats', function(keyword){
 //  Enregistrement de la demande d'ajout en ami :
 
 socket.on('ajoutAmi', function(pseudoAmi){
+
     log(socket.pseudo);
     let statutAjout = 'pending';
     let dateAjout = new Date().toString();
+    
+    let objetMsgAjout = 'Entre-chats : ' + socket.pseudo + ' souhaite vous ajouter en ami';
+    let msgAjout = 'Bonjour ' + pseudoAmi + ', <br/> ' + socket.pseudo + ' t\'a demandé en ami. Connecte-toi pour valider sa demande.<br/> A bientôt sur <a href="http://entre-chats.herokuapp.com" target="">Entre-chats</a>.';
+
     // Ajouter un ami en BDD
 
-    MongoClient.connect(url, { useNewUrlParser: true }, function(error,client){
+    // MongoClient.connect(url, { useNewUrlParser: true }, function(error,client){
+    //     if(error){
+    //         log(`Connexion à Mongo impossible! - log 5`);
+    //     } else{
+    //         log(`5 : on stocke le MP en bdd`);
+    //         const db = client.db(dbName);
+    //         const collection = db.collection('friends');
+    //         collection.insertOne({demandeur: socket.pseudo, ami: pseudoAmi, statut: statutAjout, dateAjout: dateAjout});
+    //     }
+    //     client.close();
+    // });
+
+    MongoClient.connect(url, {useNewUrlParser: true}, function(error, client){
         if(error){
-            log(`Connexion à Mongo impossible! - log 5`);
+            log(`Connexion à Mongo impossible! - MP entre chats`);
+            log(error);
+            // throw error;
         } else{
-            log(`5 : on stocke le MP en bdd`);
+            log(`1 : recherche du chat à ajouter en ami.`)
+            log(`Connexion à MongoDB : OK - On va chercher le chat.`);
             const db = client.db(dbName);
-            const collection = db.collection('friends');
-            collection.insertOne({demandeur: socket.pseudo, ami: pseudoAmi, statut: statutAjout, dateAjout: dateAjout});
+            const collection = db.collection('users');
+            collection.findOne({"pseudo": infos.pour}, {projection:{pseudo:1, email: 1, _id:0}}).toArray(function(err,data){
+                log(`On rentre dans la fonction de callback.`);
+                if(err){
+                    log(`2 - Erreur : Que se passe-t-il? ${err}`);
+                } else{
+                    log(`2 : A-t-on trouvé le chat?`);
+                    let chatDest = data;
+                    client.close();
+                    log('Infos récupérées : ', data);
+
+                    // log(`Datas récupérées en base : ${resultatChats}`);
+
+                    if(!data){
+                        log(`3 : chat introuvable... Bizarre!`);
+                        log(`Aucun chat ne correspond à votre recherche!`);
+                        let message = 'Aucun chat ne correspond à votre recherche!';
+                        socket.emit('noCat', {msg: message});
+
+                    } else{
+                        log(`4 : On envoie le MP par mail`);
+                        sendMail.sendPrivateMsg(chatDest.email, objetMsgAjout, msgAjout);
+
+                        log(`5 : on stocke le MP en bdd`);
+
+                        MongoClient.connect(url, { useNewUrlParser: true }, function(error,client){
+                            if(error){
+                                log(`Connexion à Mongo impossible! - log 5`);
+                            } else{
+                                log(`5 : on stocke le MP en bdd`);
+                                const db = client.db(dbName);
+                                const collection = db.collection('friends');
+                                collection.insertOne({demandeur: socket.pseudo, ami: pseudoAmi, statut: statutAjout, dateDemande: dateAjout});
+                            }
+                            client.close();
+                        });
+                    }
+                }
+            });
         }
-        client.close();
     });
-
-    let objetMsgAjout = 'Entre-chats : ' + socket.pseudo + ' souhaite vous ajouter en ami';
-    let msgAjout = 'Bonjour ' + pseudoAmi + ', <br/> ' + socket.pseudo '';
-    
-    sendMail.sendPrivateMsg(chatDest.email, objet, msg);
-
     
 });
 
+
+/********************************************* Vérification des demandes d'ajout en amis *********************************************/
+
+// A vérifier quand l'utilisateur se connecte (vérif en bdd si demandes en "pending");
 
 // Mise à jour du statut de la demande d'ajout en ami : "validée" ou "rejetée"
 
