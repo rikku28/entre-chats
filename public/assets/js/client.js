@@ -260,7 +260,7 @@
             // log(index + ' ' + value);
             log(index + ' ' + listeChats[index].pseudo);
 
-            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><p class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '"onclick="addFriend();" >Ajouter ' + listeChats[index].pseudo + ' en ami</p><p class="btn btn-warning m-3 envoi-msg"  id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail();" >Envoyer un mail à ' + listeChats[index].pseudo + '</p></div>');
+            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><p class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '"onclick="addFriend()" >Ajouter ' + listeChats[index].pseudo + ' en ami</p><p class="btn btn-warning m-3 envoi-msg"  id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail()" >Envoyer un mail à ' + listeChats[index].pseudo + '</p></div>');
 
 // type="button" value="' + listeChats[index].pseudo + '" onclick="sendMail(\'' + listeChats[index].pseudo + '\')"
 
