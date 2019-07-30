@@ -177,11 +177,13 @@
 /********************************************* Ajout de ch'amis *********************************************/
 
     let addFriend = function(pseudoAmi){
-    // Envoi du pseudo pour la demande d'ajout en ami.
+// Envoi du pseudo pour la demande d'ajout en ami.
         // pseudoAmi = pseudoDeLAmi;
         log(pseudoAmi);
         socket.emit('ajoutAmi', pseudoAmi);
     };
+
+// Voir les demandes d'amis reçues
 
     // socket.on('demandeAmi', function(infos){
 
