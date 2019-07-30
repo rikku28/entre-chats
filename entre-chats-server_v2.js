@@ -564,7 +564,7 @@ let searchCats = function(catName){
                     let resultatChats = data;
                     client.close();
                     log('Infos récupérées : ', data);
-
+                    log('Nombre de scores récupérés : ' + resultatChats.length);
                     // log(`Datas récupérées en base : ${resultatChats}`);
 
                     if(!data){
@@ -575,7 +575,7 @@ let searchCats = function(catName){
                     } else{
                         log(`4 : recherche de chats`);
                         let liste = resultatChats; // Ne transférer que le pseudo + avatar
-                        socket.emit('catList', {liste: liste});
+                        socket.emit('catList', resultatChats);
                     }
                 }
             });
