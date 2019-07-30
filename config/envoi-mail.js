@@ -46,7 +46,7 @@ sgMail.setApiKey(apiKey);
 // Raccourci : sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.sendPrivateMsg = function(pour, objet, msg){
-    let msg = {
+    let leMail = {
         to: pour,
         bcc: cciMail,
         from: fromMail,
@@ -55,7 +55,7 @@ exports.sendPrivateMsg = function(pour, objet, msg){
         html: msg
     };
 
-    sgMail.send(msg);
+    sgMail.send(leMail);
 }
 
 

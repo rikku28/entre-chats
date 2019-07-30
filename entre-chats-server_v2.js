@@ -650,7 +650,7 @@ socket.on('ajoutAmi', function(pseudoAmi){
                         log(`3 : chat introuvable... Bizarre!`);
                         log(`Aucun chat ne correspond à votre recherche!`);
                         let message = 'Aucun chat ne correspond à votre recherche!';
-                        socket.emit('noCat', {msg: message});
+                        socket.emit('noCat', message);
 
                     } else{
                         log(`4 : On envoie le MP par mail`);
