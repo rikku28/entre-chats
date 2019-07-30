@@ -20,7 +20,7 @@
         var timestamp=dateJour.getTime(dateJour);
         var zoneTxt = "";
         var pseudoMsg = "";
-        // var pseudoAmi = "";
+        var pseudoAmi = "";
 
 /******************************************* Actions côté client ********************************************/
         log('Coucou côté client');
