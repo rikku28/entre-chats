@@ -175,6 +175,54 @@
     });
 
 
+/********************************************* Ajout de ch'amis *********************************************/
+
+    function addFriend(pseudoAmi){
+    // var addFriend = function(pseudoAmi){
+// Envoi du pseudo pour la demande d'ajout en ami.
+        // pseudoAmi = pseudoDeLAmi;
+        log(pseudoAmi);
+        socket.emit('ajoutAmi', pseudoAmi);
+    };
+
+// Voir les demandes d'amis reçues
+
+    // socket.on('demandeAmi', function(infos){
+
+    // }); 
+
+/********************************************* Messages privés *********************************************/
+    function sendMail(pseudoDest){
+    // var sendMail = function(pseudoDest){
+    // Afficher fenêtre avec text area pour saisie message.
+        pseudoMsg = pseudoDest;
+
+        let idBtn="btn-msg-" + pseudoDest;
+        let balTextArea = document.getElementById(id);
+        log(balTextArea);
+
+        zoneTxt = balTextArea;
+
+        $('#' + balTextArea).after('<div class="container"><form id="txt-mp"><div class="form-group"><label for="saisieMsgPrive">Saisissez votre message</label><textarea class="form-control" id="saisieMsgPrive" placeholder="Saisissez votre message pour ' + pseudoDest + '" rows="3"></textarea></div><button type="submit" class="btn btn-primary mb-2">Confirm identity</button></form></div>');
+
+        // Sinon tester : balTextArea.after(); ou comme dans le jeu-cv
+    };
+
+    $('#txt-mp').submit(function(e){
+        e.preventDefault();
+        var msg = $('#saisieMsgPrive').val();
+        log(msg);
+
+        let infos = {
+            pour: pseudoMsg,
+            message: msg
+        };
+
+        socket.emit('envoiMP', infos); // Transmet le message au serveur
+        $('zoneTxt').remove;
+        // $('#chat-message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
+    });
+
 /********************************************* Recherche de chats *********************************************/
     let searchCats = document.getElementById('search-bar');
     searchCats.addEventListener('submit', function(event){
@@ -207,57 +255,10 @@
             // log(index + ' ' + value);
             log(index + ' ' + listeChats[index].pseudo);
 
-            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><button type="button" class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="addFriend(' + listeChats[index].pseudo + ')">Ajouter ' + listeChats[index].pseudo + ' en ami</button><button type="button" class="btn btn-warning m-3 envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail(' + listeChats[index].pseudo + ')">Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
+            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><button type="button" class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="addFriend(\'' + listeChats[index].pseudo + '\')">Ajouter ' + listeChats[index].pseudo + ' en ami</button><button type="button" class="btn btn-warning m-3 envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail(\'' + listeChats[index].pseudo + '\')">Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
 
             // $('#res-search-cats').append('<p class="col-md-5 offset-md-1" id="end-' + listeChats[index].pseudo + '"><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/> ' + listeChats[index].pseudo + '</p>');
         });
-    });
-
-/********************************************* Ajout de ch'amis *********************************************/
-
-    var addFriend = function(pseudoAmi){
-// Envoi du pseudo pour la demande d'ajout en ami.
-        // pseudoAmi = pseudoDeLAmi;
-        log(pseudoAmi);
-        socket.emit('ajoutAmi', pseudoAmi);
-    };
-
-// Voir les demandes d'amis reçues
-
-    // socket.on('demandeAmi', function(infos){
-
-    // }); 
-
-/********************************************* Messages privés *********************************************/
-
-    var sendMail = function(pseudoDest){
-    // Afficher fenêtre avec text area pour saisie message.
-        pseudoMsg = pseudoDest;
-
-        let idBtn="btn-msg-" + pseudoDest;
-        let balTextArea = document.getElementById(id);
-        log(balTextArea);
-
-        zoneTxt = balTextArea;
-
-        $('#' + balTextArea).after('<div class="container"><form id="txt-mp"><div class="form-group"><label for="saisieMsgPrive">Saisissez votre message</label><textarea class="form-control" id="saisieMsgPrive" placeholder="Saisissez votre message pour ' + pseudoDest + '" rows="3"></textarea></div><button type="submit" class="btn btn-primary mb-2">Confirm identity</button></form></div>');
-
-        // Sinon tester : balTextArea.after(); ou comme dans le jeu-cv
-    };
-
-    $('#txt-mp').submit(function(e){
-        e.preventDefault();
-        var msg = $('#saisieMsgPrive').val();
-        log(msg);
-
-        let infos = {
-            pour: pseudoMsg,
-            message: msg
-        };
-
-        socket.emit('envoiMP', infos); // Transmet le message au serveur
-        $('zoneTxt').remove;
-        // $('#chat-message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
     });
 
 /******************************************* Fin de partie ********************************************/
