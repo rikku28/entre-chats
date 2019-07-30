@@ -235,9 +235,15 @@
     socket.on('catList', function(liste){
         // log(liste);
         log(`On est dans le résultat de la recherche de chats.`);
-        let listeChats = liste;
-        log(listeChats);
         $('#res-search-cats').empty();
+        
+        let listeChats = [];
+
+        for(var key in liste){
+            listeChats.push(liste[key]);
+        };
+
+        log(listeChats);
         
         // $.each(listeChats, function(index, value) {
         //     log(index + ' ' + value);

@@ -34,6 +34,8 @@ h3, legend{
     font-size: 1.8em;
     text-align: center;
     font-family: 'Ranchers', 'Bangers', 'Boogaloo', cursive;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 p, span, label, #menu{
