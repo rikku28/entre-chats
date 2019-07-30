@@ -252,7 +252,7 @@
         $.each(listeChats, function(index, value) {
             log(index + ' ' + value);
             // $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/><button type="button" class="btn btn-primary ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="addFriend(listeChats[index].pseudo);">Ajouter ' + listeChats[index].pseudo + ' en ami</button><button type="button" class="btn btn-warning envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onClick="sendMail(listeChats[index].pseudo);">Envoyer un mail à ' + listeChats[index].pseudo + '</button></div>');
-            $('#res-search-cats').append('<p class="test col-md-5 offset-md-1" id="end-' + tabRanking[index].pseudo + '"><img src="' + tabRanking[index].avatar + '" class="rounded" width="40px"/> ' + tabRanking[index].pseudo + '</p>');
+            $('#res-search-cats').append('<p class="test col-md-5 offset-md-1" id="end-' + listeChats[index].pseudo + '"><img src="' + listeChats[index].avatar + '" class="rounded" width="40px"/> ' + listeChats[index].pseudo + '</p>');
         });
     });
 
