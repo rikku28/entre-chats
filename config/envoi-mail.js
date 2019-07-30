@@ -45,12 +45,26 @@ const fromMail = process.env.SENDGRID_FROM_EMAIL;
 sgMail.setApiKey(apiKey);
 // Raccourci : sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const msg = {
-  to: 'sendgrid@nekoni.fr',
-  bcc: cciMail,
-  from: fromMail,
-  subject: 'Nouveau test d\'envoi de mail avec Sendgrid',
-  text: 'Envoi avec Node.js',
-  html: 'Youhouuuuuuuuuuuuu!!! This is working! <br/><strong>and easy to do anywhere, even with Node.js</strong> <br/> Tuto : https://www.youtube.com/watch?v=s2bzUzHeSVw',
-};
-sgMail.send(msg);
+exports.sendPrivateMsg = function(pour, objet, msg){
+    let msg = {
+        to: pour,
+        bcc: cciMail,
+        from: fromMail,
+        subject: objet,
+        // text: 'Envoi avec Node.js',
+        html: msg
+    };
+
+    sgMail.send(msg);
+}
+
+
+// const msg = {
+//     to: 'ladresse@dudestinataire.fr',
+//     bcc: cciMail,
+//     from: fromMail,
+//     subject: 'Nouveau test d\'envoi de mail avec Sendgrid',
+//     // text: 'Envoi avec Node.js',
+//     html: 'Youhouuuuuuuuuuuuu!!! This is working! <br/><strong>and easy to do anywhere, even with Node.js</strong> <br/> Tuto : https://www.youtube.com/watch?v=s2bzUzHeSVw',
+// };
+// sgMail.send(msg);

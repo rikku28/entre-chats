@@ -23,7 +23,7 @@ const multer  = require('multer');
 /************************************* Données pour server.js : Modularisation de la vérification des identifants du joueur qui se connecte *************************************/
 // console.log('Dirname : ' + __dirname);
 const checkLogin = require('./config/check-login.js');
-// const sendMail = require('./config/envoi-mail.js');
+const sendMail = require('./config/envoi-mail.js');
 // const uploadImg = require('./config/upload-img.js');
 
 /************************************* Configuration du module MongoDB *************************************/
@@ -591,6 +591,82 @@ socket.on('searchingCats', function(keyword){
     log(chercheChats);
     searchCats(chercheChats);
 });
+
+
+/********************************************* Ajout de ch'amis *********************************************/
+
+
+
+
+
+/********************************************* Messages privés *********************************************/
+
+
+
+socket.on('envoiMP', function(infos){
+    log(infos);
+    log(socket.pseudo);
+
+    // let emetteurPseudo = socket.pseudo;
+    let destinataire = infos.pour;
+    let msg = infos.message;
+    let dateMsg = new Date().toString();
+    let objet = 'Entre-chats : Message privé de ' + socket.pseudo;
+
+// On cherche l'email du destinataire en base
+
+    MongoClient.connect(url, {useNewUrlParser: true}, function(error, client){
+        if(error){
+            log(`Connexion à Mongo impossible! - MP entre chats`);
+            log(error);
+            // throw error;
+        } else{
+            log(`1 : recherche du chat destinataire`)
+            log(`Connexion à MongoDB : OK - On va chercher le chat.`);
+            const db = client.db(dbName);
+            const collection = db.collection('users');
+            collection.findOne({"pseudo": infos.pour}, {projection:{pseudo:1, email: 1, _id:0}}).toArray(function(err,data){
+                log(`On rentre dans la fonction de callback.`);
+                if(err){
+                    log(`2 - Erreur : Que se passe-t-il? ${err}`);
+                } else{
+                    log(`2 : A-t-on trouvé le chat?`);
+                    let chatDest = data;
+                    client.close();
+                    log('Infos récupérées : ', data);
+
+                    // log(`Datas récupérées en base : ${resultatChats}`);
+
+                    if(!data){
+                        log(`3 : chat introuvable... Bizarre!`);
+                        log(`Aucun chat ne correspond à votre recherche!`);
+                        let message = 'Aucun chat ne correspond à votre recherche!';
+                        socket.emit('noCat', {msg: message});
+                    } else{
+                        log(`4 : On envoie le MP par mail`);
+                        sendMail.sendPrivateMsg(chatDest.email, objet, msg);
+
+                        log(`5 : on stocke le MP en bdd`);
+
+                        MongoClient.connect(url, { useNewUrlParser: true }, function(error,client){
+                            if(error){
+                                log(`Connexion à Mongo impossible! - log 5`);
+                            } else{
+                                log(`5 : on stocke le MP en bdd`);
+                                const db = client.db(dbName);
+                                const collection = db.collection('privateMsg');
+                                collection.insertOne({emetteur: socket.pseudo, destinatairePseudo: dInfosJoueur.mdp, destinataireEMail: chatDest.email , objet: objet, message: msg, dateMP: dateMsg});
+                            }
+                            client.close();
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+});
+
 
 
 /**************************************** Echange de messages entre joueurs (/chat) ************************************************/

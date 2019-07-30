@@ -6,12 +6,14 @@ body{
     /* width: 800px; */
     background-image: url(../img/backgrounds/cat-seamless-pattern-background_42349-63_v2.jpg);
     background-repeat: repeat;
+    margin: 0px;
+    padding: 0px;
 }
 
-main{
+/* main{ */
     /* max-width: 960px; */
-	margin : 10px auto;
-}
+	/* margin : 10px auto;
+} */
 
 h1{
     color: #7c3a01;
@@ -52,12 +54,12 @@ p, span, label, #menu{
     /* max-width: 960px; */
 }
 
-#question-form{
+/* #question-form{
     background-image: url(../img/pattern-pokeball.png);
-    background-repeat: repeat;
+    background-repeat: repeat; */
     /* padding: 15px; */
     /* background-image: url(../img/border-orange_2x.png); */
-}
+/* } */
 
 .icones{
     width: 60px;
