@@ -317,7 +317,7 @@ io.on('connection', function(socket){
     // bcrypt.compare(someOtherPlaintextPassword, hash, function(err, res) {
     //     // res == false
     // });
-};
+// };
 
 // Doc : https://www.npmjs.com/package/bcrypt
 
