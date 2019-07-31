@@ -661,16 +661,21 @@ socket.on('ajoutAmi', function(pseudoAmi){
                             if(error){
                                 log(`Connexion à Mongo impossible! - log 5`);
                             } else{
-                                log(`6 : on stocke le MP en bdd`);
+                                log(`5 : on stocke le MP en bdd`);
                                 const db = client.db(dbName);
                                 const collection = db.collection('friends');
-                                collection.insertOne({demandeur: socket.pseudo, ami: pseudoAmi, statut: statutAjout, dateDemande: dateAjout});
+                                collection.insertOne({demandeur: socket.pseudo, ami: pseudoAmi, statut: statutAjout, dateDemande: dateAjout}, function(err, cb){
+                                    if(err){
+                                        log(`6`);
+                                        log(err);
+                                    } else{
+                                        log(`7 : On envoie le MP par mail`);
+                                        sendMail.sendPrivateMsg(chatDestMail, objetMsgAjout, msgAjout);
+                                    }
+                                });
                             }
                             client.close();
-                        });
-
-                        log(`5 : On envoie le MP par mail`);
-                        sendMail.sendPrivateMsg(chatDestMail, objetMsgAjout, msgAjout);
+                        });                        
                     }
                 }
             });
