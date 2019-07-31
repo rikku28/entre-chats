@@ -641,7 +641,7 @@ socket.on('ajoutAmi', function(pseudoAmi){
                 } else{
                     log(`2 : A-t-on trouvé le chat?`);
                     let chatDest = data;
-                    let chatDestMail = '\' + chatDest.email + \'';
+                    let chatDestMail = chatDest.email;
                     log(`Log 2.5 : Email à transmettre à Sendgrid ${chatDestMail}`);
                     client.close();
                     log('Infos récupérées : ', data);

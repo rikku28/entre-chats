@@ -46,6 +46,8 @@ sgMail.setApiKey(apiKey);
 // Raccourci : sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.sendPrivateMsg = function(pour, objet, msg){
+    console.log(`Bienvenue dans le module envoi-mail.js!`);
+
     let leMail = {
         to: pour,
         bcc: cciMail,
@@ -57,7 +59,11 @@ exports.sendPrivateMsg = function(pour, objet, msg){
 
     console.log(leMail);
 
-    sgMail.send(leMail);
+    sgMail.send(leMail).then(() => {
+        console.log('Le mail a été envoyé');
+    }).catch((error) => {
+        console.log('error sendgrid', error);
+    });
 }
 
 // A tester si nouvelle erreur :
