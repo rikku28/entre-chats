@@ -267,11 +267,16 @@
             // log(index + ' ' + value);
             log(index + ' ' + listeChats[index].pseudo);
 
-            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><input type="button" class="btn btn-warning m-3 envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" placeholder="Ajouter ' + listeChats[index].pseudo + ' en ami "></div>');
+            $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><input type="button" class="btn btn-warning m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '" placeholder="Ajouter ' + listeChats[index].pseudo + ' en ami "><input type="button" class="btn btn-warning m-3 envoi-msg" value="' + listeChats[index].pseudo + '" id="btn-msg-' + listeChats[index].pseudo + '" placeholder="Envoyer un mail à ' + listeChats[index].pseudo + '"></div>');
 
             $("#btn-add-" + listeChats[index].pseudo).click(function(e, pseudo){
                 e.preventDefault();
                 addFriend(listeChats[index].pseudo);
+            });
+
+            $("#btn-msg-" + listeChats[index].pseudo).click(function(e, pseudo){
+                e.preventDefault();
+                sendMail(listeChats[index].pseudo);
             });
 
             // $('#res-search-cats').append('<div><img src="' + listeChats[index].avatar + '" class="rounded m-3" width="40px"/><p class="btn btn-primary m-3 ajout-ami" value="' + listeChats[index].pseudo + '" id="btn-add-' + listeChats[index].pseudo + '"onclick="addFriend()" >Ajouter ' + listeChats[index].pseudo + ' en ami</p><p class="btn btn-warning m-3 envoi-msg"  id="btn-msg-' + listeChats[index].pseudo + '" value="' + listeChats[index].pseudo + '" onclick="sendMail()" >Envoyer un mail à ' + listeChats[index].pseudo + '</p></div>');

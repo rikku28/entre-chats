@@ -62,6 +62,7 @@ exports.sendPrivateMsg = function(pour, objet, msg){
     sgMail.send(leMail).then(() => {
         console.log('Le mail a été envoyé');
     }).catch((error) => {
+        console.log(error.response.statusCode);
         console.log('error sendgrid', error);
     });
 }

@@ -604,7 +604,7 @@ socket.on('ajoutAmi', function(pseudoAmi){
     let dateAjout = new Date().toString();
     
     let objetMsgAjout = 'Entre-chats : ' + socket.pseudo + ' souhaite vous ajouter en ami';
-    let msgAjout = 'Bonjour ' + pseudoAmi + ', <br/> ' + socket.pseudo + ' t\'a demandé en ami. Connecte-toi pour valider sa demande.<br/> A bientôt sur <a href="http://entre-chats.herokuapp.com" target="">Entre-chats</a>.';
+    let msgAjout = 'Bonjour ' + pseudoAmi + ', <br/>' + socket.pseudo + ' t\'a demandé en ami. Connecte-toi pour valider sa demande. <br/>A bientôt sur <a href="http://entre-chats.herokuapp.com" target="_blank">Entre-chats</a>.';
 
     log(msgAjout);
 
