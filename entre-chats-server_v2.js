@@ -431,7 +431,7 @@ io.emit('onlinePlayers', kittens);
 /**************************************** Infos récap profil du chat ************************************************/
 socket.on('needInfos', function(msg){
 
-    log(`On est dans la fonction pour transmettre les infos du chat au client, afin de remplir ses infos de profil`).
+    log(`On est dans la fonction pour transmettre les infos du chat au client, afin de remplir ses infos de profil`);
     log(`Message reçu du client : ${msg}`);
     // socket.emit('chatProfil', {pseudo: kittens[socket.id].pseudo, avatar: kittens[socket.id].avatar, email: kittens[socket.id].email, genre: kittens[socket.id].genre, race: kittens[socket.id].race});
 
