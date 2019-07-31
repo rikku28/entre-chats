@@ -641,6 +641,8 @@ socket.on('ajoutAmi', function(pseudoAmi){
                 } else{
                     log(`2 : A-t-on trouvé le chat?`);
                     let chatDest = data;
+                    let chatDestMail = '\' + chatDest.email + \'';
+                    log(`Log 2.5 : Email à transmettre à Sendgrid ${chatDestMail}`);
                     client.close();
                     log('Infos récupérées : ', data);
 
@@ -653,22 +655,22 @@ socket.on('ajoutAmi', function(pseudoAmi){
                         socket.emit('noCat', message);
 
                     } else{
-                        log(`4 : On envoie le MP par mail`);
-                        sendMail.sendPrivateMsg(chatDest.email, objetMsgAjout, msgAjout);
-
-                        log(`5 : on stocke le MP en bdd`);
+                        log(`4 : on stocke le MP en bdd`);
 
                         MongoClient.connect(url, { useNewUrlParser: true }, function(error,client){
                             if(error){
                                 log(`Connexion à Mongo impossible! - log 5`);
                             } else{
-                                log(`5 : on stocke le MP en bdd`);
+                                log(`6 : on stocke le MP en bdd`);
                                 const db = client.db(dbName);
                                 const collection = db.collection('friends');
                                 collection.insertOne({demandeur: socket.pseudo, ami: pseudoAmi, statut: statutAjout, dateDemande: dateAjout});
                             }
                             client.close();
                         });
+
+                        log(`5 : On envoie le MP par mail`);
+                        sendMail.sendPrivateMsg(chatDestMail, objetMsgAjout, msgAjout);
                     }
                 }
             });

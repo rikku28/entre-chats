@@ -55,9 +55,17 @@ exports.sendPrivateMsg = function(pour, objet, msg){
         html: msg
     };
 
+    console.log(leMail);
+
     sgMail.send(leMail);
 }
 
+// A tester si nouvelle erreur :
+// sgMail.send(msg).then(() => {
+//     console.log('Le message a été envoyé');
+// }).catch((error) => {
+//     console.log('error', error);
+// });
 
 // const msg = {
 //     to: 'ladresse@dudestinataire.fr',
