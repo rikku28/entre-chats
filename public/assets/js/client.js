@@ -182,10 +182,13 @@
     $('#chat-profil').click(function(e){
         e.preventDefault();
 
-        socket.on('chatProfil', function(infos){
-            log (infos);
-            $('#avatar-profil').append('<img src="' + infos.avatar + '" class="rounded" width="50px"/>');
-        });
+        let msg = 'Gooo!';
+        socket.emit('needInfos', msg);
+
+        // socket.on('chatProfil', function(infos){
+        //     log (infos);
+        //     $('#avatar-profil').append('<img src="' + infos.avatar + '" class="rounded" width="50px"/>');
+        // });
         
     });
 
