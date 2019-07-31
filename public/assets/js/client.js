@@ -153,7 +153,8 @@
         }
     });
     
-// Déconnexion d'un joueur
+/**************************************** Déconnexion d'un chat ************************************************/
+
     socket.on('decoCat', function(infos){
         // log('Joueur déconnecté : ', infos);
         localStorage.removeItem(infos.key);
@@ -162,7 +163,8 @@
         $(balPlayerDis).remove();
     });
 
-// Echange de messages
+/**************************************** Échange de messages entre chats ************************************************/
+
     $('#chat-form').submit(function(e){
         e.preventDefault();
         var message = $('#chat-message').val();
@@ -173,6 +175,14 @@
     socket.on('afficheChatMsg', function(msg){
         $('#zone-infos').prepend('<p><strong>' + msg.pseudo + '</strong> : ' + msg.msg + '</p>');
     });
+
+
+/**************************************** Infos récap profil du chat ************************************************/
+
+socket.on('chatProfil', function(infos){
+    log (infos);
+    $('#avatar-profil').append('<img src="' + infos.avatar + '" class="rounded" width="50px"/>');
+});
 
 
 
